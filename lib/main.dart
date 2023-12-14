@@ -1,3 +1,4 @@
+import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/pages/loginPage/loginPage.dart';
 import 'package:client_application/pages/loginPage/loginWithPasswordPage.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +13,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Demo',
-      home: LoginWithPasswordPage()
+      home: LoginPage(),
+      onGenerateRoute: RouteConfig.onGenerateRoute,
     );
   }
 }
