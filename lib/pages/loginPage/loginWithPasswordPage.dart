@@ -2,8 +2,8 @@
 
 import 'package:client_application/components/login/checkAgreement.dart';
 import 'package:client_application/components/login/loginButton.dart';
-import 'package:client_application/components/textButtonWithNoSplash.dart';
-import 'package:client_application/components/textField.dart';
+import 'package:client_application/components/common/textButtonWithNoSplash.dart';
+import 'package:client_application/components/common/textField.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
 import 'package:flutter/material.dart';
@@ -164,5 +164,6 @@ class _LoginWithPasswordPageState extends State<LoginWithPasswordPage> {
 
   void onTapAgreement(){
     print("trunToAgreement");
+    Navigator.of(context).pushNamed(RouteConfig.agreementInfo);
   }
 }
