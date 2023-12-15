@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         body: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             //账号输入
@@ -75,9 +75,9 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () {
                           //清空输入框
                           _phoneController.clear();
-                          setState(() {_phoneController.text = "";});
+                          setState(() {_phoneController.clear();});
                         },
-                        icon: Icon(Icons.clear,color: Colors.grey,),
+                        icon: const Icon(Icons.clear,color: Colors.grey,),
                       ),
               ),
             ),
@@ -93,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                 //TODO: 键盘done操作
                 onEditingComplete: onTapLogin,
                 keyboardType: TextInputType.number,
-                suffixIconConstraints: BoxConstraints(minHeight: 22),
+                suffixIconConstraints: const BoxConstraints(minHeight: 22),
                 suffixIcon: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -102,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                           //清空输入框
                           _captchaController.clear();
                           setState(() {
-                            _captchaController.text = "";
+                            _captchaController.clear();
                           });
                         },
                         icon: Icon(Icons.clear,color:_captchaController.text.isEmpty?Colors.transparent: Colors.grey,),
@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            LoginButton(onPressed: _checkAgreement?onTapLogin:null),
+            LoginButton(onPressed: _checkAgreement&&_phoneController.text.isNotEmpty&&_captchaController.text.isNotEmpty?onTapLogin:null),
           ],
         ),
 

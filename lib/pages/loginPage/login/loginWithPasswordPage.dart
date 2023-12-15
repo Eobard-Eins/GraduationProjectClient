@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:client_application/components/login/checkAgreement.dart';
 import 'package:client_application/components/login/loginButton.dart';
 import 'package:client_application/components/common/textButtonWithNoSplash.dart';
 import 'package:client_application/components/common/textField.dart';
@@ -23,7 +22,6 @@ class _LoginWithPasswordPageState extends State<LoginWithPasswordPage> {
   late TextEditingController _passwordController;
 
   bool _obscure=true;
-  bool _checkAgreement=false;
 
   @override
   void initState() {
@@ -75,7 +73,7 @@ class _LoginWithPasswordPageState extends State<LoginWithPasswordPage> {
                         onPressed: () {
                           //清空输入框
                           _phoneController.clear();
-                          setState(() {_phoneController.text = "";});
+                          setState(() {_phoneController.clear();});
                         },
                         icon: Icon(Icons.clear,color: Colors.grey,),
                       ),
@@ -124,29 +122,20 @@ class _LoginWithPasswordPageState extends State<LoginWithPasswordPage> {
             ),
             
             
-            LoginButton(onPressed: _checkAgreement?onTapLogin:null),
+            LoginButton(onPressed: _phoneController.text.isNotEmpty&&_passwordController.text.isNotEmpty?onTapLogin:null),
 
             
           ],
         ),
         
-        //协议勾选框
-        bottomNavigationBar: CheckAgreement(
-          onChanged: (value) {
-              setState(() {
-                _checkAgreement = !_checkAgreement;
-              });
-              print("checkbox changed");
-            }, 
-          init: _checkAgreement, 
-          onTapAgreeMent: onTapAgreement),
       );
         
   }
 
 
   void forgetPassword(){
-    print("getCaptcha");
+    print("forget password");
+    Navigator.of(context).pushNamed(RouteConfig.verifyPhonePage);
   }
 
   void onTapLoginByCaptcha() {

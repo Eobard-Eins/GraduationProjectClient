@@ -58,7 +58,7 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
         ),
         body: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             //账号输入
@@ -75,9 +75,9 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
                         onPressed: () {
                           //清空输入框
                           _phoneController.clear();
-                          setState(() {_phoneController.text = "";});
+                          setState(() {_phoneController.clear();});
                         },
-                        icon: Icon(Icons.clear,color: Colors.grey,),
+                        icon: const Icon(Icons.clear,color: Colors.grey,),
                       ),
               ),
             ),
@@ -93,7 +93,7 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
                 //TODO: 键盘done操作
                 onEditingComplete: onTapNext,
                 keyboardType: TextInputType.number,
-                suffixIconConstraints: BoxConstraints(minHeight: 22),
+                suffixIconConstraints: const BoxConstraints(minHeight: 22),
                 suffixIcon: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -102,7 +102,7 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
                           //清空输入框
                           _captchaController.clear();
                           setState(() {
-                            _captchaController.text = "";
+                            _captchaController.clear();
                           });
                         },
                         icon: Icon(Icons.clear,color:_captchaController.text.isEmpty?Colors.transparent: Colors.grey,),
@@ -134,7 +134,7 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
 
         //下一步
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: SquareTextButton(text: "下一步", onTap: _checkAgreement?onTapNext:null)
+        floatingActionButton: SquareTextButton(text: "下一步", onTap: _checkAgreement&&_phoneController.text.isNotEmpty&&_captchaController.text.isNotEmpty?onTapNext:null)
       );
   }
 
@@ -167,7 +167,8 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
   }
 
   void onTapNext() {
-    print(_phoneController.text);
+    print("text");
+    Navigator.of(context).pushReplacementNamed(RouteConfig.setPasswordPage);
   }
 
   void onTapAgreement() {
