@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:client_application/components/login/checkAgreement.dart';
 import 'package:client_application/components/login/loginButton.dart';
 import 'package:client_application/components/common/textButtonWithNoSplash.dart';
@@ -19,6 +21,9 @@ class _LoginPageState extends State<LoginPage> {
   late TextEditingController _captchaController;
 
   bool _checkAgreement = false;
+
+  bool _hasGetCaptcha = false;
+  String _captchaHintText= "获取验证码";
 
   @override
   void initState() {
@@ -102,7 +107,12 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         icon: Icon(Icons.clear,color:_captchaController.text.isEmpty?Colors.transparent: Colors.grey,),
                       ),
-                  TextButtonWithNoSplash(onTap: getCaptcha,text: "获取验证码",fontSize: 14,color: Coloors.purple,),
+                  TextButtonWithNoSplash(
+                    onTap: _hasGetCaptcha?null:onTapCaptcha,
+                    text: _hasGetCaptcha?_captchaHintText:"获取验证码",
+                    fontSize: 14,
+                    color: _hasGetCaptcha?Colors.grey:Coloors.purple,
+                  ),
                 ],),
               ),
             ),
@@ -137,8 +147,32 @@ class _LoginPageState extends State<LoginPage> {
       );
   }
 
-  void getCaptcha() {
+  void timeDown(int init) async{
+    int countdown = init;
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      countdown--;
+      setState(() {
+        _captchaHintText="已获取($countdown)";
+      });
+      if (countdown == 0) {
+        _hasGetCaptcha=false;
+        timer.cancel();
+      }
+    });
+  }
+
+  void onTapCaptcha() {
     print("getCaptcha");
+    int initSec=60;
+    setState(() {
+      _hasGetCaptcha=true;
+      _captchaHintText="已获取($initSec)";
+      timeDown(initSec);
+    });
+    
+    
+    print("done");
+
   }
 
   void onTapLoginByPassword() {
