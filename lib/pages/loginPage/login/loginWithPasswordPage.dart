@@ -151,11 +151,12 @@ class _LoginWithPasswordPageState extends State<LoginWithPasswordPage> {
 
   void onTapLoginByCaptcha() {
     print("login by password");
-    Navigator.of(context).pushReplacementNamed(RouteConfig.loginWithCaptcha);
+    Navigator.of(context).pushReplacementNamed(RouteConfig.loginWithCaptchaPage);
   }
 
   void onTapRegister() {
     print("register");
+    Navigator.of(context).pushNamed(RouteConfig.verifyPhonePage);
   }
 
   void onTapLogin(){
@@ -164,6 +165,6 @@ class _LoginWithPasswordPageState extends State<LoginWithPasswordPage> {
 
   void onTapAgreement(){
     print("trunToAgreement");
-    Navigator.of(context).pushNamed(RouteConfig.agreementInfo);
+    Navigator.of(context).pushNamed(RouteConfig.agreementInfoPage);
   }
 }

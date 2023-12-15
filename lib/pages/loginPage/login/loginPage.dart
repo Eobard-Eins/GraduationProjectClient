@@ -177,11 +177,12 @@ class _LoginPageState extends State<LoginPage> {
 
   void onTapLoginByPassword() {
     print("login by password");
-    Navigator.of(context).pushReplacementNamed(RouteConfig.loginWithPassword);
+    Navigator.of(context).pushReplacementNamed(RouteConfig.loginWithPasswordPage);
   }
 
   void onTapRegister() {
     print("register");
+    Navigator.of(context).pushNamed(RouteConfig.verifyPhonePage);
   }
 
   void onTapLogin() {
@@ -190,6 +191,6 @@ class _LoginPageState extends State<LoginPage> {
 
   void onTapAgreement() {
     print("trunToAgreement");
-    Navigator.of(context).pushNamed(RouteConfig.agreementInfo);
+    Navigator.of(context).pushNamed(RouteConfig.agreementInfoPage);
   }
 }

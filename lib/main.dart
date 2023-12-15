@@ -1,6 +1,6 @@
 import 'package:client_application/config/RouteConfig.dart';
-import 'package:client_application/pages/loginPage/loginPage.dart';
-import 'package:client_application/pages/loginPage/loginWithPasswordPage.dart';
+import 'package:client_application/pages/loginPage/login/loginPage.dart';
+import 'package:client_application/pages/loginPage/register/verifyPhonePage.dart';
 import 'package:flutter/material.dart';
 
 void main() {

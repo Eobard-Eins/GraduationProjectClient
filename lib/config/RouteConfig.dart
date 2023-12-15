@@ -1,23 +1,27 @@
 
 import 'package:client_application/pages/loginPage/agreementPage.dart';
-import 'package:client_application/pages/loginPage/loginPage.dart';
-import 'package:client_application/pages/loginPage/loginWithPasswordPage.dart';
+import 'package:client_application/pages/loginPage/login/loginPage.dart';
+import 'package:client_application/pages/loginPage/login/loginWithPasswordPage.dart';
+import 'package:client_application/pages/loginPage/register/verifyPhonePage.dart';
 import 'package:flutter/material.dart';
 
 class RouteConfig {
 
-  static const String loginWithCaptcha="/loginWithCaptcha";
-  static const String loginWithPassword="/loginWithPassword";
-  static const String agreementInfo="/agreementInfo";
+  static const String loginWithCaptchaPage="/loginWithCaptchaPage";
+  static const String loginWithPasswordPage="/loginWithPasswordPage";
+  static const String agreementInfoPage="/agreementInfoPage";
+  static const String verifyPhonePage="/verifyPhonePage";
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case loginWithCaptcha:
+      case loginWithCaptchaPage:
         return MaterialPageRoute(builder: (context) => const LoginPage());
-      case loginWithPassword:
+      case loginWithPasswordPage:
         return MaterialPageRoute(builder: (context) => const LoginWithPasswordPage());
-      case agreementInfo:
+      case agreementInfoPage:
         return MaterialPageRoute(builder: (context) => const AgreementPage());
+      case verifyPhonePage:
+        return MaterialPageRoute(builder: (context) => const VerifyPhonePage());
       default:
         return MaterialPageRoute(builder: (context) => const Scaffold(body: Center(child: Text("No Page Route Provided"),)));
     }
