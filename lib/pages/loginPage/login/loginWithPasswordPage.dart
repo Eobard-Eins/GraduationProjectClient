@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:client_application/components/common/button/textButtonWithNoSplash.dart';
 import 'package:client_application/components/login/loginButton.dart';
-import 'package:client_application/components/common/textButtonWithNoSplash.dart';
-import 'package:client_application/components/common/textField.dart';
+import 'package:client_application/components/common/input/textField.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
 import 'package:flutter/material.dart';
@@ -90,6 +90,8 @@ class _LoginWithPasswordPageState extends State<LoginWithPasswordPage> {
                 obscureText: _obscure,
                 maxLength: 16,
                 textInputAction: TextInputAction.done,
+                //TODO: 
+                onEditingComplete: _phoneController.text.isNotEmpty&&_passwordController.text.isNotEmpty?onTapLogin:null,
                 hintText: "请输入密码",
                 suffixIconConstraints: BoxConstraints(minHeight: 22),
                 suffixIcon: Row(
@@ -131,7 +133,7 @@ class _LoginWithPasswordPageState extends State<LoginWithPasswordPage> {
       );
         
   }
-
+  
 
   void forgetPassword(){
     print("forget password");

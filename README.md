@@ -1,16 +1,3 @@
-# client_application
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 备忘录
+2023/12/15/21:24
+- 密码页面可用于新账号注册、设置密码、忘记密码3处，后续导航分别为个人资料设置、返回原页面、返回原页面，来处为新账号验证码登录、手机号验证后，其中手机号验证来处有注册、密码修改

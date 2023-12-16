@@ -9,9 +9,7 @@ class SquareTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
-      child:ElevatedButton(
+    return ElevatedButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(onTap == null? Colors.grey : Coloors.purple),
           foregroundColor: MaterialStateProperty.all(Colors.white),
@@ -26,7 +24,6 @@ class SquareTextButton extends StatelessWidget {
         ),
         onPressed: onTap,
         child:Padding(padding: const EdgeInsets.only(bottom:2),child: Text(text,),)
-      ),
-    );
+      );
   }
 }

@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:client_application/components/common/button/squareTextButton.dart';
+import 'package:client_application/components/common/button/textButtonWithNoSplash.dart';
 import 'package:client_application/components/login/checkAgreement.dart';
-import 'package:client_application/components/common/textButtonWithNoSplash.dart';
-import 'package:client_application/components/common/textField.dart';
-import 'package:client_application/components/login/squareTextButton.dart';
+import 'package:client_application/components/common/input/textField.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +91,7 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
                 hintText: "请输入验证码",
                 onChanged: (value){setState(() {_captchaController.text = value;});},
                 //TODO: 键盘done操作
-                onEditingComplete: onTapNext,
+                onEditingComplete: _checkAgreement&&_phoneController.text.isNotEmpty&&_captchaController.text.isNotEmpty?onTapNext:null,
                 keyboardType: TextInputType.number,
                 suffixIconConstraints: const BoxConstraints(minHeight: 22),
                 suffixIcon: Row(
@@ -134,9 +134,14 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
 
         //下一步
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: SquareTextButton(text: "下一步", onTap: _checkAgreement&&_phoneController.text.isNotEmpty&&_captchaController.text.isNotEmpty?onTapNext:null)
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+          child:SquareTextButton(text: "下一步", onTap: _checkAgreement&&_phoneController.text.isNotEmpty&&_captchaController.text.isNotEmpty?onTapNext:null)
+        )
       );
   }
+
+  
 
   void timeDown(int init) async{
     int countdown = init;

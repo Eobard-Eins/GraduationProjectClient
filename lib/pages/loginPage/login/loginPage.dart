@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:client_application/components/common/button/textButtonWithNoSplash.dart';
 import 'package:client_application/components/login/checkAgreement.dart';
 import 'package:client_application/components/login/loginButton.dart';
-import 'package:client_application/components/common/textButtonWithNoSplash.dart';
-import 'package:client_application/components/common/textField.dart';
+import 'package:client_application/components/common/input/textField.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                 hintText: "请输入验证码",
                 onChanged: (value){setState(() {_captchaController.text = value;});},
                 //TODO: 键盘done操作
-                onEditingComplete: onTapLogin,
+                onEditingComplete: _checkAgreement&&_phoneController.text.isNotEmpty&&_captchaController.text.isNotEmpty?onTapLogin:null,
                 keyboardType: TextInputType.number,
                 suffixIconConstraints: const BoxConstraints(minHeight: 22),
                 suffixIcon: Row(

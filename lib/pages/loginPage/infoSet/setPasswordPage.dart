@@ -1,6 +1,6 @@
 
-import 'package:client_application/components/common/textField.dart';
-import 'package:client_application/components/login/squareTextButton.dart';
+import 'package:client_application/components/common/button/squareTextButton.dart';
+import 'package:client_application/components/common/input/textField.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
 import 'package:flutter/material.dart';
@@ -114,6 +114,8 @@ class _SetPasswordPageState extends State<SetPasswordPage> {
                 obscureText: _obscure,
                 maxLength: 16,
                 textInputAction: TextInputAction.done,
+                //TODO:
+                onEditingComplete: (_passwordController.text.isEmpty || _passwordAgainController.text.isEmpty)? null: onTapNext,
                 hintText: "请重复输入密码",
                 suffixIconConstraints: const BoxConstraints(minHeight: 22),
                 suffixIcon: Row(
@@ -144,16 +146,21 @@ class _SetPasswordPageState extends State<SetPasswordPage> {
 
         //下一步
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: SquareTextButton(
-            text: "下一步",
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+          child:SquareTextButton(
+            text: "下一步", 
             onTap: (_passwordController.text.isEmpty ||
                     _passwordAgainController.text.isEmpty)
                 ? null
-                : onTapNext));
+                : onTapNext)
+        )
+      );
   }
 
   void onTapNext() {
     print("next");
+    Navigator.of(context).pushReplacementNamed(RouteConfig.setNameAndAvatarPage);
   }
 
   void onTapAgreement() {
