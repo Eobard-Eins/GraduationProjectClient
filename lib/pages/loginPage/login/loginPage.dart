@@ -6,6 +6,7 @@ import 'package:client_application/components/login/loginButton.dart';
 import 'package:client_application/components/common/input/textField.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
+import 'package:client_application/utils/filter.dart';
 import 'package:flutter/material.dart';
 
 //登录页面，使用验证码登录
@@ -66,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
               child: UserTextFieldWidget(
                 controller: _phoneController,
-                onChanged: (value){setState(() {_phoneController.text = value;});},
+                onChanged: (value){setState(() {_phoneController.text = InputFilter.FilterNum(value);});},
                 readOnly: false,
                 keyboardType: TextInputType.phone,
                 textInputAction: TextInputAction.next,
@@ -89,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                 maxLength: 6,
                 textInputAction: TextInputAction.done,
                 hintText: "请输入验证码",
-                onChanged: (value){setState(() {_captchaController.text = value;});},
+                onChanged: (value){setState(() {_captchaController.text = InputFilter.FilterNum(value);});},
                 //TODO: 键盘done操作
                 onEditingComplete: _checkAgreement&&_phoneController.text.isNotEmpty&&_captchaController.text.isNotEmpty?onTapLogin:null,
                 keyboardType: TextInputType.number,

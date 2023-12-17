@@ -3,6 +3,7 @@ import 'package:client_application/components/common/button/squareTextButton.dar
 import 'package:client_application/components/common/input/textField.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
+import 'package:client_application/utils/filter.dart';
 import 'package:flutter/material.dart';
 
 //用于修改密码前、注册账号前验证手机号
@@ -72,7 +73,7 @@ class _SetPasswordPageState extends State<SetPasswordPage> {
                 controller: _passwordController,
                 onChanged: (value) {
                   setState(() {
-                    _passwordController.text = value;
+                    _passwordController.text = InputFilter.FilterPassword(value);
                   });
                 },
                 readOnly: false,
@@ -106,7 +107,7 @@ class _SetPasswordPageState extends State<SetPasswordPage> {
                 controller: _passwordAgainController,
                 onChanged: (value) {
                   setState(() {
-                    _passwordAgainController.text = value;
+                    _passwordAgainController.text = InputFilter.FilterPassword(value);
                   });
                 },
                 readOnly: false,

@@ -5,6 +5,7 @@ import 'package:client_application/components/login/loginButton.dart';
 import 'package:client_application/components/common/input/textField.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
+import 'package:client_application/utils/filter.dart';
 import 'package:flutter/material.dart';
 
 //登录页面，使用密码登录
@@ -64,7 +65,7 @@ class _LoginWithPasswordPageState extends State<LoginWithPasswordPage> {
               padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
               child: UserTextFieldWidget(
                 controller: _phoneController,
-                onChanged: (value){setState(() {_phoneController.text = value;});},
+                onChanged: (value){setState(() {_phoneController.text = InputFilter.FilterNum(value);});},
                 readOnly: false,
                 keyboardType: TextInputType.phone,
                 textInputAction: TextInputAction.next,
@@ -84,7 +85,7 @@ class _LoginWithPasswordPageState extends State<LoginWithPasswordPage> {
               padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 0),
               child: UserTextFieldWidget(
                 controller: _passwordController,
-                onChanged: (value){setState(() {_passwordController.text = value;});},
+                onChanged: (value){setState(() {_passwordController.text = InputFilter.FilterPassword(value);});},
                 readOnly: false,
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: _obscure,
