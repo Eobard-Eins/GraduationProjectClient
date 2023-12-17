@@ -70,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                 onChanged: (value){setState(() {_phoneController.text = InputFilter.FilterNum(value);});},
                 readOnly: false,
                 keyboardType: TextInputType.phone,
-                textInputAction: TextInputAction.next,
+                //textInputAction: TextInputAction.next,
                 hintText: "请输入手机号码",
                 suffixIcon: _phoneController.text.isEmpty?null:IconButton(
                         onPressed: () {
@@ -187,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void onTapLogin() {
-    print(_phoneController.text);
+    //print(_phoneController.text);
   }
 
   void onTapAgreement() {

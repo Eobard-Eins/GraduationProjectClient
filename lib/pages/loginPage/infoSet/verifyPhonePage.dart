@@ -70,7 +70,7 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
                 onChanged: (value){setState(() {_phoneController.text = InputFilter.FilterNum(value);});},
                 readOnly: false,
                 keyboardType: TextInputType.phone,
-                textInputAction: TextInputAction.next,
+                //textInputAction: TextInputAction.next,
                 hintText: "请输入手机号码",
                 suffixIcon: _phoneController.text.isEmpty?null:IconButton(
                         onPressed: () {

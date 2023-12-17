@@ -80,7 +80,7 @@ class _SetPasswordPageState extends State<SetPasswordPage> {
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
                 maxLength: 16,
-                textInputAction: TextInputAction.next,
+                //textInputAction: TextInputAction.next,
                 hintText: "请输入密码",
                 suffixIconConstraints: const BoxConstraints(minHeight: 22),
                 suffixIcon: _passwordController.text.isEmpty
