@@ -1,7 +1,7 @@
 
 import 'package:client_application/pages/loginPage/login/agreementPage.dart';
 import 'package:client_application/pages/loginPage/infoSet/setNameAndAvatarPage.dart';
-import 'package:client_application/pages/loginPage/login/loginPage.dart';
+import 'package:client_application/pages/loginPage/login/loginPage/loginPageUI.dart';
 import 'package:client_application/pages/loginPage/login/loginWithPasswordPage.dart';
 import 'package:client_application/pages/loginPage/infoSet/setPasswordPage.dart';
 import 'package:client_application/pages/loginPage/infoSet/verifyPhonePage.dart';
@@ -21,7 +21,7 @@ class RouteConfig {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case loginWithCaptchaPage:
-        return MaterialPageRoute(builder: (context) => const LoginPage());
+        return MaterialPageRoute(builder: (context) => LoginPage());
       case loginWithPasswordPage:
         return MaterialPageRoute(builder: (context) => const LoginWithPasswordPage());
       case agreementInfoPage:
