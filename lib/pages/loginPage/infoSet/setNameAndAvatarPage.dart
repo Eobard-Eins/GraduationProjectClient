@@ -1,11 +1,9 @@
-import 'dart:io';
 
 import 'package:client_application/components/common/button/squareTextButton.dart';
 import 'package:client_application/components/common/display/bottomSheet.dart';
 import 'package:client_application/components/common/display/optionInSheet.dart';
 import 'package:client_application/components/common/input/textField.dart';
 import 'package:client_application/components/user/circleAvatar.dart';
-import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -21,6 +19,7 @@ class SetNameAndAvatarPage extends StatefulWidget {
 class _SetNameAndAvatarPageState extends State<SetNameAndAvatarPage> {
   late TextEditingController _usernameController;
 
+  //设置图片挑选器
   final ImagePicker _picker = ImagePicker();
   XFile? _imgPath;
   _openGallery() async {
@@ -38,25 +37,8 @@ class _SetNameAndAvatarPageState extends State<SetNameAndAvatarPage> {
     });
   }
 
-  //选取图片方式的弹窗触发函数
-  imagePickerTypeBottomSheet() {
-    return BottomSelectSheet(context: context, title: "选择图片", options: [
-      OptionInSheet(
-          text: "从相册选择",
-          icon: const Icon(
-            Icons.photo_library,
-            color: Coloors.greryDeep,
-          ),
-          onTap: _openGallery),
-      OptionInSheet(
-          text: "拍照",
-          icon: const Icon(
-            Icons.camera_sharp,
-            color: Coloors.greryDeep,
-          ),
-          onTap: _takePhoto),
-    ]).create();
-  }
+
+  //头像
   Widget _ImageView() {
     if (_imgPath == null) {
       return Container(
@@ -86,6 +68,8 @@ class _SetNameAndAvatarPageState extends State<SetNameAndAvatarPage> {
       );
     }
   }
+
+  
 
   @override
   void initState() {
@@ -131,7 +115,7 @@ class _SetNameAndAvatarPageState extends State<SetNameAndAvatarPage> {
             height: 20,
           ),
           GestureDetector(
-            onTap: imagePickerTypeBottomSheet,
+            onTap: ImagePickerTypeBottomSheet(context: context,openGallery: _openGallery,takePhoto: _takePhoto).create,
             child: _ImageView(),
           ),
           const SizedBox(height: 30),

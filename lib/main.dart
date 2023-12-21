@@ -1,7 +1,6 @@
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/pages/loginPage/infoSet/setNameAndAvatarPage.dart';
 import 'package:client_application/pages/loginPage/login/loginPage.dart';
-import 'package:client_application/pages/loginPage/infoSet/setPasswordPage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Demo',
-      home: SetNameAndAvatarPage(),
+      home: LoginPage(),
       onGenerateRoute: RouteConfig.onGenerateRoute,
     );
   }

@@ -18,7 +18,7 @@ class LoginButton extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: onPressed == null? [Color.fromARGB(255, 186, 186, 186),const Color.fromARGB(255, 149, 149, 149),] : [Coloors.purpleLight, Colors.purple],
+          colors: onPressed == null? [Color.fromARGB(255, 186, 186, 186),const Color.fromARGB(255, 149, 149, 149),] : [ Coloors.green, Coloors.purpleLight],
         ),  
       ),
       child: IconButton(
