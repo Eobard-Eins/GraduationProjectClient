@@ -1,11 +1,10 @@
-import 'dart:async';
-import 'package:client_application/pages/loginPage/login/loginPage/loginPageController.dart';
+
+import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginPageController.dart';
 import 'package:get/get.dart';
 import 'package:client_application/components/common/button/textButtonWithNoSplash.dart';
 import 'package:client_application/components/login/checkAgreement.dart';
 import 'package:client_application/components/login/loginButton.dart';
 import 'package:client_application/components/common/input/textField.dart';
-import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/utils/filter.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +44,7 @@ class LoginPage extends StatelessWidget {
                 keyboardType: TextInputType.phone,
                 //textInputAction: TextInputAction.next,
                 hintText: "请输入手机号码",
-                suffixIcon: _lpc.phoneControllerText.isEmpty?null:IconButton(
+                suffixIcon: _lpc.phoneControllerText.value.isEmpty?null:IconButton(
                         onPressed: () {
                           //清空输入框
                           _lpc.phoneController.clear();

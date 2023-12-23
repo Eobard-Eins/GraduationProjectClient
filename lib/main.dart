@@ -1,6 +1,7 @@
 import 'package:client_application/config/RouteConfig.dart';
-import 'package:client_application/pages/loginPage/infoSet/setNameAndAvatarPage.dart';
-import 'package:client_application/pages/loginPage/login/loginPage/loginPageUI.dart';
+import 'package:client_application/pages/loginAndUserInfo/infoSet/setNameAndAvatarPage.dart';
+import 'package:client_application/pages/loginAndUserInfo/login/agreementPage/agreementPageUI.dart';
+import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginPageUI.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

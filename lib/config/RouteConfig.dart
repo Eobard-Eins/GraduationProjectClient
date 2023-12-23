@@ -1,10 +1,10 @@
 
-import 'package:client_application/pages/loginPage/login/agreementPage.dart';
-import 'package:client_application/pages/loginPage/infoSet/setNameAndAvatarPage.dart';
-import 'package:client_application/pages/loginPage/login/loginPage/loginPageUI.dart';
-import 'package:client_application/pages/loginPage/login/loginWithPasswordPage.dart';
-import 'package:client_application/pages/loginPage/infoSet/setPasswordPage.dart';
-import 'package:client_application/pages/loginPage/infoSet/verifyPhonePage.dart';
+import 'package:client_application/pages/loginAndUserInfo/login/agreementPage/agreementPageUI.dart';
+import 'package:client_application/pages/loginAndUserInfo/infoSet/setNameAndAvatarPage.dart';
+import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginPageUI.dart';
+import 'package:client_application/pages/loginAndUserInfo/login/loginWithPasswordPage/loginWithPasswordPageUI.dart';
+import 'package:client_application/pages/loginAndUserInfo/infoSet/setPasswordPage.dart';
+import 'package:client_application/pages/loginAndUserInfo/infoSet/verifyPhonePage.dart';
 import 'package:flutter/material.dart';
 
 class RouteConfig {
@@ -23,7 +23,7 @@ class RouteConfig {
       case loginWithCaptchaPage:
         return MaterialPageRoute(builder: (context) => LoginPage());
       case loginWithPasswordPage:
-        return MaterialPageRoute(builder: (context) => const LoginWithPasswordPage());
+        return MaterialPageRoute(builder: (context) => LoginWithPasswordPage());
       case agreementInfoPage:
         return MaterialPageRoute(builder: (context) => const AgreementPage());
       case verifyPhonePage:
