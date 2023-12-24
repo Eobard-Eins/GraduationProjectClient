@@ -64,7 +64,7 @@ class LoginPage extends StatelessWidget {
                 hintText: "请输入验证码",
                 onChanged: (value){_lpc.captchaControllerText.value=_lpc.captchaController.text = InputFilter.FilterNum(value);},
                 //TODO: 键盘done操作
-                onEditingComplete: _lpc.checkAgreement.value&&_lpc.phoneController.text.isNotEmpty&&_lpc.captchaController.text.isNotEmpty?_lpc.onTapLogin:null,
+                onEditingComplete: _lpc.checkAgreement.value&&_lpc.phoneControllerText.value.isNotEmpty&&_lpc.captchaControllerText.value.isNotEmpty?_lpc.onTapLogin:null,
                 keyboardType: TextInputType.number,
                 suffixIconConstraints: const BoxConstraints(minHeight: 22),
                 suffixIcon: Row(
@@ -100,7 +100,7 @@ class LoginPage extends StatelessWidget {
               ),
             ),
 
-            Obx(()=>LoginButton(onPressed: _lpc.checkAgreement.value&&_lpc.phoneController.text.isNotEmpty&&_lpc.captchaController.text.isNotEmpty?_lpc.onTapLogin:null),)
+            Obx(()=>LoginButton(onPressed: _lpc.checkAgreement.value&&_lpc.phoneControllerText.value.isNotEmpty&&_lpc.captchaControllerText.value.isNotEmpty?_lpc.onTapLogin:null),)
           ],
         ),
 
