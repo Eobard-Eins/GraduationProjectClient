@@ -12,5 +12,9 @@ class UserNetService{
   static bool isNewUser(String value) {
     return true;
   }
+
+  static bool verifyPassword(String value) {
+    return true;
+  }
   
 }
