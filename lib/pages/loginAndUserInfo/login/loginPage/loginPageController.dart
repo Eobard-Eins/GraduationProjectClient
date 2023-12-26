@@ -71,7 +71,7 @@ class LoginPageController extends GetxController {
       printInfo(info: "手机号格式不匹配");
       Get.snackbar("登录失败", "请输入正确的手机号",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
     }
-    else if(!UserNetService.verifyCaptcha(captchaControllerText.value)){//格式不对或验证码输入错误
+    else if(!UserNetService.loginWithCaptcha(captchaControllerText.value)){//格式不对或验证码输入错误
       printInfo(info: "验证码错误");
       Get.snackbar("登录失败", "请输入正确的验证码",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
     }

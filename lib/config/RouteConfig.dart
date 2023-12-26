@@ -5,6 +5,8 @@ import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginP
 import 'package:client_application/pages/loginAndUserInfo/login/loginWithPasswordPage/loginWithPasswordPageUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/setPasswordPage.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/verifyPhonePage.dart';
+import 'package:client_application/pages/temp/testUI.dart';
+import 'package:client_application/utils/localStorage.dart';
 import 'package:flutter/material.dart';
 
 class RouteConfig {
@@ -17,6 +19,8 @@ class RouteConfig {
   
   static const String setPasswordPage="/setPasswordPage";
   static const String setNameAndAvatarPage="/setNameAndAvatarPage";
+
+  static const String TESTPAGE="/TESTPAGE";
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -32,6 +36,8 @@ class RouteConfig {
         return MaterialPageRoute(builder: (context) => const SetPasswordPage());
       case setNameAndAvatarPage:
         return MaterialPageRoute(builder: (context) => const SetNameAndAvatarPage());
+      case TESTPAGE:
+          return MaterialPageRoute(builder: (context) => testUI());
       default:
         return MaterialPageRoute(builder: (context) => const Scaffold(body: Center(child: Text("No Page Route Provided"),)));
     }

@@ -1,6 +1,5 @@
 
 //输入框输入时过滤掉非法字符，用于onChanged回调中
-import 'package:client_application/utils/discriminator.dart';
 import 'package:get/get.dart';
 
 class InputFilter{
