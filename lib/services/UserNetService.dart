@@ -2,7 +2,10 @@
 
 import 'dart:async';
 
+import 'package:client_application/utils/discriminator.dart';
 import 'package:client_application/utils/localStorage.dart';
+import 'package:client_application/utils/result.dart';
+import 'package:client_application/utils/status.dart';
 import 'package:get/get.dart';
 
 class UserNetService extends GetConnect{
@@ -24,16 +27,21 @@ class UserNetService extends GetConnect{
     });
   }
 
-  Future<bool> loginWithPasswordPage(String account, String password) async{
+  Future<Result<bool>> loginWithPasswordPage(String account, String password) async{
+    if(!Discriminator.accountOk(account)){
+      return Result.error(statusCode:Status.phoneFormatError, data: false);
+    }
+    //TODO:
     await TimeTestModel(3);
-    //get("www.baidu.com");
+    //var t=await get("www.baidu.com");
+
     printInfo(info:"NET TEST");
 
     bool res=true;
     SpUtils.setBool("isLogin", res);
     SpUtils.setString("account", account);
     SpUtils.setString("password", password);
-    return res;
+    return Result.success(data: res);
   }
   bool loginWithCaptcha(String captcha) {
     return true;
