@@ -19,9 +19,6 @@ class LoginPageController extends GetxController {
 
   Rx<String> captchaHintText= "获取验证码".obs;
 
-  final UserNetService _uns=Get.find();
-
-
   void timeDown(int init) async{
     int countdown = init;
     Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -50,7 +47,7 @@ class LoginPageController extends GetxController {
       Get.snackbar("登录失败", "请输入正确的手机号",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
     }else{
       printInfo(info: "发送验证码");
-      _uns.sendCaptcha();
+      UserNetService().sendCaptcha();
     }
   }
 
@@ -73,13 +70,13 @@ class LoginPageController extends GetxController {
       printInfo(info: "手机号格式不匹配");
       Get.snackbar("登录失败", "请输入正确的手机号",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
     }
-    else if(!_uns.loginWithCaptcha(captchaControllerText.value)){//格式不对或验证码输入错误
+    else if(!UserNetService().loginWithCaptcha(captchaControllerText.value)){//格式不对或验证码输入错误
       printInfo(info: "验证码错误");
       Get.snackbar("登录失败", "请输入正确的验证码",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
     }
     else{
       //是新用户
-      if(_uns.isNewUser(phoneControllerText.value)){
+      if(UserNetService().isNewUser(phoneControllerText.value)){
         printInfo(info: "跳转设置密码页");
         Get.toNamed(RouteConfig.setPasswordPage);
       }else{

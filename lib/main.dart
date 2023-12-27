@@ -16,16 +16,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async{
   //runApp(MyApp());
   WidgetsFlutterBinding.ensureInitialized();
-  //await SpUtils.getInstance();//初始化本地持续化存储器
-  /**
-   * 初始化各模块
-   * 1.初始化本地持续化存储器
-   * 2.初始化网络服务
-   */
-  await Future.wait([
-    MyApp.StorageInit(),
-    MyApp.NetServerInit(),
-  ]);
+  await SpUtils.getInstance();//初始化本地持续化存储器
+  // /**
+  //  * 初始化各模块
+  //  * 1.初始化本地持续化存储器
+  //  * 2.初始化网络服务
+  //  */
+  // await Future.wait([
+  //   MyApp.StorageInit(),
+  //   MyApp.NetServerInit(),
+  // ]);
 
   runApp(MyApp());
 }
@@ -48,14 +48,9 @@ class MyApp extends StatelessWidget {
     return SpUtils.getBool("isLogin");
   }
 
-  static Future StorageInit() async{
-    return Future.wait([
-      SpUtils.getInstance(),
-    ]);
-  }
-  static Future NetServerInit() async{
-    return Future.wait([
-      Future.sync(() => Get.put(UserNetService()))
-    ]);
-  }
+  // static Future StorageInit() async{
+  //   return Future.wait([
+  //     SpUtils.getInstance(),
+  //   ]);
+  // }
 }

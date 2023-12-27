@@ -6,6 +6,17 @@ import 'package:client_application/utils/localStorage.dart';
 import 'package:get/get.dart';
 
 class UserNetService extends GetConnect{
+  UserNetService._internal();
+
+  factory UserNetService() => _instance;
+
+  static final UserNetService _instance = UserNetService._internal();
+
+  static UserNetService getInstance(){
+    return _instance;
+  }
+
+
   Future TimeTestModel(int init)async{//模拟网络请求延时
     //模拟延时
     return Future.delayed(Duration(seconds: init),(){
