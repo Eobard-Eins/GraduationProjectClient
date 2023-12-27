@@ -3,8 +3,9 @@
 /// 为区分网络状态码，使用 1+各分类状态总码 开头的四位数
 
 class Status{
-  //正常登录
+  //正常
   static const int success=1000;
+  static const int successButUserNotExist=1001;
   
   //手机号、验证码、密码
   static const int phoneFormatError=1100;

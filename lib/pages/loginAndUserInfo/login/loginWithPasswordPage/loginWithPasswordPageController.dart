@@ -14,11 +14,6 @@ class LoginWithPasswordPageController extends GetxController {
 
   Rx<bool> obscure=true.obs;
 
-  void init(){
-    passwordController.text=passwordControllerText.value="";
-    phoneController.text=phoneControllerText.value="";
-    obscure.value=true;
-  }
 
   void changeObscure(){
     obscure.value=!obscure.value;
@@ -48,38 +43,39 @@ class LoginWithPasswordPageController extends GetxController {
     UserNetService().loginWithPasswordPage(phoneControllerText.value,passwordControllerText.value).then((value) {
       switch (value.statusCode){
         case Status.phoneFormatError:
-          printInfo(info: "手机号格式不匹配");
+          printInfo(info: "手机号格式不匹配,code:${value.statusCode}");
           Get.snackbar("登录失败", "请输入正确的手机号",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
           break;
         
         case Status.netError:
-          printInfo(info: "网络错误");
+          printInfo(info: "网络错误,code:${value.statusCode}");
           Get.snackbar("登录失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
-          init();//全部清空
+          passwordController.text=passwordControllerText.value="";//密码框清空
           break;
 
         case Status.userNotExist:
-          printInfo(info: "账号不存在");
+          printInfo(info: "账号不存在,code:${value.statusCode}");
           Get.snackbar("登录失败", "账号不存在，请确保输入的手机号正确",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
           passwordController.text=passwordControllerText.value="";//密码框清空
           break;
 
         case Status.passwordError:
-          printInfo(info: "密码错误");
+          printInfo(info: "密码错误,code:${value.statusCode}");
           Get.snackbar("登录失败", "请输入正确的密码",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
           passwordController.text=passwordControllerText.value="";//密码框清空
           break;
         
         case Status.success:
-          printInfo(info: "登录成功");
+          printInfo(info: "登录成功,code:${value.statusCode}");
           //TODO: 前往首页
-          Get.offAllNamed(RouteConfig.TESTPAGE);
+          Get.offAllNamed(RouteConfig.homePage);
           break;
 
         default:
-          printInfo(info: "网络错误");
+          printInfo(info: "未知错误,code:${value.statusCode}");
           Get.snackbar("登录失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
-          init();//全部清空
+          passwordController.text=passwordControllerText.value="";
+          phoneController.text=phoneControllerText.value="";//全部清空
       }
     });    
   }

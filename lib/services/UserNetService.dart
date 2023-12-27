@@ -43,11 +43,27 @@ class UserNetService extends GetConnect{
     SpUtils.setString("password", password);
     return Result.success(data: res);
   }
-  bool loginWithCaptcha(String captcha) {
-    return true;
+
+  Future<Result<bool>> loginWithCaptcha(String account,String captcha) async{
+    if(!Discriminator.accountOk(account)){
+      return Result.error(statusCode:Status.phoneFormatError, data: false);
+    }
+    //TODO:
+    await TimeTestModel(3);
+
+
+    return Result.success(data: true);
   }
-  bool sendCaptcha() {
-    return true;
+
+  Future<Result<bool>> sendCaptcha(String account) async{
+    if(!Discriminator.accountOk(account)){
+      return Result.error(statusCode:Status.phoneFormatError, data: false);
+    }
+    //TODO:
+    await TimeTestModel(3);
+
+
+    return Result.success(data: true);
   }
   
   bool isNewUser(String value) {

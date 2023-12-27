@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/services/UserNetService.dart';
-import 'package:client_application/utils/discriminator.dart';
+import 'package:client_application/utils/status.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,6 +18,8 @@ class LoginPageController extends GetxController {
   Rx<bool> hasGetCaptcha = false.obs;
 
   Rx<String> captchaHintText= "获取验证码".obs;
+
+
 
   void timeDown(int init) async{
     int countdown = init;
@@ -41,14 +43,29 @@ class LoginPageController extends GetxController {
     captchaHintText.value="已获取($initSec)";
     timeDown(initSec);
 
-    //发送验证码
-    if(!Discriminator.accountOk(phoneControllerText.value)){
-      printInfo(info: "手机号格式不匹配");
-      Get.snackbar("登录失败", "请输入正确的手机号",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
-    }else{
-      printInfo(info: "发送验证码");
-      UserNetService().sendCaptcha();
-    }
+    printInfo(info: "发送验证码");
+    UserNetService().sendCaptcha(phoneControllerText.value).then((value){
+      switch (value.statusCode){
+        case Status.phoneFormatError:
+          printInfo(info: "手机号格式不匹配,code:${value.statusCode}");
+          Get.snackbar("登录失败", "请输入正确的手机号",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          break;
+
+        case Status.netError:
+          printInfo(info: "网络错误,code:${value.statusCode}");
+          Get.snackbar("获取验证码失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          break;
+
+        case Status.success:
+          printInfo(info: "验证码发送成功:${value.data},code:${value.statusCode}");
+          break;
+
+        default:
+          printInfo(info: "未知错误,code:${value.statusCode}");
+          Get.snackbar("获取验证码失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          break;
+      }
+    });
   }
 
   void onTapLoginByPassword() {
@@ -66,25 +83,45 @@ class LoginPageController extends GetxController {
   void onTapLogin() {
     printInfo(info: "登录事件按钮触发");
 
-    if(!Discriminator.accountOk(phoneControllerText.value)){
-      printInfo(info: "手机号格式不匹配");
-      Get.snackbar("登录失败", "请输入正确的手机号",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
-    }
-    else if(!UserNetService().loginWithCaptcha(captchaControllerText.value)){//格式不对或验证码输入错误
-      printInfo(info: "验证码错误");
-      Get.snackbar("登录失败", "请输入正确的验证码",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
-    }
-    else{
-      //是新用户
-      if(UserNetService().isNewUser(phoneControllerText.value)){
-        printInfo(info: "跳转设置密码页");
-        Get.toNamed(RouteConfig.setPasswordPage);
-      }else{
-        printInfo(info: "跳转首页");
-        //TODO: 
+    UserNetService().loginWithCaptcha(phoneControllerText.value,captchaControllerText.value).then((value){
+      switch (value.statusCode){
+        case Status.phoneFormatError:
+          printInfo(info: "手机号格式不匹配,code:${value.statusCode}");
+          Get.snackbar("登录失败", "请输入正确的手机号",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          break;
+        
+        case Status.netError:
+          printInfo(info: "网络错误,code:${value.statusCode}");
+          Get.snackbar("登录失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          captchaController.text=captchaControllerText.value="";//验证码框清空
+          break;
+        
+        case Status.captchaError:
+          printInfo(info: "验证码错误,code:${value.statusCode}");
+          Get.snackbar("登录失败", "请输入正确的验证码",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          captchaController.text=captchaControllerText.value="";//验证码框清空
+          break;
+
+        case Status.successButUserNotExist:
+          printInfo(info: "跳转设置密码页,code:${value.statusCode}");
+          //TODO: 跳转设置密码页
+          Get.toNamed(RouteConfig.setPasswordPage);
+          break;
+        
+        case Status.success:
+          printInfo(info: "登录成功,code:${value.statusCode}");
+          //TODO: 前往首页
+          Get.offAllNamed(RouteConfig.homePage);
+          break;
+        
+        default:
+          printInfo(info: "未知错误,code:${value.statusCode}");
+          Get.snackbar("登录失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          captchaController.text=captchaControllerText.value="";
+          phoneController.text=phoneControllerText.value="";
+          break;
       }
-    }
-    //print(_phoneController.text);
+    });
   }
 
   void onTapAgreement() {
