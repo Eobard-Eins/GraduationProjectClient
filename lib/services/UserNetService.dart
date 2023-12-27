@@ -66,12 +66,5 @@ class UserNetService extends GetConnect{
     return Result.success(data: true);
   }
   
-  bool isNewUser(String value) {
-    return false;
-  }
-
-  bool verifyPassword(String value) {
-    return true;
-  }
   
 }
