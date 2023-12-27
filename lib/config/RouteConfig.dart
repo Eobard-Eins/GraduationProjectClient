@@ -1,4 +1,5 @@
 
+import 'package:client_application/pages/home/homePage.dart';
 import 'package:client_application/pages/loginAndUserInfo/login/agreementPage/agreementPageUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/setNameAndAvatarPage.dart';
 import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginPageUI.dart';
@@ -6,7 +7,6 @@ import 'package:client_application/pages/loginAndUserInfo/login/loginWithPasswor
 import 'package:client_application/pages/loginAndUserInfo/infoSet/setPasswordPage.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/verifyPhonePage.dart';
 import 'package:client_application/pages/temp/testUI.dart';
-import 'package:client_application/utils/localStorage.dart';
 import 'package:flutter/material.dart';
 
 class RouteConfig {
@@ -19,6 +19,8 @@ class RouteConfig {
   
   static const String setPasswordPage="/setPasswordPage";
   static const String setNameAndAvatarPage="/setNameAndAvatarPage";
+
+  static const String homePage="/homePage";
 
   static const String TESTPAGE="/TESTPAGE";
 
@@ -36,6 +38,8 @@ class RouteConfig {
         return MaterialPageRoute(builder: (context) => const SetPasswordPage());
       case setNameAndAvatarPage:
         return MaterialPageRoute(builder: (context) => const SetNameAndAvatarPage());
+      case homePage:
+        return MaterialPageRoute(builder: (context) => HomePage());
       case TESTPAGE:
           return MaterialPageRoute(builder: (context) => testUI());
       default:

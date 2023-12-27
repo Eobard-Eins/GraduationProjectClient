@@ -16,6 +16,7 @@ class LoginWithPasswordPageController extends GetxController {
 
   Rx<bool> obscure=true.obs;
   
+  final UserNetService _uns=Get.find();
 
   void changeObscure(){
     obscure.value=!obscure.value;
@@ -45,16 +46,16 @@ class LoginWithPasswordPageController extends GetxController {
       printInfo(info: "手机号格式不匹配");
       Get.snackbar("登录失败", "请输入正确的手机号",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
     }
-    else if(UserNetService.isNewUser(passwordControllerText.value)){
+    else if(_uns.isNewUser(passwordControllerText.value)){
       printInfo(info: "账号不存在");
       Get.snackbar("登录失败", "账号不存在，请确保输入的手机号正确",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
     }
-    else if(!UserNetService.verifyPassword(passwordControllerText.value)){//格式不对或验证码输入错误
+    else if(!_uns.verifyPassword(passwordControllerText.value)){//格式不对或验证码输入错误
       printInfo(info: "密码错误");
       Get.snackbar("登录失败", "请输入正确的密码",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
     }
     else{
-      UserNetService.loginWithPasswordPage(phoneControllerText.value,passwordControllerText.value).then((value) {
+      _uns.loginWithPasswordPage(phoneControllerText.value,passwordControllerText.value).then((value) {
         if(value==true){
           printInfo(info: "登录成功");
           //TODO: 前往首页

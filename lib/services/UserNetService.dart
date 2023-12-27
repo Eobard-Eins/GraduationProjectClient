@@ -3,17 +3,20 @@
 import 'dart:async';
 
 import 'package:client_application/utils/localStorage.dart';
+import 'package:get/get.dart';
 
-class UserNetService{
-  static Future TimeTestModel(int init)async{//模拟网络请求延时
+class UserNetService extends GetConnect{
+  Future TimeTestModel(int init)async{//模拟网络请求延时
     //模拟延时
     return Future.delayed(Duration(seconds: init),(){
       return 'Net delay test';
     });
   }
 
-  static Future<bool> loginWithPasswordPage(String account, String password) async{
+  Future<bool> loginWithPasswordPage(String account, String password) async{
     await TimeTestModel(3);
+    //get("www.baidu.com");
+    printInfo(info:"NET TEST");
 
     bool res=true;
     SpUtils.setBool("isLogin", res);
@@ -21,18 +24,18 @@ class UserNetService{
     SpUtils.setString("password", password);
     return res;
   }
-  static bool loginWithCaptcha(String captcha) {
+  bool loginWithCaptcha(String captcha) {
     return true;
   }
-  static bool sendCaptcha() {
+  bool sendCaptcha() {
     return true;
   }
   
-  static bool isNewUser(String value) {
+  bool isNewUser(String value) {
     return false;
   }
 
-  static bool verifyPassword(String value) {
+  bool verifyPassword(String value) {
     return true;
   }
   
