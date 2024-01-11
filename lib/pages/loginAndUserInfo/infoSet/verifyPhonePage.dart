@@ -51,7 +51,7 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
-              color: Coloors.purple,
+              color: Coloors.main,
             ),
             textAlign: TextAlign.center,
           ),
@@ -112,7 +112,7 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
                     onTap: _hasGetCaptcha?null:onTapCaptcha,
                     text: _hasGetCaptcha?_captchaHintText:"获取验证码",
                     fontSize: 14,
-                    color: _hasGetCaptcha?Colors.grey:Coloors.purple,
+                    color: _hasGetCaptcha?Colors.grey:Coloors.main,
                   ),
                 ],),
               ),

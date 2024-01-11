@@ -44,7 +44,7 @@ class _SetPasswordPageState extends State<SetPasswordPage> {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
-              color: Coloors.purple,
+              color: Coloors.main,
             ),
             textAlign: TextAlign.center,
           ),

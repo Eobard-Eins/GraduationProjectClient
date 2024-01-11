@@ -23,7 +23,7 @@ class LoginWithPasswordPage extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
-              color: Coloors.purple,
+              color: Coloors.main,
             ),
             textAlign: TextAlign.center,
           ),
@@ -76,7 +76,7 @@ class LoginWithPasswordPage extends StatelessWidget {
                         onPressed: _lwppc.phoneControllerText.value.isEmpty?null:_lwppc.changeObscure,
                         icon: Icon(_lwppc.obscure.value?Icons.visibility_off:Icons.visibility,color:_lwppc.passwordControllerText.value.isEmpty?Colors.transparent: Colors.grey,),
                       ),
-                    TextButtonWithNoSplash(onTap: _lwppc.forgetPassword,text: "忘记密码",fontSize: 14,color: Coloors.purple,),
+                    TextButtonWithNoSplash(onTap: _lwppc.forgetPassword,text: "忘记密码",fontSize: 14,color: Coloors.main,),
                 ],),
               ),)
             ),

@@ -11,7 +11,7 @@ class SquareTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(onTap == null? Colors.grey : Coloors.purple),
+          backgroundColor: MaterialStateProperty.all(onTap == null? Colors.grey : Coloors.main),
           foregroundColor: MaterialStateProperty.all(Colors.white),
           elevation: MaterialStateProperty.all(0),
           shape: MaterialStateProperty.all(RoundedRectangleBorder(

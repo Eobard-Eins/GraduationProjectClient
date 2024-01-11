@@ -19,7 +19,7 @@ class CheckAgreement extends StatelessWidget {
               Checkbox(
                 value: init,
                 onChanged: onChanged,
-                activeColor: Coloors.purple,
+                activeColor: Coloors.main,
                 checkColor: Colors.white,
                 splashRadius: 0,
                 shape: RoundedRectangleBorder(
@@ -30,7 +30,7 @@ class CheckAgreement extends StatelessWidget {
               Text.rich(
                 TextSpan(
                   text: "我已阅读并同意",
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 12,
                     fontWeight:  FontWeight.w100,
@@ -38,8 +38,8 @@ class CheckAgreement extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: "《用户协议》",
-                      style: TextStyle(
-                        color: Coloors.purple,
+                      style: const TextStyle(
+                        color: Coloors.main,
                         fontSize: 12,
                         fontWeight:  FontWeight.w100,
                       ),

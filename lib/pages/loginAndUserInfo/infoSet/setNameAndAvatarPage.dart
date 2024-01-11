@@ -92,7 +92,7 @@ class _SetNameAndAvatarPageState extends State<SetNameAndAvatarPage> {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
-              color: Coloors.purple,
+              color: Coloors.main,
             ),
             textAlign: TextAlign.center,
           ),

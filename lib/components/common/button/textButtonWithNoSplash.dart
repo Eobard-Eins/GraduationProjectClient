@@ -26,7 +26,7 @@ class TextButtonWithNoSplash extends StatelessWidget {
       child: Text(
           text,
           style: TextStyle(
-            color: color ?? Coloors.purpleLight,
+            color: color ?? Coloors.mainLight,
             fontSize: fontSize ?? 12,
             fontWeight: fontWeight ?? FontWeight.w200,
           )), //

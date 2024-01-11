@@ -24,7 +24,7 @@ class LoginPage extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
-              color: Coloors.purple,
+              color: Coloors.main,
             ),
             textAlign: TextAlign.center,
           ),
@@ -83,7 +83,7 @@ class LoginPage extends StatelessWidget {
                       onTap: _lpc.hasGetCaptcha.value?null:_lpc.onTapCaptcha,
                       text: _lpc.hasGetCaptcha.value?_lpc.captchaHintText.value:"获取验证码",
                       fontSize: 14,
-                      color: _lpc.hasGetCaptcha.value?Colors.grey:Coloors.purple,
+                      color: _lpc.hasGetCaptcha.value?Colors.grey:Coloors.main,
                     ),
                 ],),
               ),)
