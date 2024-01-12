@@ -19,8 +19,16 @@ class LoginPageController extends GetxController {
 
   Rx<String> captchaHintText= "获取验证码".obs;
 
+  void init(){
+    phoneController.clear(); captchaController.clear();
+    phoneControllerText.value="";
+    captchaControllerText.value="";
+    checkAgreement.value=false;
+    hasGetCaptcha.value=false;
+    captchaHintText.value="获取验证码";
+  }
 
-
+  //倒计时
   void timeDown(int init) async{
     int countdown = init;
     Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -35,6 +43,17 @@ class LoginPageController extends GetxController {
     });
   }
 
+  //改变协议框勾选状态
+  void changeAgreement(bool? value){
+    checkAgreement.value = !checkAgreement.value;
+  }
+
+  //判断是否可以使用登录按钮
+  Function()? canLogin(){
+    return checkAgreement.value&&phoneControllerText.value.isNotEmpty&&captchaControllerText.value.length>=6?onTapLogin:null;
+  }
+
+  //发送验证码
   void onTapCaptcha() {
     printInfo(info: "验证码发送按钮触发");
     int initSec=60;
@@ -48,7 +67,7 @@ class LoginPageController extends GetxController {
       switch (value.statusCode){
         case Status.phoneFormatError:
           printInfo(info: "手机号格式不匹配,code:${value.statusCode}");
-          Get.snackbar("登录失败", "请输入正确的手机号",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          Get.snackbar("获取验证码失败", "请输入正确的手机号",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
           break;
 
         case Status.netError:
@@ -76,7 +95,7 @@ class LoginPageController extends GetxController {
 
   void onTapRegister() {
     printInfo(info: "跳转注册的验证手机号页");
-    Get.toNamed(RouteConfig.verifyPhonePage);
+    Get.toNamed(RouteConfig.verifyPhonePage,arguments: {'newUser':true});
     //Navigator.of(context).pushNamed(RouteConfig.verifyPhonePage);
   }
 
@@ -88,6 +107,7 @@ class LoginPageController extends GetxController {
         case Status.phoneFormatError:
           printInfo(info: "手机号格式不匹配,code:${value.statusCode}");
           Get.snackbar("登录失败", "请输入正确的手机号",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          captchaController.text=captchaControllerText.value="";//验证码框清空
           break;
         
         case Status.netError:
@@ -105,7 +125,7 @@ class LoginPageController extends GetxController {
         case Status.successButUserNotExist:
           printInfo(info: "跳转设置密码页,code:${value.statusCode}");
           //TODO: 跳转设置密码页
-          Get.toNamed(RouteConfig.setPasswordPage);
+          Get.toNamed(RouteConfig.setPasswordPage,arguments:{'needSetInfo':true,'account':phoneControllerText.value});
           break;
         
         case Status.success:
@@ -117,8 +137,7 @@ class LoginPageController extends GetxController {
         default:
           printInfo(info: "未知错误,code:${value.statusCode}");
           Get.snackbar("登录失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
-          captchaController.text=captchaControllerText.value="";
-          phoneController.text=phoneControllerText.value="";
+          init();
           break;
       }
     });

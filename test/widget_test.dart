@@ -7,21 +7,25 @@
 
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginPageUI.dart';
+import 'package:client_application/utils/localStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:client_application/main.dart';
 import 'package:get/get.dart';
-
+bool initJudge(){
+    return SpUtils.getBool("isLogin");
+  }
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Demo',
-      home: LoginPage(),
-      onGenerateRoute: RouteConfig.onGenerateRoute,
-    ));
+        debugShowCheckedModeBanner: false,
+        title: 'Demo',
+        initialRoute: initJudge()?RouteConfig.homePage:RouteConfig.loginWithCaptchaPage,
+        getPages: RouteConfig.getPages,
+        unknownRoute: GetPage(name: '/notfound', page: () => const Scaffold(body: Center(child: Text("No Page Route Provided"),))),
+      ));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

@@ -4,21 +4,24 @@
 
 class Status{
   //正常
-  static const int success=1000;
-  static const int successButUserNotExist=1001;
+  static const int success=1000;//成功
+  static const int successButUserNotExist=1001;//成功登录但是用户不存在
   
   //手机号、验证码、密码
-  static const int phoneFormatError=1100;
-  static const int passwordFormatError=1101;
-  static const int passwordError=1102;
-  static const int captchaError=1103;
+  static const int phoneFormatError=1100;//手机号格式错误
+  static const int passwordFormatError=1101;//密码格式错误
+  static const int passwordError=1102;//密码错误
+  static const int captchaError=1103;//验证码错误
+  static const int passwordInconsistent=1104;//密码不一致
+  static const int setPasswordError=1105;//设置密码错误
 
   //用户
-  static const int userNotExist=1200;
+  static const int userNotExist=1200;//用户不存在
+  static const int userExist=1201;//用户已存在
 
   //网络
-  static const int netError=1300;
+  static const int netError=1300;//网络错误
 
   //不存在状态码
-  static const int noStatusCode=0000;
+  static const int noStatusCode=0000;//其他
 }

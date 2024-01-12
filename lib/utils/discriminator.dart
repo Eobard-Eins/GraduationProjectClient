@@ -12,4 +12,9 @@ class Discriminator{
     if(!captcha.isNum) return false;//密码中存在非数字字符
     return true;
   }
+
+  static bool passwordOk(String password){
+    //TODO: 
+    return true;
+  }
 }

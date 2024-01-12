@@ -2,40 +2,22 @@
 import 'package:client_application/components/common/button/squareTextButton.dart';
 import 'package:client_application/components/common/input/textField.dart';
 import 'package:client_application/config/RouteConfig.dart';
+import 'package:client_application/pages/loginAndUserInfo/infoSet/setPasswordPage/setPasswordController.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/utils/filter.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-//用于修改密码前、注册账号前验证手机号
-class SetPasswordPage extends StatefulWidget {
-  const SetPasswordPage({super.key});
 
-  @override
-  State<SetPasswordPage> createState() => _SetPasswordPageState();
-}
-
-class _SetPasswordPageState extends State<SetPasswordPage> {
-  late TextEditingController _passwordController;
-  late TextEditingController _passwordAgainController;
-
-  bool _obscure = true;
-
-  @override
-  void initState() {
-    _passwordController = TextEditingController();
-    _passwordAgainController = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _passwordController.dispose();
-    _passwordAgainController.dispose();
-    super.dispose();
-  }
-
+class SetPasswordPage extends StatelessWidget {
+  final SetPasswordController _spc=Get.put(SetPasswordController());
+  final passwordMaxLength=16;
+  final bool needSetInfo=Get.arguments["needSetInfo"] as bool??false;
+  
   @override
   Widget build(BuildContext context) {
+    _spc.init();
+
     return Scaffold(
         appBar: AppBar(
           //标题
@@ -69,78 +51,73 @@ class _SetPasswordPageState extends State<SetPasswordPage> {
             //密码第一次输入
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 0),
-              child: UserTextFieldWidget(
-                controller: _passwordController,
+              child: Obx(()=>UserTextFieldWidget(
+                controller: _spc.passwordController.value,
                 onChanged: (value) {
-                  setState(() {
-                    _passwordController.text = InputFilter.FilterPassword(value);
-                  });
+                  _spc.passwordController.value.text = InputFilter.FilterPassword(value);
+                  _spc.passwordController.refresh();
                 },
                 readOnly: false,
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
-                maxLength: 16,
+                maxLength: passwordMaxLength,
                 //textInputAction: TextInputAction.next,
                 hintText: "请输入密码",
                 suffixIconConstraints: const BoxConstraints(minHeight: 22),
-                suffixIcon: _passwordController.text.isEmpty
+                suffixIcon: _spc.passwordController.value.text.isEmpty
                     ? null
                     : IconButton(
                         onPressed: () {
                           //清空输入框
-                          _passwordController.clear();
-                          setState(() {
-                            _passwordController.clear();
-                          });
+                          _spc.passwordController.value.clear();
+                          _spc.passwordController.refresh();
                         },
                         icon: const Icon(
                           Icons.clear,
                           color: Colors.grey,
                         ),
                       ),
-              ),
+              ),)
             ),
             //密码第二次输入
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 0),
-              child: UserTextFieldWidget(
-                controller: _passwordAgainController,
+              child: Obx(() => UserTextFieldWidget(
+                controller: _spc.passwordAgainController.value,
                 onChanged: (value) {
-                  setState(() {
-                    _passwordAgainController.text = InputFilter.FilterPassword(value);
-                  });
+                  
+                  _spc.passwordAgainController.value.text = InputFilter.FilterPassword(value);
+                  _spc.passwordAgainController.refresh();
                 },
                 readOnly: false,
                 keyboardType: TextInputType.visiblePassword,
-                obscureText: _obscure,
-                maxLength: 16,
+                obscureText: _spc.obscure.value,
+                maxLength: passwordMaxLength,
                 textInputAction: TextInputAction.done,
                 //TODO:
-                onEditingComplete: (_passwordController.text.isEmpty || _passwordAgainController.text.isEmpty)? null: onTapNext,
+                onEditingComplete: _spc.canNext(),
                 hintText: "请重复输入密码",
                 suffixIconConstraints: const BoxConstraints(minHeight: 22),
                 suffixIcon: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      onPressed: _passwordAgainController.text.isEmpty
+                      onPressed: _spc.passwordAgainController.value.text.isEmpty
                           ? null
                           : () {
                               //显示密码
-                              setState(() {
-                                _obscure = !_obscure;
-                              });
+                              _spc.obscure.value=!_spc.obscure.value;
                             },
                       icon: Icon(
-                        _obscure ? Icons.visibility_off : Icons.visibility,
-                        color: _passwordAgainController.text.isEmpty
+                        _spc.obscure.value ? Icons.visibility_off : Icons.visibility,
+                        color: _spc.passwordAgainController.value.text.isEmpty
                             ? Colors.transparent
                             : Colors.grey,
                       ),
                     ),
                   ],
                 ),
-              ),
+              ),)
             ),
           ],
         ),
@@ -149,23 +126,12 @@ class _SetPasswordPageState extends State<SetPasswordPage> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
-          child:SquareTextButton(
-            text: "下一步", 
-            onTap: (_passwordController.text.isEmpty ||
-                    _passwordAgainController.text.isEmpty)
-                ? null
-                : onTapNext)
+          child:Obx(()=>SquareTextButton(
+            text: needSetInfo?"下一步":"完成" , 
+            onTap: _spc.canNext()))
         )
       );
   }
 
-  void onTapNext() {
-    print("next");
-    Navigator.of(context).pushReplacementNamed(RouteConfig.setNameAndAvatarPage);
-  }
-
-  void onTapAgreement() {
-    print("trunToAgreement");
-    Navigator.of(context).pushNamed(RouteConfig.agreementInfoPage);
-  }
+  
 }

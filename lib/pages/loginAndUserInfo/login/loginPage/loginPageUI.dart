@@ -12,9 +12,10 @@ import 'package:flutter/material.dart';
 //登录页面，使用验证码登录
 class LoginPage extends StatelessWidget {
   final int captchaLenth=6;
+  final LoginPageController _lpc = Get.put(LoginPageController());
   @override
   Widget build(BuildContext context) {
-    final LoginPageController _lpc = Get.put(LoginPageController());
+    _lpc.init();
 
     return Scaffold(
         appBar: AppBar(
@@ -65,7 +66,7 @@ class LoginPage extends StatelessWidget {
                 hintText: "请输入验证码",
                 onChanged: (value){_lpc.captchaControllerText.value=_lpc.captchaController.text = InputFilter.FilterNum(value);},
                 //TODO: 键盘done操作
-                onEditingComplete: _lpc.checkAgreement.value&&_lpc.phoneControllerText.value.isNotEmpty&&_lpc.captchaControllerText.value.length>=captchaLenth?_lpc.onTapLogin:null,
+                onEditingComplete: _lpc.canLogin(),
                 keyboardType: TextInputType.number,
                 suffixIconConstraints: const BoxConstraints(minHeight: 22),
                 suffixIcon: Row(
@@ -101,16 +102,14 @@ class LoginPage extends StatelessWidget {
               ),
             ),
 
-            Obx(()=>LoginButton(onPressed: _lpc.checkAgreement.value&&_lpc.phoneControllerText.value.isNotEmpty&&_lpc.captchaControllerText.value.length>=captchaLenth?_lpc.onTapLogin:null),)
+            Obx(()=>LoginButton(onPressed: _lpc.canLogin()),)
+            //_lpc.checkAgreement.value&&_lpc.phoneControllerText.value.isNotEmpty&&_lpc.captchaControllerText.value.length>=captchaLenth?_lpc.onTapLogin:null
           ],
         ),
 
         //协议勾选框
         bottomNavigationBar: Obx(()=>CheckAgreement(
-          onChanged: (value) {
-              _lpc.checkAgreement.value = !_lpc.checkAgreement.value;
-              print("checkbox changed");
-            }, 
+          onChanged: _lpc.changeAgreement,
           init: _lpc.checkAgreement.value, 
           onTapAgreeMent: _lpc.onTapAgreement),
         )

@@ -15,6 +15,7 @@ class LoginWithPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _lwppc.init();
     return Scaffold(
         appBar: AppBar(
           //标题
@@ -66,7 +67,7 @@ class LoginWithPasswordPage extends StatelessWidget {
                 maxLength: 16,
                 textInputAction: TextInputAction.done,
                 //TODO: 
-                onEditingComplete: _lwppc.phoneControllerText.value.isNotEmpty&&_lwppc.passwordControllerText.value.isNotEmpty?_lwppc.onTapLogin:null,
+                onEditingComplete: _lwppc.canLogin(),
                 hintText: "请输入密码",
                 suffixIconConstraints: BoxConstraints(minHeight: 22),
                 suffixIcon: Row(
@@ -94,7 +95,7 @@ class LoginWithPasswordPage extends StatelessWidget {
             ),
             
             
-            Obx(()=>LoginButton(onPressed: _lwppc.phoneControllerText.value.isNotEmpty&&_lwppc.passwordControllerText.value.isNotEmpty?_lwppc.onTapLogin:null),)
+            Obx(()=>LoginButton(onPressed: _lwppc.canLogin()),)
 
             
           ],

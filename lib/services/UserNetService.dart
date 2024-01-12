@@ -39,6 +39,7 @@ class UserNetService extends GetConnect{
     return Result.success(data: res);
   }
 
+  //综合已有账号和新账号的验证，前端接口分三种api
   Future<Result<bool>> loginWithCaptcha(String account,String captcha) async{
     if(!Discriminator.accountOk(account)){
       return Result.error(statusCode:Status.phoneFormatError, data: false);
@@ -49,6 +50,31 @@ class UserNetService extends GetConnect{
 
     return Result.success(data: true);
   }
+
+  //用于已有账号的验证码验证
+  Future<Result<bool>> loginWithCaptchaByUserExist(String account,String captcha) async{
+    if(!Discriminator.accountOk(account)){
+      return Result.error(statusCode:Status.phoneFormatError, data: false);
+    }
+    //TODO:
+    await TimeTestModel(3);
+
+
+    return Result.success(data: true);
+  }
+
+  //用于新账号的验证码验证
+  Future<Result<bool>> loginWithCaptchaByUserNotExist(String account,String captcha) async{
+    if(!Discriminator.accountOk(account)){
+      return Result.error(statusCode:Status.phoneFormatError, data: false);
+    }
+    //TODO:
+    await TimeTestModel(3);
+
+
+    return Result.success(data: true);
+  }
+  
 
   Future<Result<bool>> sendCaptcha(String account) async{
     if(!Discriminator.accountOk(account)){
@@ -61,5 +87,17 @@ class UserNetService extends GetConnect{
     return Result.success(data: true);
   }
   
-  
+  Future<Result<bool>> setPassword(String account,String password,String passwordAgain) async{
+    if(password!=passwordAgain){
+      return Result.error(statusCode:Status.passwordInconsistent, data: false);
+    }
+    if(!Discriminator.passwordOk(password)){
+      return Result.error(statusCode:Status.phoneFormatError, data: false);
+    }
+    //TODO:
+    await TimeTestModel(3);
+
+
+    return Result.success(data: true);
+  }
 }

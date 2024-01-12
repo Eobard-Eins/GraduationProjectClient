@@ -32,8 +32,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Demo',
-        home: initJudge()?HomePage():LoginPage(),
-        onGenerateRoute: RouteConfig.onGenerateRoute,
+        initialRoute: initJudge()?RouteConfig.homePage:RouteConfig.loginWithCaptchaPage,
+        getPages: RouteConfig.getPages,
+        unknownRoute: GetPage(name: '/notfound', page: () => const Scaffold(body: Center(child: Text("No Page Route Provided"),))),
       );
   }
 

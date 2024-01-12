@@ -1,13 +1,14 @@
 
 import 'package:client_application/pages/home/homePage.dart';
 import 'package:client_application/pages/loginAndUserInfo/login/agreementPage/agreementPageUI.dart';
-import 'package:client_application/pages/loginAndUserInfo/infoSet/setNameAndAvatarPage.dart';
+import 'package:client_application/pages/loginAndUserInfo/infoSet/setNameAndAvatarPage/setNameAndAvatarUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginPageUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/login/loginWithPasswordPage/loginWithPasswordPageUI.dart';
-import 'package:client_application/pages/loginAndUserInfo/infoSet/setPasswordPage.dart';
-import 'package:client_application/pages/loginAndUserInfo/infoSet/verifyPhonePage.dart';
+import 'package:client_application/pages/loginAndUserInfo/infoSet/setPasswordPage/setPasswordUI.dart';
+import 'package:client_application/pages/loginAndUserInfo/infoSet/verifyPhonePage/verifyPhoneUI.dart';
 import 'package:client_application/pages/temp/testUI.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/routes/get_route.dart';
 
 class RouteConfig {
 
@@ -24,26 +25,39 @@ class RouteConfig {
 
   static const String TESTPAGE="/TESTPAGE";
 
-  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case loginWithCaptchaPage:
-        return MaterialPageRoute(builder: (context) => LoginPage());
-      case loginWithPasswordPage:
-        return MaterialPageRoute(builder: (context) => LoginWithPasswordPage());
-      case agreementInfoPage:
-        return MaterialPageRoute(builder: (context) => const AgreementPage());
-      case verifyPhonePage:
-        return MaterialPageRoute(builder: (context) => const VerifyPhonePage());
-      case setPasswordPage:
-        return MaterialPageRoute(builder: (context) => const SetPasswordPage());
-      case setNameAndAvatarPage:
-        return MaterialPageRoute(builder: (context) => const SetNameAndAvatarPage());
-      case homePage:
-        return MaterialPageRoute(builder: (context) => HomePage());
-      case TESTPAGE:
-          return MaterialPageRoute(builder: (context) => testUI());
-      default:
-        return MaterialPageRoute(builder: (context) => const Scaffold(body: Center(child: Text("No Page Route Provided"),)));
-    }
-  }
+  static List<GetPage<dynamic>>? getPages=[
+    GetPage(
+      name: loginWithCaptchaPage,
+      page: () => LoginPage(),
+    ),
+    GetPage(
+      name: loginWithPasswordPage,
+      page: () => LoginWithPasswordPage(),
+    ),
+    GetPage(
+      name: agreementInfoPage,
+      page: () => const AgreementPage(),
+    ),
+    GetPage(
+      name: verifyPhonePage,
+      page: () => VerifyPhonePage(),
+    ),
+    GetPage(
+      name: setPasswordPage,
+      page: () => SetPasswordPage(),
+    ),
+    GetPage(
+      name: setNameAndAvatarPage,
+      page: () => SetNameAndAvatarPage(),
+    ),
+    GetPage(
+      name: homePage,
+      page: () => HomePage(),
+    ),
+    GetPage(
+      name: TESTPAGE,
+      page: () => testUI(),
+    ),
+  ];
+
 }
