@@ -14,4 +14,5 @@ class InputFilter{
 
     return s;
   }
+  
 }

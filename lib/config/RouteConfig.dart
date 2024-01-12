@@ -7,7 +7,6 @@ import 'package:client_application/pages/loginAndUserInfo/login/loginWithPasswor
 import 'package:client_application/pages/loginAndUserInfo/infoSet/setPasswordPage/setPasswordUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/verifyPhonePage/verifyPhoneUI.dart';
 import 'package:client_application/pages/temp/testUI.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 class RouteConfig {

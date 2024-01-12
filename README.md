@@ -28,5 +28,5 @@
 >2024/1/12
 >- 问题：VerifyPhonePage跳转设置密码页时出现`REPLACE ROUTE null`和`NEW ROUTE null`，其余跳转暂未发现
 
->2024/1/13
+>2024/1/12
 >- 记录：密码格式未确定
