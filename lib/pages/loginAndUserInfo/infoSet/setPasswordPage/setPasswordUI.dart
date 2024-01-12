@@ -1,7 +1,6 @@
 
 import 'package:client_application/components/common/button/squareTextButton.dart';
 import 'package:client_application/components/common/input/textField.dart';
-import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/setPasswordPage/setPasswordController.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/utils/filter.dart';
@@ -12,7 +11,7 @@ import 'package:get/get.dart';
 class SetPasswordPage extends StatelessWidget {
   final SetPasswordController _spc=Get.put(SetPasswordController());
   final passwordMaxLength=16;
-  final bool needSetInfo=Get.arguments["needSetInfo"] as bool??false;
+  final bool needSetInfo=Get.arguments["needSetInfo"] as bool;
   
   @override
   Widget build(BuildContext context) {
