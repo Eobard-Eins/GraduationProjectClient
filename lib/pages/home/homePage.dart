@@ -1,5 +1,6 @@
 import 'package:client_application/pages/home/homePageController.dart';
 import 'package:client_application/res/color.dart';
+import 'package:client_application/utils/localStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,7 +22,7 @@ class HomePage extends StatelessWidget{
           ),
           centerTitle: true,
       ),
-      body: Center(child: Text("Home Page"),)
+      body: Center(child: Text(SpUtils.getString("account")),)
     );
   }
 }
