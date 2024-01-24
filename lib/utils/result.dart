@@ -7,8 +7,9 @@ class Result<T> {
   
   Result.success({required T this.data}){
     this.statusCode=Status.success;
-}
-  Result.error({required int this.statusCode,required T this.data});
+  }
+  Result.error({required int this.statusCode});
+  Result.successBut({required int this.statusCode, required T this.data});
 }
 
 class NetError<T>{

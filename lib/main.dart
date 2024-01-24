@@ -39,7 +39,20 @@ class MyApp extends StatelessWidget {
   }
 
   bool initJudge(){
-    return SpUtils.getBool("isLogin");
+    if(SpUtils.getBool("isLogin")){//true
+      int lt=SpUtils.getInt("lastLoginTime");
+      int nt=DateTime.now().millisecondsSinceEpoch;
+      if((nt-lt).abs()<15*86400000){
+        //两次登录天数小于15天
+        SpUtils.setInt("lastLoginTime", nt);
+        return true;
+      }else{
+        SpUtils.clear();
+        return false;
+      }
+    }else{//null false
+      return false;
+    }
   }
 
   // static Future StorageInit() async{

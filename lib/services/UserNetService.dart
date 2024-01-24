@@ -1,10 +1,13 @@
 
 
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:client_application/services/model/User.dart';
 import 'package:client_application/utils/discriminator.dart';
 import 'package:client_application/utils/localStorage.dart';
 import 'package:client_application/utils/result.dart';
+import 'package:client_application/utils/staticValue.dart';
 import 'package:client_application/utils/status.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +17,14 @@ class UserNetService extends GetConnect{
   static final UserNetService _instance = UserNetService._internal();
   static UserNetService getInstance() => _instance;
 
+  final String _baseUrl="${staticValue.URL}/userLogin";
+
+  @override
+  void onInit(){
+    super.onInit();
+
+  }
+
 
   Future TimeTestModel(int init)async{//模拟网络请求延时
     //模拟延时
@@ -22,27 +33,50 @@ class UserNetService extends GetConnect{
     });
   }
 
-  Future<Result<bool>> loginWithPasswordPage(String account, String password) async{
+  Future<Result<User>> loginWithPassword(String account, String password) async{
     if(!Discriminator.accountOk(account)){
-      return Result.error(statusCode:Status.phoneFormatError, data: false);
+      return Result.error(statusCode:Status.phoneFormatError);
     }
     //TODO:
-    await TimeTestModel(3);
-    //var t=await get("www.baidu.com");
-
-    printInfo(info:"NET TEST");
-
-    bool res=true;
-    SpUtils.setBool("isLogin", res);
-    SpUtils.setString("account", account);
-    SpUtils.setString("password", password);
-    return Result.success(data: res);
+    final Result<User> res=await get("$_baseUrl/loginWithPassword",query:{"phone":account,"password":password}).then((value){
+      //value.printInfo();
+      //printError(info:value.body.toString());
+      if(value.isOk){
+        printInfo(info:"网络正常,${value.body.toString()}");
+        if(value.body['statusCode']!=Status.success){
+          printInfo(info:"网络正常，服务器返回错误码：${value.body['statusCode']}");
+          return Result.error(statusCode:value.body['statusCode']) as Result<User>;
+        }
+        
+        User u=User.fromJson(value.body['data']);
+        printInfo(info:"解析User：${u.phone}");
+        /*本地缓存*/ 
+        SpUtils.setBool("isLogin", true);
+        SpUtils.setInt("lastLoginTime",DateTime.now().millisecondsSinceEpoch);
+        SpUtils.setString("account", u.phone);
+        SpUtils.setString("username", u.username??"用户${u.phone}");
+        SpUtils.setString("gender", u.gender??"未知");
+        SpUtils.setDouble("longitude", u.longitude??116.397128);
+        SpUtils.setDouble("latitude", u.latitude??39.916527);
+        SpUtils.setString("avatar", u.avatar);//存头像的网络url
+        SpUtils.setDouble("point", u.point);
+        return Result.success(data: u);
+      }else{
+        printInfo(info:"网络异常，不能连接服务器");
+        return Result.error(statusCode: Status.netError) as Result<User>;
+      }
+      
+    }).onError((error, stackTrace){
+      printInfo(info:"网络异常且未知错误");
+      return Result.error(statusCode: Status.netError) as Result<User>;
+    });
+    return res;
   }
 
   //综合已有账号和新账号的验证，前端接口分三种api
   Future<Result<bool>> loginWithCaptcha(String account,String captcha) async{
     if(!Discriminator.accountOk(account)){
-      return Result.error(statusCode:Status.phoneFormatError, data: false);
+      return Result.error(statusCode:Status.phoneFormatError);
     }
     //TODO:
     await TimeTestModel(3);
@@ -54,7 +88,7 @@ class UserNetService extends GetConnect{
   //用于已有账号的验证码验证
   Future<Result<bool>> loginWithCaptchaByUserExist(String account,String captcha) async{
     if(!Discriminator.accountOk(account)){
-      return Result.error(statusCode:Status.phoneFormatError, data: false);
+      return Result.error(statusCode:Status.phoneFormatError);
     }
     //TODO:
     await TimeTestModel(3);
@@ -66,7 +100,7 @@ class UserNetService extends GetConnect{
   //用于新账号的验证码验证
   Future<Result<bool>> loginWithCaptchaByUserNotExist(String account,String captcha) async{
     if(!Discriminator.accountOk(account)){
-      return Result.error(statusCode:Status.phoneFormatError, data: false);
+      return Result.error(statusCode:Status.phoneFormatError);
     }
     //TODO:
     await TimeTestModel(3);
@@ -78,7 +112,7 @@ class UserNetService extends GetConnect{
 
   Future<Result<bool>> sendCaptcha(String account) async{
     if(!Discriminator.accountOk(account)){
-      return Result.error(statusCode:Status.phoneFormatError, data: false);
+      return Result.error(statusCode:Status.phoneFormatError);
     }
     //TODO:
     await TimeTestModel(3);
@@ -89,10 +123,10 @@ class UserNetService extends GetConnect{
   
   Future<Result<bool>> setPassword(String account,String password,String passwordAgain) async{
     if(password!=passwordAgain){
-      return Result.error(statusCode:Status.passwordInconsistent, data: false);
+      return Result.error(statusCode:Status.passwordInconsistent);
     }
     if(!Discriminator.passwordOk(password)){
-      return Result.error(statusCode:Status.phoneFormatError, data: false);
+      return Result.error(statusCode:Status.phoneFormatError);
     }
     //TODO:
     await TimeTestModel(3);

@@ -1,6 +1,7 @@
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/services/UserNetService.dart';
+import 'package:client_application/utils/localStorage.dart';
 import 'package:client_application/utils/status.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -52,7 +53,7 @@ class LoginWithPasswordPageController extends GetxController {
   void onTapLogin(){
     printInfo(info: "登录按钮触发");
 
-    UserNetService().loginWithPasswordPage(phoneControllerText.value,passwordControllerText.value).then((value) {
+    UserNetService().loginWithPassword(phoneControllerText.value,passwordControllerText.value).then((value) {
       switch (value.statusCode){
         case Status.phoneFormatError:
           printInfo(info: "手机号格式不匹配,code:${value.statusCode}");
@@ -79,7 +80,7 @@ class LoginWithPasswordPageController extends GetxController {
           break;
         
         case Status.success:
-          printInfo(info: "登录成功,code:${value.statusCode}");
+          printInfo(info: "登录成功,code:${value.statusCode},User:${value.data}");
           //TODO: 前往首页
           Get.offAllNamed(RouteConfig.homePage);
           break;
