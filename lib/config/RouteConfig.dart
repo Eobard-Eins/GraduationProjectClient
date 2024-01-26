@@ -1,6 +1,5 @@
 
 import 'package:client_application/pages/home/homePage.dart';
-import 'package:client_application/pages/loginAndUserInfo/infoSet/userInitProfile/setUserInitProfileUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/login/agreementPage/agreementPageUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/setNameAndAvatarPage/setNameAndAvatarUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginPageUI.dart';
@@ -9,7 +8,6 @@ import 'package:client_application/pages/loginAndUserInfo/infoSet/setPasswordPag
 import 'package:client_application/pages/loginAndUserInfo/infoSet/verifyPhonePage/verifyPhoneUI.dart';
 import 'package:client_application/pages/temp/testUI.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
-
 
 class RouteConfig {
 
@@ -21,7 +19,6 @@ class RouteConfig {
   
   static const String setPasswordPage="/setPasswordPage";
   static const String setNameAndAvatarPage="/setNameAndAvatarPage";
-  static const String setUserInitProfilePage="/SetUserInitProfilePage";
 
   static const String homePage="/homePage";
 
@@ -52,10 +49,6 @@ class RouteConfig {
       name: setNameAndAvatarPage,
       page: () => SetNameAndAvatarPage(),
     ),
-    // GetPage(
-    //   name: setUserInitProfilePage,
-    //   page: () => SetUserInitProfilePage(),
-    // ),
     GetPage(
       name: homePage,
       page: () => HomePage(),

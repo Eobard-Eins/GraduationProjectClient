@@ -18,17 +18,9 @@ class Status{
   //用户
   static const int userNotExist=1200;//用户不存在
   static const int userExist=1201;//用户已存在
-  static const int setUsernameError=1202;//通信数据库设置用户名时出现错误
-  static const int setLongitudeAndLatitudeError=1203;//通信数据库设置经纬度时出现错误
-  static const int setPointError=1204;//通信数据库设置积分时出现错误
-  static const int setRegisteredError=1204;//通信数据库设置注册状态时出现错误
-  static const int setAvatarError=1205;//通信数据库设置头像时出现错误
-  static const int avatarMissing=1206;//头像路径为空
 
   //网络
   static const int netError=1300;//网络错误
-  static const int ossError=1301;//Oss服务器错误
-  static const int infoMiss=1302;//传输信息缺失
 
   //不存在状态码
   static const int noStatusCode=0000;//其他
