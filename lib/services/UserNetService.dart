@@ -151,10 +151,10 @@ class UserNetService extends GetConnect{
 
   Future<Result<bool>> setAvatar(String account,XFile? avatar) async{
     if(avatar==null) return Result.error(statusCode: Status.avatarMissing);
-    //final Result<bool> res=await dioService().uploadAvatar(avatar, account, "$_baseUrl/userInfo/setAvatar");
-    //return res;
+    final Result<bool> res=await dioService().uploadAvatar(avatar, account, "$_baseUrl/userInfo/setAvatar");
+    return res;
 
-    return Result.success(data: true);
+    //return Result.success(data: true);
   }
 
 }
