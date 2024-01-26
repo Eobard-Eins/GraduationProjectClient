@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:client_application/services/Dio.dart';
 import 'package:client_application/services/model/User.dart';
 import 'package:client_application/utils/discriminator.dart';
 import 'package:client_application/utils/localStorage.dart';
@@ -10,6 +11,7 @@ import 'package:client_application/utils/result.dart';
 import 'package:client_application/utils/staticValue.dart';
 import 'package:client_application/utils/status.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UserNetService extends GetConnect{
   UserNetService._internal();
@@ -128,10 +130,32 @@ class UserNetService extends GetConnect{
     if(!Discriminator.passwordOk(password)){
       return Result.error(statusCode:Status.phoneFormatError);
     }
-    //TODO:
-    await TimeTestModel(3);
+    final Result<bool> res=await put("$_baseUrl/userInfo/setPassword", '{"phone":"$account","password":"$password"}').then((value){
+      if(value.isOk){
+        printInfo(info:"网络正常,${value.body.toString()}");
+        if(value.body['statusCode']!=Status.success){
+          printInfo(info:"网络正常，服务器返回错误码：${value.body['statusCode']}");
+          return Result.error(statusCode:value.body['statusCode']) as Result<bool>;
+        }
+        
+        bool t=value.body['data'];
+        return Result.success(data: t);
+      }else{
+        printError(info:"网络异常，不能连接服务器");
+        return Result.error(statusCode: Status.netError) as Result<bool>;
+      }
+    }).onError((error, stackTrace){
+      printError(info:"网络异常且未知错误:${error.toString()}");
+      return Result.error(statusCode: Status.netError) as Result<bool>;
+    });
+    return res;
+  }
 
+  Future<Result<bool>> setAvatar(String account,XFile? avatar) async{
+    if(avatar==null) return Result.error(statusCode: Status.avatarMissing);
+    final Result<bool> res=await dioService().uploadAvatar(avatar, account, "$_baseUrl/userInfo/setAvatar");
+    return res;
 
-    return Result.success(data: true);
+    //return Result.success(data: true);
   }
 }
