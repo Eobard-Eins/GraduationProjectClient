@@ -1,5 +1,5 @@
-import 'package:get/get.dart';
+// import 'package:get/get.dart';
 
-class SetUserInitProfileController extends GetxController {
+// class SetUserInitProfileController extends GetxController {
   
-}
+// }

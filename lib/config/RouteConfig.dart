@@ -10,6 +10,7 @@ import 'package:client_application/pages/loginAndUserInfo/infoSet/verifyPhonePag
 import 'package:client_application/pages/temp/testUI.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
+
 class RouteConfig {
 
   static const String loginWithCaptchaPage="/loginWithCaptchaPage";
@@ -51,10 +52,10 @@ class RouteConfig {
       name: setNameAndAvatarPage,
       page: () => SetNameAndAvatarPage(),
     ),
-    GetPage(
-      name: setUserInitProfilePage,
-      page: () => SetUserInitProfilePage(),
-    ),
+    // GetPage(
+    //   name: setUserInitProfilePage,
+    //   page: () => SetUserInitProfilePage(),
+    // ),
     GetPage(
       name: homePage,
       page: () => HomePage(),

@@ -1,10 +1,9 @@
 
 
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:client_application/services/Dio.dart';
-import 'package:client_application/services/model/User.dart';
+import 'package:client_application/models/User.dart';
 import 'package:client_application/utils/discriminator.dart';
 import 'package:client_application/utils/localStorage.dart';
 import 'package:client_application/utils/result.dart';
@@ -39,7 +38,6 @@ class UserNetService extends GetConnect{
     if(!Discriminator.accountOk(account)){
       return Result.error(statusCode:Status.phoneFormatError);
     }
-    //TODO:
     final Result<User> res=await get("$_baseUrl/userLogin/loginWithPassword",query:{"phone":account,"password":password}).then((value){
       //value.printInfo();
       //printError(info:value.body.toString());
@@ -130,7 +128,6 @@ class UserNetService extends GetConnect{
     if(!Discriminator.passwordOk(password)){
       return Result.error(statusCode:Status.phoneFormatError);
     }
-    //TODO:
     final Result<bool> res=await put("$_baseUrl/userInfo/setPassword", '{"phone":"$account","password":"$password"}').then((value){
       if(value.isOk){
         printInfo(info:"网络正常,${value.body.toString()}");
@@ -154,8 +151,10 @@ class UserNetService extends GetConnect{
 
   Future<Result<bool>> setAvatar(String account,XFile? avatar) async{
     if(avatar==null) return Result.error(statusCode: Status.avatarMissing);
-    final Result<bool> res=await dioService().uploadFile(avatar, account, "$_baseUrl/userInfo/setAvatar");
-    return res;
+    //final Result<bool> res=await dioService().uploadAvatar(avatar, account, "$_baseUrl/userInfo/setAvatar");
+    //return res;
+
+    return Result.success(data: true);
   }
 
 }

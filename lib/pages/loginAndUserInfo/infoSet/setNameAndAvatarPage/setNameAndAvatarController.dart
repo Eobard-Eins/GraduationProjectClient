@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:client_application/components/user/circleAvatar.dart';
 import 'package:client_application/config/RouteConfig.dart';
@@ -18,13 +17,13 @@ class SetNameAndAvatarController extends GetxController{
   openGallery() async {
     Get.back();
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    if(image!=null) imgPath.value=image;
+    imgPath.value=image;
     imgPath.refresh();
   }
   takePhoto() async {
     Get.back();
     final XFile? image = await _picker.pickImage(source: ImageSource.camera);
-    if(image!=null) imgPath.value=image;
+    imgPath.value=image;
     imgPath.refresh();
   }
   //头像
@@ -85,10 +84,15 @@ class SetNameAndAvatarController extends GetxController{
           init();
           break;
 
+        case Status.userNotExist:
+          printInfo(info: "账号不存在,code:${value.statusCode}");
+          Get.snackbar("设置失败", "账号不存在",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          init();
+          break;
 
         case Status.success:
           if(needSetInfo){
-            Get.offNamed(RouteConfig.setUserInitProfilePage,arguments:{'needSetInfo':true,'account':account});
+            //Get.offNamed(RouteConfig.setUserInitProfilePage,arguments:{'needSetInfo':true,'account':account});
           }else{
             Get.back();
           }
