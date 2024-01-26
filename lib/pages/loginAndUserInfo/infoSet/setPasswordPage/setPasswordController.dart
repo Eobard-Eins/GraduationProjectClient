@@ -60,7 +60,7 @@ class SetPasswordController extends GetxController{
 
         case Status.success:
           if(needSetInfo){
-            Get.offNamed(RouteConfig.setNameAndAvatarPage);
+            Get.offNamed(RouteConfig.setNameAndAvatarPage,arguments:{'needSetInfo':true,'account':account});
           }else{
             Get.back();
           }

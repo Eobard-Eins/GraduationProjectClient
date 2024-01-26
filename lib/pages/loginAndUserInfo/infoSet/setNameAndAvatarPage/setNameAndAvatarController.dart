@@ -1,7 +1,10 @@
 import 'dart:io';
 
 import 'package:client_application/components/user/circleAvatar.dart';
+import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
+import 'package:client_application/services/UserNetService.dart';
+import 'package:client_application/utils/status.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,13 +18,13 @@ class SetNameAndAvatarController extends GetxController{
   openGallery() async {
     Get.back();
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    imgPath.value=image;
+    if(image!=null) imgPath.value=image;
     imgPath.refresh();
   }
   takePhoto() async {
     Get.back();
     final XFile? image = await _picker.pickImage(source: ImageSource.camera);
-    imgPath.value=image;
+    if(image!=null) imgPath.value=image;
     imgPath.refresh();
   }
   //头像
@@ -60,5 +63,49 @@ class SetNameAndAvatarController extends GetxController{
   }
   void onTapNext() {
     printInfo(info:"点击下一步");
+    bool needSetInfo=Get.arguments["needSetInfo"] as bool;
+    String account=Get.arguments["account"] as String;
+    UserNetService().setAvatar(account,imgPath.value).then((value){
+      switch(value.statusCode){
+        case Status.setAvatarError:
+          printInfo(info: "数据库写入错误,code:${value.statusCode}");
+          Get.snackbar("设置失败", "请稍后重试",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          init();
+          break;
+
+        case Status.ossError:
+          printInfo(info: "OSS服务器错误,code:${value.statusCode}");
+          Get.snackbar("设置失败", "请稍后重试",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          init();
+          break;
+
+        case Status.netError:
+          printInfo(info: "网络错误,code:${value.statusCode}");
+          Get.snackbar("设置失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          init();
+          break;
+
+
+        case Status.success:
+          if(needSetInfo){
+            Get.offNamed(RouteConfig.setUserInitProfilePage,arguments:{'needSetInfo':true,'account':account});
+          }else{
+            Get.back();
+          }
+          break;
+
+        default:
+          printInfo(info: "未知错误,code:${value.statusCode}");
+          Get.snackbar("设置失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          init();
+          break;
+      }
+    });
+  }
+
+  void init() {
+    usernameController.value.clear();
+    usernameController.refresh();
+    imgPath.value=null;
   }
 }

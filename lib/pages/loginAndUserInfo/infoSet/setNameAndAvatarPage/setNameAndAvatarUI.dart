@@ -12,6 +12,7 @@ class SetNameAndAvatarPage extends StatelessWidget {
   final SetNameAndAvatarController _saac=Get.put(SetNameAndAvatarController());
   @override
   Widget build(BuildContext context) {
+    _saac.init();
     return Scaffold(
         appBar: AppBar(
           //标题
