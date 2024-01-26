@@ -8,7 +8,7 @@
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginPageUI.dart';
 import 'package:client_application/services/UserNetService.dart';
-import 'package:client_application/services/model/User.dart';
+import 'package:client_application/models/User.dart';
 import 'package:client_application/utils/localStorage.dart';
 import 'package:client_application/utils/result.dart';
 import 'package:flutter/material.dart';
