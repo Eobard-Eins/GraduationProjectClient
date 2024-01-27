@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:client_application/components/user/circleAvatar.dart';
+import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/services/UserNetService.dart';
 import 'package:client_application/utils/status.dart';
@@ -90,12 +91,62 @@ class SetNameAndAvatarController extends GetxController{
           init();
           break;
 
+        case Status.infoMiss:
+          printInfo(info: "信息缺失,code:${value.statusCode}");
+          Get.snackbar("设置失败", "请检查输入是否正确",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          init();
+          break;
+
         case Status.success:
-          if(needSetInfo){
-            //Get.offNamed(RouteConfig.setUserInitProfilePage,arguments:{'needSetInfo':true,'account':account});
-          }else{
-            Get.back();
-          }
+          setname(account, (){
+            if(value.data==true){
+              if(needSetInfo){
+                Get.offNamed(RouteConfig.setUserInitProfilePage,arguments:{'needSetInfo':true,'account':account});
+              }else{
+                Get.back();
+              }
+            }else{
+              Get.snackbar("设置失败", "请稍后重试",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);    
+            }
+          });
+          break;
+
+        default:
+          printInfo(info: "未知错误,code:${value.statusCode}");
+          Get.snackbar("设置失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          init();
+          break;
+      }
+    });
+  }
+  void setname(String account,Function f){
+    UserNetService().setUsername(account, usernameController.value.text).then((value){
+      switch(value.statusCode){
+        case Status.setUsernameError:
+          printInfo(info: "数据库写入错误,code:${value.statusCode}");
+          Get.snackbar("设置失败", "请稍后重试",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          init();
+          break;
+        case Status.netError:
+          printInfo(info: "网络错误,code:${value.statusCode}");
+          Get.snackbar("设置失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          init();
+          break;
+
+        case Status.userNotExist:
+          printInfo(info: "账号不存在,code:${value.statusCode}");
+          Get.snackbar("设置失败", "账号不存在",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          init();
+          break;
+
+        case Status.infoMiss:
+          printInfo(info: "信息缺失,code:${value.statusCode}");
+          Get.snackbar("设置失败", "请检查输入是否正确",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          init();
+          break;
+
+        case Status.success:
+          f();
           break;
 
         default:

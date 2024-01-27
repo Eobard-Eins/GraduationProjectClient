@@ -7,6 +7,7 @@ import 'package:client_application/pages/loginAndUserInfo/login/loginWithPasswor
 import 'package:client_application/res/color.dart';
 import 'package:client_application/utils/filter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 //登录页面，使用密码登录
@@ -33,11 +34,11 @@ class LoginWithPasswordPage extends StatelessWidget {
         body: Column(
           children: [
             SizedBox(
-              height: 30,
+              height: 30.h,
             ),
             //账号输入
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 200.w, vertical: 30.h),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _lwppc.phoneController,
                 onChanged: (value){_lwppc.phoneControllerText.value=_lwppc.phoneController.text = InputFilter.FilterNum(value);},
@@ -57,7 +58,7 @@ class LoginWithPasswordPage extends StatelessWidget {
             ),
             //密码输入
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 0),
+              padding: EdgeInsets.symmetric(horizontal: 200.w, vertical: 0.h),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _lwppc.passwordController,
                 onChanged: (value){_lwppc.passwordControllerText.value=_lwppc.passwordController.text = InputFilter.FilterPassword(value);},
@@ -84,7 +85,7 @@ class LoginWithPasswordPage extends StatelessWidget {
             
             //文字按钮，链接到验证码登录页和注册页
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10), 
+              padding: EdgeInsets.symmetric(horizontal: 200.w, vertical: 30.h), 
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

@@ -7,6 +7,7 @@ import 'package:client_application/pages/loginAndUserInfo/infoSet/verifyPhonePag
 import 'package:client_application/res/color.dart';
 import 'package:client_application/utils/filter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 //用于修改密码前、注册账号前验证手机号
@@ -33,12 +34,12 @@ class VerifyPhonePage extends StatelessWidget {
         ),
         body: Column(
           children: [
-            const SizedBox(
-              height: 30,
+            SizedBox(
+              height: 30.h,
             ),
             //账号输入
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 200.w, vertical: 30.h),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _vpc.phoneController.value,
                 onChanged: (value){
@@ -61,7 +62,7 @@ class VerifyPhonePage extends StatelessWidget {
             ),
             //验证码输入
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 0),
+              padding: EdgeInsets.symmetric(horizontal: 200.w, vertical: 0.h),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _vpc.captchaController.value,
                 maxLength: captchaLenth,
@@ -74,7 +75,7 @@ class VerifyPhonePage extends StatelessWidget {
                 //TODO: 键盘done操作
                 onEditingComplete: _vpc.canNext(),
                 keyboardType: TextInputType.number,
-                suffixIconConstraints: const BoxConstraints(minHeight: 22),
+                suffixIconConstraints: BoxConstraints(minHeight: 22.h),
                 suffixIcon: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -109,7 +110,7 @@ class VerifyPhonePage extends StatelessWidget {
         //下一步
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+          padding: EdgeInsets.symmetric(horizontal: 200.w, vertical: 30.h),
           child: Obx(()=>SquareTextButton(text: "下一步", onTap: _vpc.canNext()))
         )
       );

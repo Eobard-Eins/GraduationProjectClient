@@ -28,6 +28,12 @@ class User {
       required this.longitude,
       required this.latitude,
       required this.point});
+  User.create(){
+    phone = "";
+    password = "";
+    avatar="";
+    point=0.0;
+  }
 
   User.fromJson(Map<String, dynamic> json) {
 

@@ -1,5 +1,6 @@
 
 import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginPageController.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:client_application/components/common/button/textButtonWithNoSplash.dart';
 import 'package:client_application/components/login/checkAgreement.dart';
@@ -33,12 +34,12 @@ class LoginPage extends StatelessWidget {
         ),
         body: Column(
           children: [
-            const SizedBox(
-              height: 30,
+            SizedBox(
+              height: 30.h,
             ),
             //账号输入
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+              padding:  EdgeInsets.symmetric(horizontal: 200.w, vertical: 30.h),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _lpc.phoneController,
                 onChanged: (value){_lpc.phoneControllerText.value = _lpc.phoneController.text = InputFilter.FilterNum(value);},
@@ -58,7 +59,7 @@ class LoginPage extends StatelessWidget {
             ),
             //验证码输入
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 0),
+              padding: EdgeInsets.symmetric(horizontal: 200.w, vertical: 0.h),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _lpc.captchaController,
                 maxLength: 6,
@@ -68,7 +69,7 @@ class LoginPage extends StatelessWidget {
                 //TODO: 键盘done操作
                 onEditingComplete: _lpc.canLogin(),
                 keyboardType: TextInputType.number,
-                suffixIconConstraints: const BoxConstraints(minHeight: 22),
+                suffixIconConstraints: BoxConstraints(minHeight: 22.h),
                 suffixIcon: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -92,7 +93,7 @@ class LoginPage extends StatelessWidget {
 
             //文字按钮，链接到账号密码登录页和注册页
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 200.w, vertical: 30.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

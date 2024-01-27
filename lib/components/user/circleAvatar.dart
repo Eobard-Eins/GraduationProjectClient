@@ -15,7 +15,6 @@ class CircleAvatarOfUser extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return CircleAvatar(
-      backgroundImage: const AssetImage("assets/images/default_avatar.png"),
       foregroundImage: image==null?null:FileImage(File(image!.path)),
       backgroundColor: backgroundColor,
       radius: size??26,

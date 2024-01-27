@@ -15,7 +15,7 @@ class dioService{
   
   final dio = Dio();
 
-  Future<Result<bool>> uploadAvatar(XFile file, String account, String url) async {
+  Future<Result> uploadAvatar(XFile file, String account, String url) async {
     // 创建FormData对象以包含要上传的文件
     final formData = FormData.fromMap({
       // 根据后端API要求设置键名
@@ -33,11 +33,11 @@ class dioService{
         return Result.success(data: true);
       }else{
         printError(info:"网络异常，不能连接服务器");
-        return Result.error(statusCode: Status.netError) as Result<bool>;
+        return Result.error(statusCode: Status.netError);
       }
     }).onError((error, stackTrace){
       printError(info:"网络异常且未知错误:${error.toString()}");
-      return Result.error(statusCode: Status.netError) as Result<bool>;
+      return Result.error(statusCode: Status.netError);
     });
     return response;
   }

@@ -5,6 +5,7 @@ import 'package:client_application/components/common/input/textField.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/setNameAndAvatarPage/setNameAndAvatarController.dart';
 import 'package:client_application/res/color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 //设置头像和用户名，注册时用
@@ -30,9 +31,9 @@ class SetNameAndAvatarPage extends StatelessWidget {
 
 
         body: Column(children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 0),
-            child: Text(
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 300.w, vertical: 20.h),
+            child: const Text(
               "设置头像和用户名，用户名应在3~16个字符之间",
               style: TextStyle(
                 color: Colors.grey,
@@ -55,9 +56,9 @@ class SetNameAndAvatarPage extends StatelessWidget {
 
 
 
-          const SizedBox(height: 30),
+          SizedBox(height: 60.h),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 0),
+            padding: EdgeInsets.symmetric(horizontal: 200.w, vertical: 10.h),
             child: Obx(()=>UserTextFieldWidget(
               controller: _saac.usernameController.value,
               onChanged: (value) {
@@ -73,7 +74,7 @@ class SetNameAndAvatarPage extends StatelessWidget {
               onEditingComplete:
                   _saac.canNext(),
               hintText: "请输入用户名",
-              suffixIconConstraints: const BoxConstraints(minHeight: 22),
+              suffixIconConstraints: BoxConstraints(minHeight: 22.h),
               suffixIcon: _saac.usernameController.value.text.isEmpty
                   ? null
                   : IconButton(
@@ -93,7 +94,7 @@ class SetNameAndAvatarPage extends StatelessWidget {
         //下一步
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 200.w, vertical: 30.h),
             child: Obx(()=>SquareTextButton(
                 text: "下一步",
                 onTap:

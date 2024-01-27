@@ -8,7 +8,9 @@ class Result<T> {
   Result.success({required T this.data}){
     this.statusCode=Status.success;
   }
-  Result.error({required int this.statusCode});
+  Result.error({required int this.statusCode}){
+    this.data=null;
+  }
   Result.successBut({required int this.statusCode, required T this.data});
 }
 
