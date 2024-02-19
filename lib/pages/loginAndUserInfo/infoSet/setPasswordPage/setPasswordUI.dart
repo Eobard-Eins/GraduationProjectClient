@@ -5,7 +5,6 @@ import 'package:client_application/pages/loginAndUserInfo/infoSet/setPasswordPag
 import 'package:client_application/res/color.dart';
 import 'package:client_application/utils/filter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 
@@ -34,9 +33,9 @@ class SetPasswordPage extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 300.w, vertical: 0.h),
-              child:const Text(
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 40, vertical: 0),
+              child:Text(
                 "密码长度应在4~16位，可使用字母、数字、符号组合",
                 style: TextStyle(
                   color: Colors.grey,
@@ -45,12 +44,12 @@ class SetPasswordPage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            SizedBox(
-              height: 40.h,
+            const SizedBox(
+              height: 20,
             ),
             //密码第一次输入
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 200.w, vertical: 0.h),
+              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 0),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _spc.passwordController.value,
                 onChanged: (value) {
@@ -63,7 +62,7 @@ class SetPasswordPage extends StatelessWidget {
                 maxLength: passwordMaxLength,
                 //textInputAction: TextInputAction.next,
                 hintText: "请输入密码",
-                suffixIconConstraints:  BoxConstraints(minHeight: 22.h),
+                suffixIconConstraints: const BoxConstraints(minHeight: 22),
                 suffixIcon: _spc.passwordController.value.text.isEmpty
                     ? null
                     : IconButton(
@@ -81,7 +80,7 @@ class SetPasswordPage extends StatelessWidget {
             ),
             //密码第二次输入
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 200.w, vertical: 30.h),
+              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 0),
               child: Obx(() => UserTextFieldWidget(
                 controller: _spc.passwordAgainController.value,
                 onChanged: (value) {
@@ -97,7 +96,7 @@ class SetPasswordPage extends StatelessWidget {
                 //TODO:
                 onEditingComplete: _spc.canNext(),
                 hintText: "请重复输入密码",
-                suffixIconConstraints: BoxConstraints(minHeight: 22.h),
+                suffixIconConstraints: const BoxConstraints(minHeight: 22),
                 suffixIcon: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -125,7 +124,7 @@ class SetPasswordPage extends StatelessWidget {
         //下一步
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 200.w, vertical: 30.h),
+          padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
           child:Obx(()=>SquareTextButton(
             text: needSetInfo?"下一步":"完成" , 
             onTap: _spc.canNext()))

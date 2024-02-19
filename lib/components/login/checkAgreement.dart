@@ -1,7 +1,6 @@
 import 'package:client_application/res/color.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CheckAgreement extends StatelessWidget {
   final void Function(bool?)? onChanged;
@@ -13,7 +12,7 @@ class CheckAgreement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 200.w, vertical: 60.h),
+          padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 30),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
