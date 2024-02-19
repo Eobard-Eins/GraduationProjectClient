@@ -4,7 +4,6 @@ import 'package:client_application/pages/home/homePage.dart';
 import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginPageUI.dart';
 import 'package:client_application/utils/localStorage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 void main() async{
@@ -31,19 +30,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return ScreenUtilInit(
-      /// 设置设计稿宽高
-      designSize: const Size(1080,1920),
-
-      /// 设置原本要显示的 MaterialApp
-      builder: (BuildContext, Widget)=>GetMaterialApp(
+    return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Demo',
         initialRoute: initJudge()?RouteConfig.homePage:RouteConfig.loginWithCaptchaPage,
         getPages: RouteConfig.getPages,
         unknownRoute: GetPage(name: '/notfound', page: () => const Scaffold(body: Center(child: Text("No Page Route Provided"),))),
-      ),
-    );
+      );
     
   }
 
