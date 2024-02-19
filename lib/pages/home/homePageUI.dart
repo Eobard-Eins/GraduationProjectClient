@@ -9,20 +9,41 @@ class HomePage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title:const Text(
-            "HOME",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              color: Coloors.main,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          centerTitle: true,
+   return Scaffold(
+     //appBar: AppBar(title: Text('BottomNavigationBar'),),
+     bottomNavigationBar: _buildBottomNavigationBar(),
+     body: _buildPageView(),
+   );
+  }
+
+  Widget _buildBottomNavigationBar(){
+    return Obx(()=>Theme(
+        data: ThemeData(
+          brightness: Brightness.light,
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+        ),
+        child: BottomNavigationBar(
+          items: _hpc.bottomTabs,
+          currentIndex: _hpc.currentPage,
+          type: BottomNavigationBarType.fixed,
+          // fixedColor: Colors.red,
+          selectedFontSize: 12,
+          unselectedFontSize: 12,
+          selectedItemColor: Coloors.main,
+          onTap:  (int index) => _hpc.switchBottomTabBar(index),
+        ),
       ),
-      body: Center(child: Text(SpUtils.getString("account")),)
+    );
+  }
+  /// 内容页
+  Widget _buildPageView() {
+    return PageView(
+      controller: _hpc.pageController,
+      onPageChanged: (index) => _hpc.onPageChanged(index),
+      //禁止滑动
+      //physics: const NeverScrollableScrollPhysics(),
+      children: _hpc.tabPageBodies,
     );
   }
 }

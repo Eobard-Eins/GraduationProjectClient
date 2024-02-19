@@ -85,14 +85,14 @@ class ImagePickerTypeBottomSheet{
           text: "从相册选择",
           icon: const Icon(
             Icons.photo_library,
-            color: Coloors.greryDeep,
+            color: Coloors.greyDeep,
           ),
           onTap: openGallery),
       OptionInSheet(
           text: "拍照",
           icon: const Icon(
             Icons.camera_sharp,
-            color: Coloors.greryDeep,
+            color: Coloors.greyDeep,
           ),
           onTap: takePhoto),
     ]).create();
