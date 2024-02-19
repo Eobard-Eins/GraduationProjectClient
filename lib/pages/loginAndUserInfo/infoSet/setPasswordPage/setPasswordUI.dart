@@ -9,13 +9,12 @@ import 'package:get/get.dart';
 
 
 class SetPasswordPage extends StatelessWidget {
-  final SetPasswordController _spc=Get.put(SetPasswordController());
+  final SetPasswordController _spc=Get.find<SetPasswordController>();
   final passwordMaxLength=16;
   final bool needSetInfo=Get.arguments["needSetInfo"] as bool;
   
   @override
   Widget build(BuildContext context) {
-    _spc.init();
 
     return Scaffold(
         appBar: AppBar(

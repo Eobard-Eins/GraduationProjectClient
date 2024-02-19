@@ -10,11 +10,11 @@ import 'package:get/get.dart';
 
 //登录页面，使用密码登录
 class LoginWithPasswordPage extends StatelessWidget {
-  final LoginWithPasswordPageController _lwppc=Get.put(LoginWithPasswordPageController());
+  final LoginWithPasswordPageController _lwppc=Get.find<LoginWithPasswordPageController>();
 
   @override
   Widget build(BuildContext context) {
-    _lwppc.init();
+
     return Scaffold(
         appBar: AppBar(
           //标题

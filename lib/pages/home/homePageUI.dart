@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget{
-  final HomePageController _hpc=Get.put(HomePageController());
+  final HomePageController _hpc=Get.find<HomePageController>();
 
   @override
   Widget build(BuildContext context) {

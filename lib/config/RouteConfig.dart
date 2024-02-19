@@ -1,5 +1,5 @@
 
-import 'package:client_application/pages/home/homePage.dart';
+import 'package:client_application/pages/home/homePageUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/userInitProfile/setUserInitProfileUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/login/agreementPage/agreementPageUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/setNameAndAvatarPage/setNameAndAvatarUI.dart';

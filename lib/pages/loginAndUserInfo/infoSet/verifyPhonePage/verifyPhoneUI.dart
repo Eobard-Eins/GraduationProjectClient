@@ -11,11 +11,11 @@ import 'package:get/get.dart';
 
 //用于修改密码前、注册账号前验证手机号
 class VerifyPhonePage extends StatelessWidget {
-  final VerifyPhoneController _vpc=Get.put(VerifyPhoneController());
+  final VerifyPhoneController _vpc=Get.find<VerifyPhoneController>();
   final int captchaLenth=6;
   @override
   Widget build(BuildContext context) {
-    _vpc.init();
+
     //print(Get.arguments);
     return Scaffold(
         appBar: AppBar(

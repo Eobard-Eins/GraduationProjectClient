@@ -1,7 +1,6 @@
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/services/UserNetService.dart';
-import 'package:client_application/utils/localStorage.dart';
 import 'package:client_application/utils/status.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +14,9 @@ class LoginWithPasswordPageController extends GetxController {
 
   Rx<bool> obscure=true.obs;
 
-  void init(){
+  @override
+  void onInit(){
+    super.onInit();
     phoneController.clear(); passwordController.clear();
     passwordControllerText.value="";
     phoneControllerText.value="";
@@ -88,7 +89,7 @@ class LoginWithPasswordPageController extends GetxController {
         default:
           printInfo(info: "未知错误,code:${value.statusCode}");
           Get.snackbar("登录失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
-          init();
+          onInit();
 
           break;
       }

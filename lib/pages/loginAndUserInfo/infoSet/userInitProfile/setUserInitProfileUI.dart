@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SetUserInitProfilePage extends StatelessWidget {
-  final SetUserInitProfileController _suipc=Get.put(SetUserInitProfileController());
+  final SetUserInitProfileController _suipc=Get.find<SetUserInitProfileController>();
 
   @override
   Widget build(BuildContext context) {

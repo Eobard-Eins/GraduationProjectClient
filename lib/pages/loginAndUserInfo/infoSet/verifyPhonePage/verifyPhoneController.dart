@@ -16,7 +16,9 @@ class VerifyPhoneController extends GetxController{
   Rx<bool> hasGetCaptcha = false.obs;
   Rx<String> captchaHintText= "获取验证码".obs;
 
-  void init(){
+  @override
+  void onInit(){
+    super.onInit();
     printInfo(info: "验证页信息初始化");
     phoneController.value.clear();
     captchaController.value.clear();
@@ -108,7 +110,7 @@ class VerifyPhoneController extends GetxController{
           case Status.userExist://用户存在
             printInfo(info: "用户已存在,code:${value.statusCode}");
             Get.snackbar("验证失败", "账号已存在",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
-            init();
+            onInit();
             break;
           
           case Status.captchaError:
@@ -127,7 +129,7 @@ class VerifyPhoneController extends GetxController{
           default:
             printInfo(info: "未知错误,code:${value.statusCode}");
             Get.snackbar("验证失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
-            init();
+            onInit();
             break;
         }
       });
@@ -152,7 +154,7 @@ class VerifyPhoneController extends GetxController{
           case Status.userNotExist://用户不存在
             printInfo(info: "用户不存在,code:${value.statusCode}");
             Get.snackbar("验证失败", "账号不存在",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
-            init();
+            onInit();
             break;
           
           case Status.captchaError:
@@ -171,7 +173,7 @@ class VerifyPhoneController extends GetxController{
           default:
             printInfo(info: "未知错误,code:${value.statusCode}");
             Get.snackbar("验证失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
-            init();
+            onInit();
             break;
         }
       });

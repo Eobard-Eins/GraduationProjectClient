@@ -1,7 +1,6 @@
 
 
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:client_application/services/Dio.dart';
 import 'package:client_application/models/User.dart';
@@ -11,7 +10,6 @@ import 'package:client_application/utils/result.dart';
 import 'package:client_application/utils/staticValue.dart';
 import 'package:client_application/utils/status.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserNetService extends GetConnect{

@@ -19,7 +19,9 @@ class LoginPageController extends GetxController {
 
   Rx<String> captchaHintText= "获取验证码".obs;
 
-  void init(){
+  @override
+  void onInit(){
+    super.onInit();
     phoneController.clear(); captchaController.clear();
     phoneControllerText.value="";
     captchaControllerText.value="";
@@ -137,7 +139,7 @@ class LoginPageController extends GetxController {
         default:
           printInfo(info: "未知错误,code:${value.statusCode}");
           Get.snackbar("登录失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
-          init();
+          onInit();
           break;
       }
     });
