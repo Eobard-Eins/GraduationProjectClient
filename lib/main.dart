@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Demo',
-        initialRoute: initJudge()?RouteConfig.homePage:RouteConfig.homePage,
+        initialRoute: initJudge()?RouteConfig.homePage:RouteConfig.loginWithCaptchaPage,
         getPages: RouteConfig.getPages,
         unknownRoute: GetPage(name: '/notfound', page: () => const Scaffold(body: Center(child: Text("No Page Route Provided"),))),
         initialBinding: AppBindings(),
@@ -49,6 +49,7 @@ class MyApp extends StatelessWidget {
       if((nt-lt).abs()<15*86400000){
         //两次登录天数小于15天
         SpUtils.setInt("lastLoginTime", nt);
+        print("[INFO] 登陆日期判断通过");
         return true;
       }else{
         SpUtils.clear();

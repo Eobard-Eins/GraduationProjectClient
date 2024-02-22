@@ -107,11 +107,11 @@ class TaskPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
                 child: TaskItem(
                   ontap: _tpc.tapTask,
-                  title: "星穹铁道：银狼PV里那些有趣的细节！和崩坏3梦幻联动，电玩音游元素拉满",
+                  title: "星穹铁道：银狼问问啊里那些有趣的细节！和崩坏我梦幻联动，电玩音游",
                   point: 25.0,
                   time: "2022-01-01\n12:00",
                   location: "2km以内",
-                  labels: "一些有趣的细节 | 那些有趣的细节 | 那些有趣的细节 | 那些有趣的细节 | 那些有趣的细节",
+                  labels: "崩坏：星穹铁道 | 崩坏：星穹铁道 | 崩坏：星穹铁道 | 崩坏：星穹铁道 | 崩坏：星穹铁道",
                   hotValue: 114514,
                 ),
               )

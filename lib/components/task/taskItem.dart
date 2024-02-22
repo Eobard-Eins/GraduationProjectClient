@@ -95,7 +95,7 @@ class TaskItem extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     width: 180,
                     height: 80,
-                    padding: const EdgeInsets.only(left: 10,right: 0,top: 15,bottom: 10),
+                    padding: const EdgeInsets.only(left: 10,right: 0,top: 20,bottom: 10),
                     
                     child:Column(
                       children: [
@@ -133,7 +133,7 @@ class TaskItem extends StatelessWidget {
                     decoration: const BoxDecoration(color: Color.fromARGB(255, 181, 181, 181)),
                   ),
                   Container(
-                    padding: const EdgeInsets.only(left:0,top: 15,bottom: 10),
+                    padding: const EdgeInsets.only(left:0,top: 20,bottom: 10),
                     width: 80,
                     height: 80,
                     child: Column(
