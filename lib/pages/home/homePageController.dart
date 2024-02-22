@@ -2,7 +2,6 @@ import 'package:client_application/pages/home/chat/chatPageUI.dart';
 import 'package:client_application/pages/home/community/communityPageUI.dart';
 import 'package:client_application/pages/home/me/mePageUI.dart';
 import 'package:client_application/pages/home/task/taskPageUI.dart';
-import 'package:client_application/res/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

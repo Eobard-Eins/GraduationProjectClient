@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 
 //设置头像和用户名，注册时用
 class SetNameAndAvatarPage extends StatelessWidget {
-  final SetNameAndAvatarController _saac=Get.find<SetNameAndAvatarController>();
+  final SetNameAndAvatarController _saac=Get.put<SetNameAndAvatarController>(SetNameAndAvatarController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(

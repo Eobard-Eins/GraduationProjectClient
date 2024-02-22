@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 //登录页面，使用验证码登录
 class LoginPage extends StatelessWidget {
   final int captchaLenth=6;
-  final LoginPageController _lpc = Get.find<LoginPageController>();
+  final LoginPageController _lpc = Get.put<LoginPageController>(LoginPageController());
   @override
   Widget build(BuildContext context) {
 

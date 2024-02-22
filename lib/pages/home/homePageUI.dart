@@ -1,11 +1,10 @@
 import 'package:client_application/pages/home/homePageController.dart';
 import 'package:client_application/res/color.dart';
-import 'package:client_application/utils/localStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget{
-  final HomePageController _hpc=Get.find<HomePageController>();
+  final HomePageController _hpc=Get.put<HomePageController>(HomePageController());
 
   @override
   Widget build(BuildContext context) {

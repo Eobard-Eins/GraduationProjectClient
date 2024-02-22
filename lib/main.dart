@@ -2,7 +2,6 @@
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/pages/home/homePageUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginPageUI.dart';
-import 'package:client_application/utils/bingdings.dart';
 import 'package:client_application/utils/localStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,7 +36,7 @@ class MyApp extends StatelessWidget {
         initialRoute: initJudge()?RouteConfig.homePage:RouteConfig.loginWithCaptchaPage,
         getPages: RouteConfig.getPages,
         unknownRoute: GetPage(name: '/notfound', page: () => const Scaffold(body: Center(child: Text("No Page Route Provided"),))),
-        initialBinding: AppBindings(),
+        
       );
     
   }

@@ -1,4 +1,3 @@
-import 'package:client_application/components/common/button/textButtonWithNoSplash.dart';
 import 'package:client_application/components/common/input/searchBar.dart';
 import 'package:client_application/components/task/taskItem.dart';
 import 'package:client_application/pages/home/task/taskPageController.dart';
@@ -7,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TaskPage extends StatelessWidget {
-  final TaskPageController _tpc = Get.find<TaskPageController>();
+  final TaskPageController _tpc = Get.put<TaskPageController>(TaskPageController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
