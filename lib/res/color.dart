@@ -17,6 +17,8 @@ class Coloors{
   static const Color red=Color.fromARGB(255, 237, 103, 93);
 
   static const Color greyLight=Color.fromARGB(255, 234, 234, 234);
-  static const Color greyDark=Color.fromARGB(255, 170, 160, 177);
+  static const Color grey=Color.fromARGB(255, 160, 177, 171);
   static const Color greyDeep=Color.fromARGB(225, 58, 58, 59);
+
+  static const Color gold=Color.fromARGB(255, 227, 226, 135);
 }

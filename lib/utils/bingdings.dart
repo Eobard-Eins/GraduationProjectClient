@@ -1,4 +1,5 @@
 import 'package:client_application/pages/home/homePageController.dart';
+import 'package:client_application/pages/home/task/taskPageController.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/setNameAndAvatarPage/setNameAndAvatarController.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/setPasswordPage/setPasswordController.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/userInitProfile/setUserInitProfileController.dart';
@@ -18,5 +19,6 @@ class AppBindings extends Bindings {
     Get.lazyPut<SetPasswordController>(() => SetPasswordController());
     Get.lazyPut<SetNameAndAvatarController>(() => SetNameAndAvatarController());
     Get.lazyPut<HomePageController>(() => HomePageController());
+    Get.lazyPut<TaskPageController>(() => TaskPageController());
   }
 }

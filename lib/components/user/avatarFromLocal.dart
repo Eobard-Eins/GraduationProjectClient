@@ -3,13 +3,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class CircleAvatarOfUser extends StatelessWidget {
+class avatarFromLocal extends StatelessWidget {
   final XFile? image;
   final double? size;
   final Color? backgroundColor;
   final Color? roundColor;
 
-  const CircleAvatarOfUser({super.key,this.image,this.size, this.backgroundColor, this.roundColor});
+  const avatarFromLocal({super.key,this.image,this.size, this.backgroundColor, this.roundColor});
 
   @override
   Widget build(BuildContext context) {

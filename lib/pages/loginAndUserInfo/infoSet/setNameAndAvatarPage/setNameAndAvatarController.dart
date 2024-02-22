@@ -1,5 +1,5 @@
 
-import 'package:client_application/components/user/circleAvatar.dart';
+import 'package:client_application/components/user/avatarFromLocal.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/services/UserNetService.dart';
@@ -39,7 +39,7 @@ class SetNameAndAvatarController extends GetxController{
             padding: EdgeInsets.only(bottom: 3, right: 3),
             child: Icon(
               Icons.add_a_photo_rounded,
-              color: Coloors.greyDark,
+              color: Coloors.grey,
               size: 48,
             )),
       );
@@ -52,7 +52,7 @@ class SetNameAndAvatarController extends GetxController{
           border: Border.all(color: Coloors.greyLight, width: 1),
           color: Colors.transparent,
         ),
-        child: CircleAvatarOfUser(image: imgPath.value,size: 50,)
+        child: avatarFromLocal(image: imgPath.value,size: 50,)
       );
     }
   }
