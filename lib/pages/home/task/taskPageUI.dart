@@ -4,6 +4,9 @@ import 'package:client_application/pages/home/task/taskPageController.dart';
 import 'package:client_application/res/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 
 class TaskPage extends StatelessWidget {
   final TaskPageController _tpc = Get.put<TaskPageController>(TaskPageController());
@@ -101,19 +104,36 @@ class TaskPage extends StatelessWidget {
                   ],
                 ),
               ),
+              
               //const Divider(height: 1,color: Coloors.greyLight,),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-                child: TaskItem(
-                  ontap: _tpc.tapTask,
-                  title: "星穹铁道：银狼问问啊里那些有趣的细节！和崩坏我梦幻联动，电玩音游",
-                  point: 25.0,
-                  time: "2022-01-01\n12:00",
-                  location: "2km以内",
-                  labels: "崩坏：星穹铁道 | 崩坏：星穹铁道 | 崩坏：星穹铁道 | 崩坏：星穹铁道 | 崩坏：星穹铁道",
-                  hotValue: 114514,
-                ),
-              )
+              Expanded(
+                child: 
+                  RefreshIndicator(
+                    onRefresh: _tpc.refreshh,
+                    color: Coloors.main,
+                    displacement: 30,
+                    
+                    child: MasonryGridView.builder(
+                      // 展示几列
+                      gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+
+                      ),
+                      // 元素总个数
+                      itemCount: _tpc.tasks.length,
+                      // 单个子元素
+                      itemBuilder: (BuildContext context, int index) => _tpc.TaskCard(context,_tpc.tasks[index]),
+                      // // 纵向元素间距MasonryGridView
+                      mainAxisSpacing: 25,
+                      // // 横向元素间距
+                      // crossAxisSpacing: 10,
+                      //本身不滚动，让外面的singlescrollview来滚动
+                      //physics:const NeverScrollableScrollPhysics(), 
+                      shrinkWrap: true, //收缩，让元素宽度自适应
+                      controller: _tpc.scrollController
+                    ),
+                  )
+              ),
             ],
           )
         )
