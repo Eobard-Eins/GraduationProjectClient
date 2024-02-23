@@ -1,6 +1,7 @@
 import 'package:client_application/pages/home/chat/chatPageUI.dart';
 import 'package:client_application/pages/home/community/communityPageUI.dart';
 import 'package:client_application/pages/home/me/mePageUI.dart';
+import 'package:client_application/pages/home/task/taskPageController.dart';
 import 'package:client_application/pages/home/task/taskPageUI.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,9 @@ class HomePageController extends GetxController {
   switchBottomTabBar(int index) {
     //点击底部BottomNavigationBarItem切换PageView页面
     //pageController.animateToPage(index,duration: Duration(seconds: 1),curve: Curves.fastLinearToSlowEaseIn);
+    if(currentPage==0){
+      Get.find<TaskPageController>().moveToTop();
+    }
     pageController.jumpToPage(index);
   }
 

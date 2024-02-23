@@ -190,7 +190,7 @@ class TaskPage extends StatelessWidget {
               //const Divider(height: 1,color: Coloors.greyLight,),
               Expanded(
                 child: 
-                  RefreshIndicator(
+                  Obx(() => RefreshIndicator(
                     onRefresh: _tpc.refreshh,
                     color: Coloors.main,
                     displacement: 30,
@@ -202,9 +202,9 @@ class TaskPage extends StatelessWidget {
 
                       ),
                       // 元素总个数
-                      itemCount: _tpc.tasks.length,
+                      itemCount: _tpc.tasks.length+(_tpc.isLoading.value?1:0),
                       // 单个子元素
-                      itemBuilder: (BuildContext context, int index) => _tpc.TaskCard(context,_tpc.tasks[index]),
+                      itemBuilder: (BuildContext context, int index) => _tpc.TaskCard(context,index),
                       // // 纵向元素间距MasonryGridView
                       mainAxisSpacing: 25,
                       // // 横向元素间距
@@ -212,9 +212,10 @@ class TaskPage extends StatelessWidget {
                       //本身不滚动，让外面的singlescrollview来滚动
                       //physics:const NeverScrollableScrollPhysics(), 
                       shrinkWrap: true, //收缩，让元素宽度自适应
-                      controller: _tpc.scrollController
+                      controller: _tpc.scrollController,
+                      
                     ),
-                  )
+                  ))
               ),
             ],
           )
