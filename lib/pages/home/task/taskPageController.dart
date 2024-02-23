@@ -4,13 +4,18 @@ import 'package:client_application/components/task/taskItem.dart';
 import 'package:client_application/models/Task.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/services/UserNetService.dart';
+import 'package:client_application/utils/localStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TaskPageController extends GetxController {
   Rx<TextEditingController> searchController = TextEditingController().obs;
   RxList<TaskItemInfo> tasks=[TaskItemInfo.bottom()].obs;
+  Rx<double> distance=10.0.obs;
+  Rx<String> location="定位".obs;
+
   final ScrollController scrollController=ScrollController();
+  double distanceInSearch=10.0;
   @override
   void onInit() {
     super.onInit();
@@ -18,6 +23,10 @@ class TaskPageController extends GetxController {
       tasks.insert(tasks.length-1, TaskItemInfo(id: 1, title: "title", point: 1025.5, time: "time", location: "location", labels: "labels", hotValue: 114514));
       
     }
+    tasks.value=[TaskItemInfo.bottom()];
+    distance.value=SpUtils.getDouble('distance',defaultValue: 10.0);
+    distanceInSearch=distance.value;
+    location.value="定位";
     searchController.value.clear();
     searchController.refresh();
   }
@@ -64,5 +73,20 @@ class TaskPageController extends GetxController {
   }
   void tapTask(){
     
+  }
+  void alterConfirm(){
+    if(distance.value==50){
+      distanceInSearch=99999;
+    } else if (distance.value==0){
+      distanceInSearch=0.1;
+    }else{
+      distanceInSearch=distance.value;
+    }
+    SpUtils.setDouble("distance",distanceInSearch);
+    printInfo(info:"distance change to $distanceInSearch");
+    Get.back();
+  }
+  void getLocation(){
+    location.value="北京";
   }
 }

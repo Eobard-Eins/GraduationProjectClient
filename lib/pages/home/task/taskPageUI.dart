@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:client_application/components/common/input/searchBar.dart';
 import 'package:client_application/components/task/taskItem.dart';
 import 'package:client_application/pages/home/task/taskPageController.dart';
@@ -59,14 +61,14 @@ class TaskPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 15,right:15),
                       child: InkWell(
-                        onTap: _tpc.search,
+                        onTap: _tpc.getLocation,
                         highlightColor: Colors.transparent, // 透明色
                         splashColor: Colors.transparent,
-                        child: const Row(children: [
-                          Icon(Icons.place,color: Coloors.main,),
-                          Text("定位",style: TextStyle(
+                        child: Row(children: [
+                          const Icon(Icons.place,color: Coloors.main,),
+                          Obx(() => Text(_tpc.location.value,style: const TextStyle(
                             fontSize: 16
-                          ),)
+                          ),))
                         ],),)
                     ),
                     Expanded(
@@ -97,7 +99,87 @@ class TaskPage extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.only(left: 5,right:5),
                       child: IconButton(
-                        onPressed: _tpc.search,
+                        onPressed: (){
+                          Get.defaultDialog(
+                            content: Column(
+                              children: [
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  padding: const EdgeInsets.only(left: 20,bottom: 25),
+                                  child: const Text(
+                                    "距离:",
+                                    style: TextStyle(
+                                      fontFamily: "SmileySans",
+                                      fontSize: 20
+                                    ),
+                                  ),
+                                ),
+                                Padding(padding: const EdgeInsets.symmetric(horizontal: 15),
+                                  child:Row(
+                                    children: [
+                                      const Text("0Km",style: TextStyle(fontFamily: 'SmileySans',fontSize: 14,letterSpacing: 1),),
+                                      Obx(()=>Slider(
+                                        //Slider的当前的值  0.0 ~ 1.0
+                                        value: _tpc.distance.value,
+                                        min: 0.0,
+                                        max: 50.0,
+                                        //平均分成的等分
+                                        divisions: 100,
+                                        //滚动时会回调
+                                        onChanged: (double value) {
+                                          _tpc.distance.value = value;
+                                        },
+                                        //滑块以及滑动左侧的滚动条颜色
+                                        activeColor: Coloors.mainLight,
+                                        thumbColor: Coloors.main,
+                                        //滑块右侧的滚动条颜色
+                                        // inactiveColor: Colors.blue,
+                                        //气泡
+                                        label: _tpc.distance.value==50?"无限制":(_tpc.distance.value==0?"<100m":"${_tpc.distance.value.toStringAsFixed(1)}Km"),
+                                      )),
+                                      const Text("无限制",style: TextStyle(fontFamily: 'SmileySans',fontSize: 14,letterSpacing: 1),),
+                                    ],
+                                  )
+                                
+                                ),
+                                const Padding(padding: EdgeInsets.only(top: 20)),
+                                const Divider(height: 0.1)
+                              ],
+                            ),
+                            confirm: InkWell(
+                              onTap: _tpc.alterConfirm,
+                              highlightColor: Colors.transparent, // 透明色
+                              splashColor: Colors.transparent,
+                              child:Container(
+                                width: 130,
+                                height: 30,
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.symmetric(horizontal: 15),
+                                child: const Text("完成",style: TextStyle(fontFamily: 'SmileySans',fontSize: 18,letterSpacing: 1),),
+                              ),
+                            ),
+                            cancel: InkWell(
+                                onTap: (){
+                                  Get.back();
+                                },
+                                highlightColor: Colors.transparent, // 透明色
+                                splashColor: Colors.transparent,
+                                child:Container(
+                                  width: 130,
+                                  height: 30,
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                                  child: const Text("取消",style: TextStyle(fontFamily: 'SmileySans',fontSize: 18,letterSpacing: 1),),
+                                ),
+                            ),
+                            title:"筛选",
+                            titleStyle: const TextStyle(
+                              fontFamily: 'SmileySans',
+                              letterSpacing: 2,
+                              fontSize: 30,
+                            )
+                          );
+                        },
                         icon: const Icon(Icons.filter_alt,color: Coloors.greyDeep,),
                       )
                     )

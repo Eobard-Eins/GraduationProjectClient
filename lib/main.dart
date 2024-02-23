@@ -2,6 +2,7 @@
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/pages/home/homePageUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginPageUI.dart';
+import 'package:client_application/res/color.dart';
 import 'package:client_application/utils/localStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,6 +32,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return GetMaterialApp(
+        theme: ThemeData(
+          primaryColor: Coloors.main,
+          primaryColorLight: Coloors.mainLight,
+          primaryColorDark: Coloors.mainDark,
+          ),
         debugShowCheckedModeBanner: false,
         title: 'Demo',
         initialRoute: initJudge()?RouteConfig.homePage:RouteConfig.homePage,
