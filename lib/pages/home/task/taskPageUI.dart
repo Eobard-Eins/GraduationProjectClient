@@ -191,7 +191,7 @@ class TaskPage extends StatelessWidget {
               Expanded(
                 child: 
                   Obx(() => RefreshIndicator(
-                    onRefresh: _tpc.refreshh,
+                    onRefresh: _tpc.refreshByPull,
                     color: Coloors.main,
                     displacement: 30,
                     
@@ -202,7 +202,7 @@ class TaskPage extends StatelessWidget {
 
                       ),
                       // 元素总个数
-                      itemCount: _tpc.tasks.length+(_tpc.isLoading.value?1:0),
+                      itemCount: _tpc.tasks.length+((_tpc.isLoading.value||_tpc.allLoaded.value)?1:0),
                       // 单个子元素
                       itemBuilder: (BuildContext context, int index) => _tpc.TaskCard(context,index),
                       // // 纵向元素间距MasonryGridView

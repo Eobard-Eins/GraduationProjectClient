@@ -1,4 +1,6 @@
 
+import 'dart:ffi';
+
 import 'package:client_application/components/common/button/textButtonWithNoSplash.dart';
 import 'package:client_application/components/task/taskItem.dart';
 import 'package:client_application/models/Task.dart';
@@ -14,48 +16,60 @@ class TaskPageController extends GetxController {
   Rx<double> distance=10.0.obs;
   Rx<String> location="定位".obs;
   Rx<bool> isLoading=false.obs;
-
+  Rx<bool> allLoaded=false.obs;
+  Rx<bool> pull=false.obs;
+  
   final ScrollController scrollController=ScrollController();
   double distanceInSearch=10.0;
   @override
   void onInit() {
     super.onInit();
-    tasks=RxList<TaskItemInfo>();
-    loadData(20);
+
+    tasks.clear();
     distance.value=SpUtils.getDouble('distance',defaultValue: 10.0);
     distanceInSearch=distance.value;
     location.value="定位";
+    allLoaded.value=false;
     isLoading.value=false;
+    pull.value=false;
     searchController.value.clear();
     searchController.refresh();
 
+    loadData(10);
     scrollController.addListener(_scrollListener);
   }
   Widget TaskCard(context,int index){
     //printInfo(info:"TaskItem $index Created");
-    if (index==tasks.length&&isLoading.value) {
-      // return Container(
-      //   width: 100,
-      //   alignment: Alignment.center,
-      //   padding: const EdgeInsets.only(bottom: 20),
-      //   child: TextButtonWithNoSplash(
-      //     onTap: refreshh, 
-      //     text: "---到底了，点击刷新---",
-      //     textStyle: const TextStyle(
-      //       fontSize: 10,
-      //       color: Coloors.greyDeep,
-      //       fontFamily: 'SmileySans',
-      //       letterSpacing: 2
-      //     ),
-      //   )
-      // );
+    if (index==tasks.length) {
+      if(isLoading.value){
+        if(pull.value){
+          return const Padding(padding: EdgeInsets.only(bottom: 20));
+        }
+        return Container(
+          padding: const EdgeInsets.only(bottom: 10),
+          alignment: Alignment.center,
+          child: const CircularProgressIndicator(
+            color: Coloors.main,
+          )
+        );
+      }
       return Container(
-        padding: const EdgeInsets.only(bottom: 10),
-        alignment: Alignment.center,
-        child: const CircularProgressIndicator(
-          color: Coloors.main,
-        )
-      );
+          width: 100,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.only(bottom: 20),
+          child: TextButtonWithNoSplash(
+            onTap: refreshh, 
+            text: "---到底了，点击刷新---",
+            textStyle: const TextStyle(
+              fontSize: 10,
+              color: Coloors.greyDeep,
+              fontFamily: 'SmileySans',
+              letterSpacing: 2
+            ),
+          )
+        );
+      
+      
     } else {
       var ti=tasks[index];
       return TaskItem(
@@ -70,26 +84,44 @@ class TaskPageController extends GetxController {
     }
   }
   void _scrollListener() {
-    if (scrollController.position.pixels == scrollController.position.maxScrollExtent && !isLoading.value) {
-      isLoading.value=true;
-      loadData(10);
+    if (scrollController.position.pixels == scrollController.position.maxScrollExtent && !isLoading.value && !allLoaded.value) {
+      loadData(5);
+      printInfo(info:"to the down");
     }
   }
   Future<void> refreshh()async{
     printInfo(info:"refreshh");
     moveToTop();
-    
-    tasks=RxList<TaskItemInfo>();
-    loadData(20);
-    
+    tasks.clear();
+    await loadData(10);
     printInfo(info:"refreshh end");
   }
-  void loadData(int n)async{
+  Future<void> refreshByPull()async{
+    pull.value=true;
+    await refreshh();
+    pull.value=false;
+  }
+  Future<void> loadData(int n)async{
+    isLoading.value=true;
     printInfo(info:"loadData");
+    List<TaskItemInfo> newTasks=[];
+
+    //TODO: 测试网络请求
     await UserNetService().TimeTestModel(3);
     for(var i=0;i<n;i++){
-      tasks.add(TaskItemInfo(id: 1, title: "title", point: 1025.5, time: "time", location: "location", labels: "labels", hotValue: 114514));
-      
+      newTasks.add(TaskItemInfo(id: 1, title: "title", point: 1025.5, time: "time", location: "location", labels: "labels", hotValue: 114514));
+    }
+
+    if (newTasks.isEmpty){
+      allLoaded.value=true;
+      Get.snackbar("暂无更多", "暂时没有更多数据",icon: const Icon(Icons.feedback_outlined,color: Coloors.gold,),shouldIconPulse:false);
+    }else{
+      tasks.addAll(newTasks);
+      if(tasks.length<3){
+        allLoaded.value=true;
+      }else{
+        allLoaded.value=false;
+      }
     }
     isLoading.value=false;
   }
