@@ -1,5 +1,7 @@
 
+import 'package:client_application/components/common/button/textButtonWithNoSplash.dart';
 import 'package:client_application/components/common/input/searchBar.dart';
+import 'package:client_application/components/task/taskItem.dart';
 import 'package:client_application/pages/home/task/taskPageController.dart';
 import 'package:client_application/res/color.dart';
 import 'package:flutter/material.dart';
@@ -225,7 +227,7 @@ class TaskPage extends StatelessWidget {
                       // 元素总个数
                       itemCount: _tpc.tasks.length+((_tpc.isLoading.value||_tpc.allLoaded.value)?1:0),
                       // 单个子元素
-                      itemBuilder: (BuildContext context, int index) => _tpc.TaskCard(context,index),
+                      itemBuilder: (BuildContext context, int index) => TaskCard(context,index),
                       // // 纵向元素间距MasonryGridView
                       //mainAxisSpacing: 25,
                       // // 横向元素间距
@@ -242,5 +244,50 @@ class TaskPage extends StatelessWidget {
           )
         )
       );
+  }
+  Widget TaskCard(context,int index){
+    //printInfo(info:"TaskItem $index Created");
+    if (index==_tpc.tasks.length) {
+      if(_tpc.isLoading.value){
+        if(_tpc.pull.value){
+          return const Padding(padding: EdgeInsets.only(bottom: 20));
+        }
+        return Container(
+          padding: const EdgeInsets.only(bottom: 10,top:12),
+          alignment: Alignment.center,
+          child: const CircularProgressIndicator(
+            color: Coloors.main,
+          )
+        );
+      }
+      return Container(
+          width: 100,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.only(bottom: 20,top:12),
+          child: TextButtonWithNoSplash(
+            onTap:_tpc.refreshh, 
+            text: "---到底了，点击刷新---",
+            textStyle: const TextStyle(
+              fontSize: 10,
+              color: Coloors.greyDeep,
+              fontFamily: 'SmileySans',
+              letterSpacing: 2
+            ),
+          )
+        );
+      
+      
+    } else {
+      var ti=_tpc.tasks[index];
+      return TaskItem(
+        ontap: (){},
+        title: ti.title,
+        point: ti.point,
+        time: ti.time,
+        location: ti.location,
+        labels: ti.labels,
+        hotValue: ti.hotValue,
+      );
+    }
   }
 }

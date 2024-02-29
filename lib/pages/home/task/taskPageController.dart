@@ -41,51 +41,7 @@ class TaskPageController extends GetxController {
     loadData(10);
     scrollController.addListener(_scrollListener);
   }
-  Widget TaskCard(context,int index){
-    //printInfo(info:"TaskItem $index Created");
-    if (index==tasks.length) {
-      if(isLoading.value){
-        if(pull.value){
-          return const Padding(padding: EdgeInsets.only(bottom: 20));
-        }
-        return Container(
-          padding: const EdgeInsets.only(bottom: 10,top:12),
-          alignment: Alignment.center,
-          child: const CircularProgressIndicator(
-            color: Coloors.main,
-          )
-        );
-      }
-      return Container(
-          width: 100,
-          alignment: Alignment.center,
-          padding: const EdgeInsets.only(bottom: 20,top:12),
-          child: TextButtonWithNoSplash(
-            onTap: refreshh, 
-            text: "---到底了，点击刷新---",
-            textStyle: const TextStyle(
-              fontSize: 10,
-              color: Coloors.greyDeep,
-              fontFamily: 'SmileySans',
-              letterSpacing: 2
-            ),
-          )
-        );
-      
-      
-    } else {
-      var ti=tasks[index];
-      return TaskItem(
-        ontap: (){},
-        title: ti.title,
-        point: ti.point,
-        time: ti.time,
-        location: ti.location,
-        labels: ti.labels,
-        hotValue: ti.hotValue,
-      );
-    }
-  }
+  
   void _scrollListener() {
     if (scrollController.position.pixels == scrollController.position.maxScrollExtent && !isLoading.value && !allLoaded.value) {
       loadData(5);
