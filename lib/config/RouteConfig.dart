@@ -1,5 +1,6 @@
 
 import 'package:client_application/pages/home/homePageUI.dart';
+import 'package:client_application/pages/home/task/taskInfo/taskInfoPageUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/userInitProfile/setUserInitProfileUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/login/agreementPage/agreementPageUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/setNameAndAvatarPage/setNameAndAvatarUI.dart';
@@ -23,6 +24,8 @@ class RouteConfig {
   static const String setUserInitProfilePage="/setUserInitProfilePage";
 
   static const String homePage="/homePage";
+
+  static const String taskInfoPage="/taskInfoPage";
 
   static const String TESTPAGE="/TESTPAGE";
 
@@ -58,6 +61,10 @@ class RouteConfig {
     GetPage(
       name: homePage,
       page: () => HomePage(),
+    ),
+    GetPage(
+      name: taskInfoPage, 
+      page: ()=>TaskInfoPage(),
     ),
     GetPage(
       name: TESTPAGE,

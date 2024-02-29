@@ -1,5 +1,6 @@
 import 'package:client_application/components/user/avatarFromNet.dart';
 import 'package:client_application/res/color.dart';
+import 'package:client_application/utils/staticValue.dart';
 import 'package:flutter/material.dart';
 
 class TaskItem extends StatelessWidget {
@@ -67,7 +68,7 @@ class TaskItem extends StatelessWidget {
                           width: 30,
                           height: 30,
                           boxShape: BoxShape.circle,
-                          imageUrl: avatarUrl??"https://picx.zhimg.com/80/v2-1e02c1531c33f9460ae82eb88a999cdd_720w.webp?source=2c26e567"
+                          imageUrl: avatarUrl??staticValue.defaultAvatar
                         ),
                         Expanded(
                           child: Padding(padding: const EdgeInsets.only(left: 10),

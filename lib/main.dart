@@ -2,6 +2,7 @@
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/utils/localStorage.dart';
+import 'package:client_application/utils/locationUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,15 +10,6 @@ void main() async{
   //runApp(MyApp());
   WidgetsFlutterBinding.ensureInitialized();
   await SpUtils.getInstance();//初始化本地持续化存储器
-  // /**
-  //  * 初始化各模块
-  //  * 1.初始化本地持续化存储器
-  //  * 2.初始化网络服务
-  //  */
-  // await Future.wait([
-  //   MyApp.StorageInit(),
-  //   MyApp.NetServerInit(),
-  // ]);
 
   runApp(MyApp());
 }

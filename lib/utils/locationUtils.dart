@@ -14,8 +14,7 @@ class LocationUtils {
     static late StreamSubscription<Map<String, Object>> locationListener;
  
     
-    static getLocation (Function(Map<String,dynamic> result) onLocationChanged,{bool onceLocation=false, String androidKey=staticValue.GaoDeKeyOfAndroid, String iosKey=staticValue.GaoDeKeyOfIos}){
-        
+    static getLocation (Function(dynamic result) onLocationChanged,{bool onceLocation=false, String androidKey=staticValue.GaoDeKeyOfAndroid, String iosKey=staticValue.GaoDeKeyOfIos}){
         _setPrivacy(androidKey, iosKey);
         _requestPermission(onceLocation,onLocationChanged);
     }
@@ -36,7 +35,7 @@ class LocationUtils {
     }
  
     //  获取系统权限
-    static _requestPermission (bool onceLocation,Function(Map<String,dynamic> result) onLocationChanged) async {
+    static _requestPermission (bool onceLocation,Function(dynamic result) onLocationChanged) async {
         permissionStatus = await Permission.location.status;
         if(permissionStatus == PermissionStatus.granted) {
             _requestLocation(onceLocation,onLocationChanged);
@@ -53,7 +52,7 @@ class LocationUtils {
                      Get.snackbar("获取失败", "请开启位置权限",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
                      break;
                 default:
-                     _requestLocation(onceLocation,onLocationChanged);
+                     Get.snackbar("获取失败", "请开启位置权限",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
                      break;
             }     
  
@@ -84,13 +83,12 @@ class LocationUtils {
     }
  
     //  获取实时位置
-    static _requestLocation (bool onceLocation,Function(Map<String,dynamic> result) onLocationChanged) {
+    static _requestLocation (bool onceLocation,Function(dynamic result) onLocationChanged) {
         _setLocationOption(onceLocation);
         flutterLocation.startLocation();
         locationListener = flutterLocation.onLocationChanged().listen((result){
             onLocationChanged(result);
         });
-        
         locationListener.onError((e){
           Get.snackbar("获取失败", "请稍后重试",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
           _stopLocation();

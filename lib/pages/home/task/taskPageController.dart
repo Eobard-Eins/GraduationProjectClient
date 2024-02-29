@@ -2,6 +2,7 @@
 
 import 'package:client_application/components/common/button/textButtonWithNoSplash.dart';
 import 'package:client_application/components/task/taskItem.dart';
+import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/models/Task.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/services/UserNetService.dart';
@@ -68,7 +69,7 @@ class TaskPageController extends GetxController {
     //TODO: 测试网络请求
     await UserNetService().TimeTestModel(3);
     for(var i=0;i<n;i++){
-      newTasks.add(TaskItemInfo(id: 1, title: "title", point: 1025.5, time: "time", location: "location", labels: "labels", hotValue: 114514));
+      newTasks.add(TaskItemInfo(id: i+1000, title: "title", point: 1025.5, time: "time", location: "location", labels: "labels", hotValue: 114514));
     }
 
     if (newTasks.isEmpty){
@@ -95,8 +96,9 @@ class TaskPageController extends GetxController {
   void filter(){
 
   }
-  void tapTask(){
-    
+  void tapTask(int id){
+    printInfo(info:"tapTask${id}");
+    Get.toNamed(RouteConfig.taskInfoPage,arguments:{'id':id});
   }
   void alterConfirm(){
     if(distance.value==50){
@@ -110,36 +112,39 @@ class TaskPageController extends GetxController {
     printInfo(info:"distance change to ${SpUtils.getDouble('distance')}");
     Get.back();
   }
-  void getLocation(){
-    gettingLocation.value=true;
+
+
+  Future<void> getLocation()async{
+    
     int count=0;
     printInfo(info:"开始定位");
     LocationUtils.getLocation((result){
+      gettingLocation.value=true;
       printInfo(info:result.toString());
-      if(result['latitude']!=null&&result['longitude']!=null){
-        SpUtils.setDouble('longitude', result['longitude']);
-        SpUtils.setDouble('latitude', result['latitude']);
-        printInfo(info:'已存储经纬度:${SpUtils.getDouble('latitude')},${SpUtils.getDouble('longitude')}');
-      }
+      
       if(result['district'].toString()!=""){
+        if(result['latitude']!=null&&result['longitude']!=null){
+          SpUtils.setDouble('longitude', result['longitude']);
+          SpUtils.setDouble('latitude', result['latitude']);
+          printInfo(info:'已存储经纬度:${SpUtils.getDouble('latitude')},${SpUtils.getDouble('longitude')}');
+        }
         location.value=result['district'].toString();
-        LocationUtils.stopLocation();
-        gettingLocation.value=false;
-        printInfo(info:'定位结束');
+        
+        stopLocation();
       }
       if(count==5){
         Get.snackbar("获取失败", "请稍后重试",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
-        LocationUtils.stopLocation();
-        gettingLocation.value=false;
-        printInfo(info:'定位结束');
+        stopLocation();
       }
       count++;
       //TimeUntils.TimeTestModel(1);
       
     });
+    printError(info:"getLocation end");
   }
   void stopLocation(){
     LocationUtils.stopLocation();
     gettingLocation.value=false;
+    printInfo(info:'定位结束');
   }
 }
