@@ -1,5 +1,4 @@
 
-import 'dart:ffi';
 
 import 'package:client_application/components/common/button/textButtonWithNoSplash.dart';
 import 'package:client_application/components/task/taskItem.dart';
@@ -7,6 +6,8 @@ import 'package:client_application/models/Task.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/services/UserNetService.dart';
 import 'package:client_application/utils/localStorage.dart';
+import 'package:client_application/utils/locationUtils.dart';
+import 'package:client_application/utils/timeUntils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,10 +15,11 @@ class TaskPageController extends GetxController {
   Rx<TextEditingController> searchController = TextEditingController().obs;
   RxList<TaskItemInfo> tasks=RxList<TaskItemInfo>();
   Rx<double> distance=10.0.obs;
-  Rx<String> location="定位".obs;
+  Rx<String> location="- - -".obs;
   Rx<bool> isLoading=false.obs;
   Rx<bool> allLoaded=false.obs;
   Rx<bool> pull=false.obs;
+  Rx<bool> gettingLocation=false.obs;
   
   final ScrollController scrollController=ScrollController();
   double distanceInSearch=10.0;
@@ -28,13 +30,15 @@ class TaskPageController extends GetxController {
     tasks.clear();
     distance.value=SpUtils.getDouble('distance',defaultValue: 10.0);
     distanceInSearch=distance.value;
-    location.value="定位";
+    location.value="- - -";
     allLoaded.value=false;
     isLoading.value=false;
+    gettingLocation.value=false;
     pull.value=false;
     searchController.value.clear();
     searchController.refresh();
 
+    getLocation();
     loadData(10);
     scrollController.addListener(_scrollListener);
   }
@@ -46,7 +50,7 @@ class TaskPageController extends GetxController {
           return const Padding(padding: EdgeInsets.only(bottom: 20));
         }
         return Container(
-          padding: const EdgeInsets.only(bottom: 10),
+          padding: const EdgeInsets.only(bottom: 10,top:12),
           alignment: Alignment.center,
           child: const CircularProgressIndicator(
             color: Coloors.main,
@@ -56,7 +60,7 @@ class TaskPageController extends GetxController {
       return Container(
           width: 100,
           alignment: Alignment.center,
-          padding: const EdgeInsets.only(bottom: 20),
+          padding: const EdgeInsets.only(bottom: 20,top:12),
           child: TextButtonWithNoSplash(
             onTap: refreshh, 
             text: "---到底了，点击刷新---",
@@ -148,10 +152,39 @@ class TaskPageController extends GetxController {
       distanceInSearch=distance.value;
     }
     SpUtils.setDouble("distance",distanceInSearch);
-    printInfo(info:"distance change to $distanceInSearch");
+    printInfo(info:"distance change to ${SpUtils.getDouble('distance')}");
     Get.back();
   }
   void getLocation(){
-    location.value="北京";
+    gettingLocation.value=true;
+    int count=0;
+    printInfo(info:"开始定位");
+    LocationUtils.getLocation((result){
+      printInfo(info:result.toString());
+      if(result['latitude']!=null&&result['longitude']!=null){
+        SpUtils.setDouble('longitude', result['longitude']);
+        SpUtils.setDouble('latitude', result['latitude']);
+        printInfo(info:'已存储经纬度:${SpUtils.getDouble('latitude')},${SpUtils.getDouble('longitude')}');
+      }
+      if(result['district'].toString()!=""){
+        location.value=result['district'].toString();
+        LocationUtils.stopLocation();
+        gettingLocation.value=false;
+        printInfo(info:'定位结束');
+      }
+      if(count==5){
+        Get.snackbar("获取失败", "请稍后重试",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+        LocationUtils.stopLocation();
+        gettingLocation.value=false;
+        printInfo(info:'定位结束');
+      }
+      count++;
+      //TimeUntils.TimeTestModel(1);
+      
+    });
+  }
+  void stopLocation(){
+    LocationUtils.stopLocation();
+    gettingLocation.value=false;
   }
 }

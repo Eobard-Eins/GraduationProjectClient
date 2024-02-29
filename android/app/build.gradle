@@ -64,4 +64,9 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    //添加demo中引入高德地图SDK
+    implementation fileTree(include: ['*.zip'], dir: 'libs')
+    implementation('com.amap.api:location:latest.integration')
+    //定位功能
+}

@@ -30,7 +30,7 @@ class TaskItem extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 0),
+    return Padding(padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 12),
       child: InkWell(
         onTap: ontap,
         borderRadius: BorderRadius.circular(15),
@@ -117,7 +117,7 @@ class TaskItem extends StatelessWidget {
                           child: Text(
                             labels,
                             style: const TextStyle(
-                              fontSize: 8,
+                              fontSize: 10,
                               color: Coloors.greyDeep,
                               fontFamily: 'SmileySans',
                               fontWeight: FontWeight.normal
@@ -216,7 +216,7 @@ class TaskItem extends StatelessWidget {
                           const Padding(padding: EdgeInsets.only(left:10)),
                           const Icon(Icons.gps_fixed_outlined,color: Coloors.greyLight,size: 12,),
                           Padding(padding: const EdgeInsets.only(left:3),
-                            child:Text(location??"---",style: const TextStyle(fontFamily: 'SmileySans',color: Colors.white,fontSize: 8,letterSpacing: 1),),
+                            child:Text(location??"---",style: const TextStyle(fontFamily: 'SmileySans',color: Colors.white,fontSize: 10,letterSpacing: 1),),
                           )
                       ],),
                       const Padding(padding: EdgeInsets.symmetric(vertical:3)),
@@ -229,7 +229,7 @@ class TaskItem extends StatelessWidget {
                               time,
                               style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 8,
+                                fontSize: 10,
                                 letterSpacing: 1,
                                 height: 1.1,
                                 fontFamily: 'SmileySans'

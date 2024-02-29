@@ -15,11 +15,19 @@ class TaskPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 15,
+          shadowColor: Colors.white,
+          foregroundColor: Colors.white,
+          surfaceTintColor: Colors.white,
+          backgroundColor: Colors.white,
+          scrolledUnderElevation: 0,
+        ),
         body: Container(
           child:Column(
             children: [
               Container(
-                  padding: const EdgeInsets.only(top: 45,left: 20,right:20,bottom: 15),
+                  padding: const EdgeInsets.only(left: 20,right:20,bottom: 15),
                   decoration: const BoxDecoration(color: Colors.white),
                   child: Row(children: [
                     const Text(
@@ -30,15 +38,15 @@ class TaskPage extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     ),
                     const Spacer(),
-                    Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: IconButton(
-                            onPressed: _tpc.addNewTask,
-                            icon: const Icon(
-                              Icons.add_circle_outlined,
-                              size: 50,
-                              color: Coloors.main,
-                            )))
+                    IconButton(
+                      padding: const EdgeInsets.only(top: 5,right: 10),
+                      iconSize: 50,
+                      highlightColor: Colors.transparent,
+                      onPressed: _tpc.addNewTask,
+                      icon: const Icon(
+                        Icons.add_circle_outlined,
+                        color: Coloors.main,
+                      ))
                   ])),
               //const Divider(height: 1,color: Coloors.greyLight,),
 
@@ -60,16 +68,32 @@ class TaskPage extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 15,right:15),
-                      child: InkWell(
-                        onTap: _tpc.getLocation,
+                      child: Obx(()=>InkWell(
+                        onTap: _tpc.gettingLocation.value?_tpc.stopLocation:_tpc.getLocation,
                         highlightColor: Colors.transparent, // 透明色
                         splashColor: Colors.transparent,
-                        child: Row(children: [
+                        child: _tpc.gettingLocation.value?const Row(
+                          children: [
+                            Padding(padding: EdgeInsets.only(right: 5)),
+                            SizedBox(
+                              width: 14,
+                              height: 14,
+                              child: CircularProgressIndicator(
+                                color: Coloors.main,
+                                strokeWidth: 3,
+                              ),
+                            ),
+                            Padding(padding: EdgeInsets.only(right: 5)),
+                            Text("定位中",style: TextStyle(
+                              fontSize: 16
+                            ),)
+                          ],
+                        ):Row(children: [
                           const Icon(Icons.place,color: Coloors.main,),
-                          Obx(() => Text(_tpc.location.value,style: const TextStyle(
+                          Text(_tpc.location.value,style: const TextStyle(
                             fontSize: 16
-                          ),))
-                        ],),)
+                          ),)
+                        ],),))
                     ),
                     Expanded(
                       flex: 1,
@@ -187,7 +211,7 @@ class TaskPage extends StatelessWidget {
                 ),
               ),
               
-              //const Divider(height: 1,color: Coloors.greyLight,),
+              
               Expanded(
                 child: 
                   Obx(() => RefreshIndicator(
@@ -206,7 +230,7 @@ class TaskPage extends StatelessWidget {
                       // 单个子元素
                       itemBuilder: (BuildContext context, int index) => _tpc.TaskCard(context,index),
                       // // 纵向元素间距MasonryGridView
-                      mainAxisSpacing: 25,
+                      //mainAxisSpacing: 25,
                       // // 横向元素间距
                       // crossAxisSpacing: 10,
                       //本身不滚动，让外面的singlescrollview来滚动
