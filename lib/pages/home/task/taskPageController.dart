@@ -7,7 +7,6 @@ import 'package:client_application/res/color.dart';
 import 'package:client_application/services/UserNetService.dart';
 import 'package:client_application/utils/localStorage.dart';
 import 'package:client_application/utils/locationUtils.dart';
-import 'package:client_application/utils/timeUntils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,7 +1,5 @@
 
 import 'package:client_application/config/RouteConfig.dart';
-import 'package:client_application/pages/home/homePageUI.dart';
-import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginPageUI.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/utils/localStorage.dart';
 import 'package:flutter/material.dart';
