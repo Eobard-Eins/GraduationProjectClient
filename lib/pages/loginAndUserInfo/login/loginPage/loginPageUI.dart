@@ -16,28 +16,39 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [ Color.fromARGB(255, 252, 235, 178),Color.fromARGB(255, 186, 178, 215), Color.fromARGB(255, 181, 210, 197)],
+        ), 
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
           //标题
-          title: const Text(
+          title: const Padding(padding: EdgeInsets.only(top:30),child: Text(
             "使用验证码登录",
             style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
+              fontWeight: FontWeight.normal,
+              fontSize: 30,
+              fontFamily: 'SmileySans',
               color: Coloors.main,
             ),
             textAlign: TextAlign.center,
-          ),
+          ),),
           centerTitle: true,
+          backgroundColor: Colors.transparent,
         ),
         body: Column(
           children: [
             const SizedBox(
-              height: 30,
+              height: 60,
             ),
             //账号输入
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _lpc.mailController,
                 onChanged: (value){_lpc.mailControllerText.value = _lpc.mailController.text = InputFilter.FilterEmail(value);},
@@ -57,7 +68,7 @@ class LoginPage extends StatelessWidget {
             ),
             //验证码输入
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 0),
+              padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 0),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _lpc.captchaController,
                 maxLength: 6,
@@ -82,7 +93,7 @@ class LoginPage extends StatelessWidget {
                     TextButtonWithNoSplash(
                       onTap: _lpc.hasGetCaptcha.value?null:_lpc.onTapCaptcha,
                       text: _lpc.hasGetCaptcha.value?_lpc.captchaHintText.value:"获取验证码",
-                      fontSize: 14,
+                      fontSize: 16,
                       color: _lpc.hasGetCaptcha.value?Colors.grey:Coloors.main,
                     ),
                 ],),
@@ -91,7 +102,7 @@ class LoginPage extends StatelessWidget {
 
             //文字按钮，链接到账号密码登录页和注册页
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -112,7 +123,8 @@ class LoginPage extends StatelessWidget {
           init: _lpc.checkAgreement.value, 
           onTapAgreeMent: _lpc.onTapAgreement),
         )
-      );
+      ),
+    );
   }
 
   

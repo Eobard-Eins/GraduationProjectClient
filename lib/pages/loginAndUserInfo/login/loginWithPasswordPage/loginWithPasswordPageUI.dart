@@ -15,28 +15,39 @@ class LoginWithPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [ Color.fromARGB(255, 252, 235, 178),Color.fromARGB(255, 186, 178, 215), Color.fromARGB(255, 181, 210, 197)],
+        ), 
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
           //标题
-          title: const Text(
+          title: const Padding(padding: EdgeInsets.only(top:30),child: Text(
             "使用密码登录",
             style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
+              fontWeight: FontWeight.normal,
+              fontSize: 30,
+              fontFamily: 'SmileySans',
               color: Coloors.main,
             ),
             textAlign: TextAlign.center,
-          ),
+          ),),
           centerTitle: true,
+          backgroundColor: Colors.transparent,
         ),
         body: Column(
           children: [
-            SizedBox(
-              height: 30,
+            const SizedBox(
+              height: 60,
             ),
             //账号输入
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _lwppc.mailController,
                 onChanged: (value){_lwppc.mailControllerText.value=_lwppc.mailController.text = InputFilter.FilterEmail(value);},
@@ -50,13 +61,13 @@ class LoginWithPasswordPage extends StatelessWidget {
                           _lwppc.mailController.clear();
                           _lwppc.passwordControllerText.value="";
                         },
-                        icon: Icon(Icons.clear,color: Colors.grey,),
+                        icon: const Icon(Icons.clear,color: Colors.grey,),
                       ),
               ),)
             ),
             //密码输入
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 0),
+              padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 0),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _lwppc.passwordController,
                 onChanged: (value){_lwppc.passwordControllerText.value=_lwppc.passwordController.text = InputFilter.FilterPassword(value);},
@@ -68,7 +79,7 @@ class LoginWithPasswordPage extends StatelessWidget {
                 //TODO: 
                 onEditingComplete: _lwppc.canLogin(),
                 hintText: "请输入密码",
-                suffixIconConstraints: BoxConstraints(minHeight: 22),
+                suffixIconConstraints: const BoxConstraints(minHeight: 22),
                 suffixIcon: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -76,14 +87,14 @@ class LoginWithPasswordPage extends StatelessWidget {
                         onPressed: _lwppc.mailControllerText.value.isEmpty?null:_lwppc.changeObscure,
                         icon: Icon(_lwppc.obscure.value?Icons.visibility_off:Icons.visibility,color:_lwppc.passwordControllerText.value.isEmpty?Colors.transparent: Colors.grey,),
                       ),
-                    TextButtonWithNoSplash(onTap: _lwppc.forgetPassword,text: "忘记密码",fontSize: 14,color: Coloors.main,),
+                    TextButtonWithNoSplash(onTap: _lwppc.forgetPassword,text: "忘记密码",fontSize: 16,color: Coloors.main,),
                 ],),
               ),)
             ),
             
             //文字按钮，链接到验证码登录页和注册页
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10), 
+              padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 10), 
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -100,7 +111,9 @@ class LoginWithPasswordPage extends StatelessWidget {
           ],
         ),
         
-      );
+      ),
+    );
+    
         
   }
   

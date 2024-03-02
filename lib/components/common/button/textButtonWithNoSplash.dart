@@ -29,8 +29,8 @@ class TextButtonWithNoSplash extends StatelessWidget {
           text,
           style: textStyle??TextStyle(
             color: color ?? Coloors.mainLight,
-            fontSize: fontSize ?? 12,
-            fontWeight: fontWeight ?? FontWeight.w200,
+            fontSize: fontSize ?? 14,
+            fontWeight: fontWeight ?? FontWeight.normal,
           )), //
     );
   }

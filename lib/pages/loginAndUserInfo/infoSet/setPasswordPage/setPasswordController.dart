@@ -2,6 +2,7 @@
 import 'package:client_application/components/common/snackbar/snackbar.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/services/UserNetService.dart';
+import 'package:client_application/utils/localStorage.dart';
 import 'package:client_application/utils/status.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -58,6 +59,9 @@ class SetPasswordController extends GetxController{
 
         case Status.success:
           if(value.data==true){
+            SpUtils.setBool("isLogin", true);
+            SpUtils.setInt("lastLoginTime",DateTime.now().millisecondsSinceEpoch);
+            SpUtils.setString("account", account);
             needSetInfo?
               Get.offNamed(RouteConfig.setNameAndAvatarPage,arguments: {'needSetInfo':true,'account':account}):
               Get.back();

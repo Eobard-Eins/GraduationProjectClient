@@ -57,10 +57,10 @@ class UserNetService extends GetConnect{
         SpUtils.setBool("isLogin", true);
         SpUtils.setInt("lastLoginTime",DateTime.now().millisecondsSinceEpoch);
         SpUtils.setString("account", u.mailAddress);
-        SpUtils.setString("username", u.username??"用户${u.mailAddress.split('@')[0]}");
-        SpUtils.setString("gender", u.gender??"未知");
-        SpUtils.setString("avatar", u.avatar);//存头像的网络url
-        SpUtils.setDouble("point", u.point);
+        // SpUtils.setString("username", u.username??"用户${u.mailAddress.split('@')[0]}");
+        // SpUtils.setString("gender", u.gender??"未知");
+        // SpUtils.setString("avatar", u.avatar);//存头像的网络url
+        // SpUtils.setDouble("point", u.point);
         return Result.success(data: u);
       }
     }).onError((error, stackTrace){
@@ -95,10 +95,10 @@ class UserNetService extends GetConnect{
         SpUtils.setBool("isLogin", true);
         SpUtils.setInt("lastLoginTime",DateTime.now().millisecondsSinceEpoch);
         SpUtils.setString("account", u.mailAddress);
-        SpUtils.setString("username", u.username??"用户${u.mailAddress.split('@')[0]}");
-        SpUtils.setString("gender", u.gender??"未知");
-        SpUtils.setString("avatar", u.avatar);//存头像的网络url
-        SpUtils.setDouble("point", u.point);
+        // SpUtils.setString("username", u.username??"用户${u.mailAddress.split('@')[0]}");
+        // SpUtils.setString("gender", u.gender??"未知");
+        // SpUtils.setString("avatar", u.avatar);//存头像的网络url
+        // SpUtils.setDouble("point", u.point);
         return Result.success(data: u);
       }
     }).onError((error, stackTrace){

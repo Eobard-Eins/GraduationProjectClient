@@ -34,11 +34,11 @@ class VerifyPhonePage extends StatelessWidget {
         body: Column(
           children: [
             const SizedBox(
-              height: 30,
+              height: 60,
             ),
             //账号输入
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _vpc.mailController.value,
                 onChanged: (value){
@@ -61,7 +61,7 @@ class VerifyPhonePage extends StatelessWidget {
             ),
             //验证码输入
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 0),
+              padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 0),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _vpc.captchaController.value,
                 maxLength: captchaLenth,
@@ -89,7 +89,7 @@ class VerifyPhonePage extends StatelessWidget {
                   TextButtonWithNoSplash(
                     onTap: _vpc.hasGetCaptcha.value?null:_vpc.onTapCaptcha,
                     text: _vpc.hasGetCaptcha.value?_vpc.captchaHintText.value:"获取验证码",
-                    fontSize: 14,
+                    fontSize: 16,
                     color: _vpc.hasGetCaptcha.value?Colors.grey:Coloors.main,
                   ),
                 ],),
@@ -109,7 +109,7 @@ class VerifyPhonePage extends StatelessWidget {
         //下一步
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
           child: Obx(()=>SquareTextButton(text: "下一步", onTap: _vpc.canNext()))
         )
       );

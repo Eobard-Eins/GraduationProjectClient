@@ -48,7 +48,7 @@ class SetPasswordPage extends StatelessWidget {
             ),
             //密码第一次输入
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 0),
+              padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 0),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _spc.passwordController.value,
                 onChanged: (value) {
@@ -79,7 +79,7 @@ class SetPasswordPage extends StatelessWidget {
             ),
             //密码第二次输入
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 0),
+              padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 0),
               child: Obx(() => UserTextFieldWidget(
                 controller: _spc.passwordAgainController.value,
                 onChanged: (value) {
@@ -123,7 +123,7 @@ class SetPasswordPage extends StatelessWidget {
         //下一步
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
           child:Obx(()=>SquareTextButton(
             text: needSetInfo?"下一步":"完成" , 
             onTap: _spc.canNext()))

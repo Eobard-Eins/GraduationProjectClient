@@ -52,7 +52,7 @@ class UserTextFieldWidget extends StatelessWidget {
       textInputAction: textInputAction,
       onEditingComplete: onEditingComplete,
       cursorColor: Colors.grey,
-      style: TextStyle(fontSize: 20,fontWeight: FontWeight.w300),
+      style: const TextStyle(fontSize: 20,fontWeight: FontWeight.normal),
       decoration: InputDecoration(
         counterText: "",
         prefixText: prefixText,
@@ -60,7 +60,7 @@ class UserTextFieldWidget extends StatelessWidget {
         suffixIcon: suffixIcon,
         suffixIconConstraints: suffixIconConstraints,
         hintText: hintText,
-        hintStyle: TextStyle(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.w100),
+        hintStyle: const TextStyle(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.normal),
         enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.grey),
         ),

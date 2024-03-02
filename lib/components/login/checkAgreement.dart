@@ -33,7 +33,7 @@ class CheckAgreement extends StatelessWidget {
                   style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 12,
-                    fontWeight:  FontWeight.w100,
+                    fontWeight:  FontWeight.normal,
                   ),
                   children: [
                     TextSpan(
@@ -41,7 +41,7 @@ class CheckAgreement extends StatelessWidget {
                       style: const TextStyle(
                         color: Coloors.main,
                         fontSize: 12,
-                        fontWeight:  FontWeight.w100,
+                        fontWeight:  FontWeight.normal,
                       ),
                       recognizer: TapGestureRecognizer()
                        ..onTap = onTapAgreeMent,
