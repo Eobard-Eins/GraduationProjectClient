@@ -5,6 +5,7 @@ import 'package:client_application/res/color.dart';
 import 'package:client_application/services/UserNetService.dart';
 import 'package:client_application/utils/localStorage.dart';
 import 'package:client_application/utils/locationUtils.dart';
+import 'package:client_application/utils/timeUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -64,7 +65,7 @@ class TaskPageController extends GetxController {
     List<TaskItemInfo> newTasks=[];
 
     //TODO: 测试网络请求
-    await UserNetService().TimeTestModel(3);
+    await TimeUtils.TimeTestModel(3);
     for(var i=0;i<n;i++){
       newTasks.add(TaskItemInfo(id: i+1000, title: "title", point: 1025.5, time: "time", location: "location", labels: "labels", hotValue: 114514));
     }

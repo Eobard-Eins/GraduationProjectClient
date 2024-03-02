@@ -25,14 +25,6 @@ class UserNetService extends GetConnect{
     super.onInit();
   }
 
-
-  Future TimeTestModel(int init)async{//模拟网络请求延时
-    //模拟延时
-    return Future.delayed(Duration(seconds: init),(){
-      return 'Net delay test';
-    });
-  }
-
   Future<Result> loginWithPassword(String account, String password) async{
     if(!Discriminator.accountOk(account)){
       return Result.error(statusCode:Status.mailFormatError);

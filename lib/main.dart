@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           primaryColorDark: Coloors.mainDark,
           ),
         debugShowCheckedModeBanner: false,
-        title: 'Demo',
+        title: '帮帮',
         initialRoute: goHome()?RouteConfig.homePage:RouteConfig.loginWithCaptchaPage,
         getPages: RouteConfig.getPages,
         unknownRoute: GetPage(name: '/notfound', page: () => const Scaffold(body: Center(child: Text("No Page Route Provided"),))),

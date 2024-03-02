@@ -3,7 +3,7 @@ import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginP
 import 'package:get/get.dart';
 import 'package:client_application/components/common/button/textButtonWithNoSplash.dart';
 import 'package:client_application/components/login/checkAgreement.dart';
-import 'package:client_application/components/login/loginButton.dart';
+import 'package:client_application/components/common/button/loginButton.dart';
 import 'package:client_application/components/common/input/textField.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/utils/filter.dart';
@@ -21,7 +21,7 @@ class LoginPage extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
-          colors: [ Color.fromARGB(255, 252, 235, 178),Color.fromARGB(255, 186, 178, 215), Color.fromARGB(255, 181, 210, 197)],
+          colors: [ Color.fromARGB(255, 245, 241, 226),Color.fromARGB(255, 228, 218, 245), Color.fromARGB(255, 225, 238, 244)],
         ), 
       ),
       child: Scaffold(

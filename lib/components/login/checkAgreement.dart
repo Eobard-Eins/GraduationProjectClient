@@ -31,7 +31,7 @@ class CheckAgreement extends StatelessWidget {
                 TextSpan(
                   text: "我已阅读并同意",
                   style: const TextStyle(
-                    color: Colors.grey,
+                    color: Coloors.greyDeep,
                     fontSize: 12,
                     fontWeight:  FontWeight.normal,
                   ),

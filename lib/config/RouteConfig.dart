@@ -8,7 +8,6 @@ import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginP
 import 'package:client_application/pages/loginAndUserInfo/login/loginWithPasswordPage/loginWithPasswordPageUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/setPasswordPage/setPasswordUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/verifyEmailPage/verifyEmailUI.dart';
-import 'package:client_application/pages/temp/testUI.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 class RouteConfig {
@@ -27,7 +26,6 @@ class RouteConfig {
 
   static const String taskInfoPage="/taskInfoPage";
 
-  static const String TESTPAGE="/TESTPAGE";
 
   static List<GetPage<dynamic>>? getPages=[
     GetPage(
@@ -65,10 +63,6 @@ class RouteConfig {
     GetPage(
       name: taskInfoPage, 
       page: ()=>TaskInfoPage(),
-    ),
-    GetPage(
-      name: TESTPAGE,
-      page: () => testUI(),
     ),
   ];
 

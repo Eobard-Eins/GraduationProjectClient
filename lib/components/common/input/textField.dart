@@ -60,12 +60,12 @@ class UserTextFieldWidget extends StatelessWidget {
         suffixIcon: suffixIcon,
         suffixIconConstraints: suffixIconConstraints,
         hintText: hintText,
-        hintStyle: const TextStyle(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.normal),
+        hintStyle: const TextStyle(color: Color.fromARGB(255, 115, 115, 115),fontSize: 16,fontWeight: FontWeight.normal),
         enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey),
+          borderSide: BorderSide(color: Color.fromARGB(255, 115, 115, 115)),
         ),
         focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey),
+          borderSide: BorderSide(color: Color.fromARGB(255, 115, 115, 115)),
         ),
       ),
     );
