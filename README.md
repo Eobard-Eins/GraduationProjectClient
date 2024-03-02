@@ -1,7 +1,7 @@
 # 记录
 >## 2023/12/15
 >- **记录**：设置密码页面可用于`新账号注册`、`设置密码与忘记密码2处`，后续导航分别为`个人资料设置`、`返回原页面`，来处为`新账号验证码登录`、`手机号验证`。新账号注册信息会导向个人资料设置，其余返回原页面。
->- **记录**导航到设置密码页和头像用户名页时需传入参数`arguments: {'needSetInfo':true,'account':phoneControllerText.value}`,跳转验证页需`arguments: {'newUser':false}`
+>- **记录**导航到设置密码页和头像用户名页时需传入参数`arguments: {'needSetInfo':true,'account':phoneControllerText.value}`,跳转验证页需`arguments: {'newUser':false}`,needSetInfo代表是否需要后续信息设置
 
 >## 2023/12/16
 >- **记录**输入框的next动作在出现后缀按钮后失效，会定位到后缀按钮上；输入框可以进行输入有效性检查，可行性未测试

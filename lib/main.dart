@@ -2,7 +2,6 @@
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/utils/localStorage.dart';
-import 'package:client_application/utils/locationUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
           ),
         debugShowCheckedModeBanner: false,
         title: 'Demo',
-        initialRoute: initJudge()?RouteConfig.homePage:RouteConfig.homePage,
+        initialRoute: initJudge()?RouteConfig.homePage:RouteConfig.loginWithPasswordPage,
         getPages: RouteConfig.getPages,
         unknownRoute: GetPage(name: '/notfound', page: () => const Scaffold(body: Center(child: Text("No Page Route Provided"),))),
         

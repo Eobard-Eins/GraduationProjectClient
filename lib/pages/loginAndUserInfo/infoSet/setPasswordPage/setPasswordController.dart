@@ -1,6 +1,6 @@
 
+import 'package:client_application/components/common/snackbar/snackbar.dart';
 import 'package:client_application/config/RouteConfig.dart';
-import 'package:client_application/res/color.dart';
 import 'package:client_application/services/UserNetService.dart';
 import 'package:client_application/utils/status.dart';
 import 'package:flutter/material.dart';
@@ -37,52 +37,37 @@ class SetPasswordController extends GetxController{
     UserNetService().setPassword(account,passwordController.value.text, passwordAgainController.value.text).then((value){
       switch(value.statusCode){
         case Status.passwordInconsistent:
-          printInfo(info: "密码不一致错误,code:${value.statusCode}");
-          Get.snackbar("设置失败", "请确保两次密码一致",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          snackbar.error("设置失败", "请确保两次密码一致", value.statusCode);
           onInit();
           break;
 
         case Status.passwordFormatError:
-          printInfo(info: "密码格式错误,code:${value.statusCode}");
-          Get.snackbar("设置失败", "请检查密码格式",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          snackbar.error("设置失败", "请检查密码格式", value.statusCode);
           onInit();
           break;
 
-        case Status.netError:
-          printInfo(info: "网络错误,code:${value.statusCode}");
-          Get.snackbar("设置失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
-          onInit();
-          break;
-
-        case Status.setPasswordError:
-          printInfo(info: "未知错误,code:${value.statusCode}");
-          Get.snackbar("设置失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+        case Status.netError||Status.setPasswordError:
+          snackbar.error("设置失败", "请检查网络设置", value.statusCode);
           onInit();
           break;
 
         case Status.infoMiss:
-          printInfo(info: "信息缺失,code:${value.statusCode}");
-          Get.snackbar("设置失败", "请检查输入是否正确",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          snackbar.error("设置失败", "请检查输入是否正确", value.statusCode);
           onInit();
           break;
 
         case Status.success:
           if(value.data==true){
-            if(needSetInfo){
-              Get.offNamed(RouteConfig.setNameAndAvatarPage,arguments: {'needSetInfo':needSetInfo,'account':account});
-            }else{
+            needSetInfo?
+              Get.offNamed(RouteConfig.setNameAndAvatarPage,arguments: {'needSetInfo':true,'account':account}):
               Get.back();
-            }
           }else{
-            Get.snackbar("设置失败", "请稍后重试",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
-
+            snackbar.error("设置失败", "请稍后重试", value.statusCode);
           }
-          
           break;
 
         default:
-          printInfo(info: "未知错误,code:${value.statusCode}");
-          Get.snackbar("设置失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          snackbar.error("设置失败", "请检查网络设置", value.statusCode, exception: true);
           onInit();
           break;
       }

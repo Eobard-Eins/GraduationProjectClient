@@ -38,16 +38,16 @@ class LoginWithPasswordPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
               child: Obx(()=>UserTextFieldWidget(
-                controller: _lwppc.phoneController,
-                onChanged: (value){_lwppc.phoneControllerText.value=_lwppc.phoneController.text = InputFilter.FilterNum(value);},
+                controller: _lwppc.mailController,
+                onChanged: (value){_lwppc.mailControllerText.value=_lwppc.mailController.text = InputFilter.FilterEmail(value);},
                 readOnly: false,
-                keyboardType: TextInputType.phone,
+                keyboardType: TextInputType.emailAddress,
                 //textInputAction: TextInputAction.next,
-                hintText: "请输入手机号码",
-                suffixIcon: _lwppc.phoneControllerText.value.isEmpty?null:IconButton(
+                hintText: "请输入邮箱",
+                suffixIcon: _lwppc.mailControllerText.value.isEmpty?null:IconButton(
                         onPressed: () {
                           //清空输入框
-                          _lwppc.phoneController.clear();
+                          _lwppc.mailController.clear();
                           _lwppc.passwordControllerText.value="";
                         },
                         icon: Icon(Icons.clear,color: Colors.grey,),
@@ -73,7 +73,7 @@ class LoginWithPasswordPage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                       IconButton(
-                        onPressed: _lwppc.phoneControllerText.value.isEmpty?null:_lwppc.changeObscure,
+                        onPressed: _lwppc.mailControllerText.value.isEmpty?null:_lwppc.changeObscure,
                         icon: Icon(_lwppc.obscure.value?Icons.visibility_off:Icons.visibility,color:_lwppc.passwordControllerText.value.isEmpty?Colors.transparent: Colors.grey,),
                       ),
                     TextButtonWithNoSplash(onTap: _lwppc.forgetPassword,text: "忘记密码",fontSize: 14,color: Coloors.main,),

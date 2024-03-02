@@ -7,7 +7,7 @@ import 'package:client_application/pages/loginAndUserInfo/infoSet/setNameAndAvat
 import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginPageUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/login/loginWithPasswordPage/loginWithPasswordPageUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/setPasswordPage/setPasswordUI.dart';
-import 'package:client_application/pages/loginAndUserInfo/infoSet/verifyPhonePage/verifyPhoneUI.dart';
+import 'package:client_application/pages/loginAndUserInfo/infoSet/verifyEmailPage/verifyEmailUI.dart';
 import 'package:client_application/pages/temp/testUI.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 

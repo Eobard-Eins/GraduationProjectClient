@@ -36,10 +36,10 @@ class UserNetService extends GetConnect{
 
   Future<Result> loginWithPassword(String account, String password) async{
     if(!Discriminator.accountOk(account)){
-      return Result.error(statusCode:Status.phoneFormatError);
+      return Result.error(statusCode:Status.mailFormatError);
     }
     //TODO:
-    final Result res=await get("$_baseUrl/userLogin/loginWithPassword",query:{"phone":account,"password":password}).then((value){
+    final Result res=await get("$_baseUrl/userLogin/loginWithPassword",query:{"mailAddress":account,"password":password}).then((value){
       //value.printInfo();
       //printError(info:value.body.toString());
       if(value.isOk){
@@ -50,15 +50,13 @@ class UserNetService extends GetConnect{
         }
         
         User u=User.fromJson(value.body['data']);
-        printInfo(info:"解析User：${u.phone}");
+        printInfo(info:"解析User：${u.mailAddress}");
         /*本地缓存*/ 
         SpUtils.setBool("isLogin", true);
         SpUtils.setInt("lastLoginTime",DateTime.now().millisecondsSinceEpoch);
-        SpUtils.setString("account", u.phone);
-        SpUtils.setString("username", u.username??"用户${u.phone}");
+        SpUtils.setString("account", u.mailAddress);
+        SpUtils.setString("username", u.username??"用户${u.mailAddress}");
         SpUtils.setString("gender", u.gender??"未知");
-        SpUtils.setDouble("longitude", u.longitude??116.397128);
-        SpUtils.setDouble("latitude", u.latitude??39.916527);
         SpUtils.setString("avatar", u.avatar);//存头像的网络url
         SpUtils.setDouble("point", u.point);
         return Result.success(data: u);
@@ -77,7 +75,7 @@ class UserNetService extends GetConnect{
   //综合已有账号和新账号的验证，前端接口分三种api
   Future<Result> loginWithCaptcha(String account,String captcha) async{
     if(!Discriminator.accountOk(account)){
-      return Result.error(statusCode:Status.phoneFormatError);
+      return Result.error(statusCode:Status.mailFormatError);
     }
     //TODO:
     await TimeTestModel(3);
@@ -89,7 +87,7 @@ class UserNetService extends GetConnect{
   //用于已有账号的验证码验证
   Future<Result> loginWithCaptchaByUserExist(String account,String captcha) async{
     if(!Discriminator.accountOk(account)){
-      return Result.error(statusCode:Status.phoneFormatError);
+      return Result.error(statusCode:Status.mailFormatError);
     }
     //TODO:
     await TimeTestModel(3);
@@ -101,7 +99,7 @@ class UserNetService extends GetConnect{
   //用于新账号的验证码验证
   Future<Result> loginWithCaptchaByUserNotExist(String account,String captcha) async{
     if(!Discriminator.accountOk(account)){
-      return Result.error(statusCode:Status.phoneFormatError);
+      return Result.error(statusCode:Status.mailFormatError);
     }
     //TODO:
     await TimeTestModel(3);
@@ -113,7 +111,7 @@ class UserNetService extends GetConnect{
 
   Future<Result> sendCaptcha(String account) async{
     if(!Discriminator.accountOk(account)){
-      return Result.error(statusCode:Status.phoneFormatError);
+      return Result.error(statusCode:Status.mailFormatError);
     }
     //TODO:
     await TimeTestModel(3);
@@ -127,10 +125,10 @@ class UserNetService extends GetConnect{
       return Result.error(statusCode:Status.passwordInconsistent);
     }
     if(!Discriminator.passwordOk(password)){
-      return Result.error(statusCode:Status.phoneFormatError);
+      return Result.error(statusCode:Status.mailFormatError);
     }
-    printInfo(info:'开始设置密码:{"phone":"$account","password":"$password"}');
-    final Result res=await put("$_baseUrl/userInfo/setPassword", '{"phone":"$account","password":"$password"}').then((value){
+    printInfo(info:'开始设置密码:{"mailAddress":"$account","password":"$password"}');
+    final Result res=await put("$_baseUrl/userInfo/setPassword", '{"mailAddress":"$account","password":"$password"}').then((value){
       if(value.isOk){
         printInfo(info:"网络正常,${value.body.toString()}");
         if(value.body['statusCode']!=Status.success){
@@ -160,7 +158,7 @@ class UserNetService extends GetConnect{
   }
 
   Future<Result> setUsername(String account,String username) async{
-    final Result res=await put("$_baseUrl/userInfo/setName", '{"phone":"$account","username":"$username"}').then((value){
+    final Result res=await put("$_baseUrl/userInfo/setName", '{"mailAddress":"$account","username":"$username"}').then((value){
       if(value.isOk){
         printInfo(info:"网络正常,${value.body.toString()}");
         if(value.body['statusCode']!=Status.success){

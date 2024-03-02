@@ -1,5 +1,5 @@
 class User {
-  late String phone;
+  late String mailAddress;
 
   late String? username;
 
@@ -20,7 +20,7 @@ class User {
 
 
   User(
-      {required this.phone,
+      {required this.mailAddress,
       required this.username,
       required this.password,
       required this.gender,
@@ -29,7 +29,7 @@ class User {
       required this.latitude,
       required this.point});
   User.create(){
-    phone = "";
+    mailAddress = "";
     password = "";
     avatar="";
     point=0.0;
@@ -37,7 +37,7 @@ class User {
 
   User.fromJson(Map<String, dynamic> json) {
 
-    phone = json['phone'];
+    mailAddress = json['mailAddress'];
     username = json['username'];
     password = json['password'];
     gender = json['gender'];

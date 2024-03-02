@@ -3,7 +3,7 @@ import 'package:client_application/components/common/button/squareTextButton.dar
 import 'package:client_application/components/common/button/textButtonWithNoSplash.dart';
 import 'package:client_application/components/login/checkAgreement.dart';
 import 'package:client_application/components/common/input/textField.dart';
-import 'package:client_application/pages/loginAndUserInfo/infoSet/verifyPhonePage/verifyPhoneController.dart';
+import 'package:client_application/pages/loginAndUserInfo/infoSet/verifyEmailPage/verifyEmailController.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/utils/filter.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 
 //用于修改密码前、注册账号前验证手机号
 class VerifyPhonePage extends StatelessWidget {
-  final VerifyPhoneController _vpc=Get.put<VerifyPhoneController>(VerifyPhoneController());
+  final VerifymailController _vpc=Get.put<VerifymailController>(VerifymailController());
   final int captchaLenth=6;
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class VerifyPhonePage extends StatelessWidget {
         appBar: AppBar(
           //标题
           title: const Text(
-            "验证手机号",
+            "邮箱验证",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
@@ -40,20 +40,20 @@ class VerifyPhonePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
               child: Obx(()=>UserTextFieldWidget(
-                controller: _vpc.phoneController.value,
+                controller: _vpc.mailController.value,
                 onChanged: (value){
-                  _vpc.phoneController.value.text = InputFilter.FilterNum(value); 
-                  _vpc.phoneController.refresh();
+                  _vpc.mailController.value.text = InputFilter.FilterEmail(value); 
+                  _vpc.mailController.refresh();
                 },
                 readOnly: false,
-                keyboardType: TextInputType.phone,
+                keyboardType: TextInputType.emailAddress,
                 //textInputAction: TextInputAction.next,
-                hintText: "请输入手机号码",
-                suffixIcon: _vpc.phoneController.value.text.isEmpty?null:IconButton(
+                hintText: "请输入邮箱",
+                suffixIcon: _vpc.mailController.value.text.isEmpty?null:IconButton(
                         onPressed: () {
                           //清空输入框
-                          _vpc.phoneController.value.clear();
-                          _vpc.phoneController.refresh();
+                          _vpc.mailController.value.clear();
+                          _vpc.mailController.refresh();
                         },
                         icon: const Icon(Icons.clear,color: Colors.grey,),
                       ),

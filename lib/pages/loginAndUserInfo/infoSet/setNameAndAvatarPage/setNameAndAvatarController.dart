@@ -1,4 +1,5 @@
 
+import 'package:client_application/components/common/snackbar/snackbar.dart';
 import 'package:client_application/components/user/avatarFromLocal.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
@@ -66,91 +67,61 @@ class SetNameAndAvatarController extends GetxController{
     String account=Get.arguments["account"] as String;
     UserNetService().setAvatar(account,imgPath.value).then((value){
       switch(value.statusCode){
-        case Status.setAvatarError:
-          printInfo(info: "数据库写入错误,code:${value.statusCode}");
-          Get.snackbar("设置失败", "请稍后重试",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
-          onInit();
-          break;
-
-        case Status.ossError:
-          printInfo(info: "OSS服务器错误,code:${value.statusCode}");
-          Get.snackbar("设置失败", "请稍后重试",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+        case Status.setAvatarError||Status.ossError:
+          snackbar.error("设置失败", "请稍后重试", value.statusCode);
           onInit();
           break;
 
         case Status.netError:
-          printInfo(info: "网络错误,code:${value.statusCode}");
-          Get.snackbar("设置失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          snackbar.error("设置失败", "请检查网络设置", value.statusCode);
           onInit();
           break;
 
         case Status.userNotExist:
-          printInfo(info: "账号不存在,code:${value.statusCode}");
-          Get.snackbar("设置失败", "账号不存在",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
-          onInit();
-          break;
-
-        case Status.infoMiss:
-          printInfo(info: "信息缺失,code:${value.statusCode}");
-          Get.snackbar("设置失败", "请检查输入是否正确",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          snackbar.error("设置失败", "账号不存在", value.statusCode);
           onInit();
           break;
 
         case Status.success:
-          setname(account, (){
-            if(value.data==true){
-              if(needSetInfo){
-                Get.offNamed(RouteConfig.setUserInitProfilePage,arguments:{'needSetInfo':true,'account':account});
-              }else{
-                Get.back();
-              }
-            }else{
-              Get.snackbar("设置失败", "请稍后重试",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);    
-            }
-          });
+          value.data?setname(account, needSetInfo):snackbar.error("设置失败", "请稍后重试", value.statusCode);
           break;
 
         default:
-          printInfo(info: "未知错误,code:${value.statusCode}");
-          Get.snackbar("设置失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          snackbar.error("设置失败", "请检查网络设置", value.statusCode, exception: true);
           onInit();
           break;
       }
     });
   }
-  void setname(String account,Function f){
+  void setname(String account,bool needSetInfo){
     UserNetService().setUsername(account, usernameController.value.text).then((value){
       switch(value.statusCode){
         case Status.setUsernameError:
-          printInfo(info: "数据库写入错误,code:${value.statusCode}");
-          Get.snackbar("设置失败", "请稍后重试",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          snackbar.error("设置失败", "请稍后重试", value.statusCode);
           onInit();
           break;
         case Status.netError:
-          printInfo(info: "网络错误,code:${value.statusCode}");
-          Get.snackbar("设置失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
-          onInit();
-          break;
-
-        case Status.userNotExist:
-          printInfo(info: "账号不存在,code:${value.statusCode}");
-          Get.snackbar("设置失败", "账号不存在",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          snackbar.error("设置失败", "请检查网络设置", value.statusCode);
           onInit();
           break;
 
         case Status.infoMiss:
-          printInfo(info: "信息缺失,code:${value.statusCode}");
-          Get.snackbar("设置失败", "请检查输入是否正确",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          snackbar.error("设置失败", "请检查输入是否正确", value.statusCode);
           onInit();
           break;
 
         case Status.success:
-          f();
+          if(value.data==true){
+            needSetInfo?
+              Get.offNamed(RouteConfig.setUserInitProfilePage,arguments:{'needSetInfo':true,'account':account}):
+              Get.back();
+          }else{
+            snackbar.error("设置失败", "请稍后重试", value.statusCode);
+          }
           break;
 
         default:
-          printInfo(info: "未知错误,code:${value.statusCode}");
-          Get.snackbar("设置失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          snackbar.error("设置失败", "请检查网络设置", value.statusCode, exception: true);
           onInit();
           break;
       }

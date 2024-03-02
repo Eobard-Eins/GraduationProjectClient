@@ -7,30 +7,28 @@ import 'package:client_application/utils/status.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginPageController extends GetxController {
-  TextEditingController mailController=TextEditingController();
-  TextEditingController captchaController=TextEditingController();
-
-  Rx<String> mailControllerText= "".obs;
-  Rx<String> captchaControllerText= "".obs;
+class VerifymailController extends GetxController{
+  Rx<TextEditingController> mailController=TextEditingController().obs;
+  Rx<TextEditingController> captchaController=TextEditingController().obs;
 
   Rx<bool> checkAgreement = false.obs;
-  Rx<bool> hasGetCaptcha = false.obs;
 
+  Rx<bool> hasGetCaptcha = false.obs;
   Rx<String> captchaHintText= "获取验证码".obs;
 
   @override
   void onInit(){
     super.onInit();
-    mailController.clear(); captchaController.clear();
-    mailControllerText.value="";
-    captchaControllerText.value="";
+    printInfo(info: "验证页信息初始化");
+    mailController.value.clear();
+    captchaController.value.clear();
+    mailController.refresh();
+    captchaController.refresh();
     checkAgreement.value=false;
-    hasGetCaptcha.value=false;
-    captchaHintText.value="获取验证码";
+    hasGetCaptcha.value = false;
+    captchaHintText.value= "获取验证码";
   }
 
-  //倒计时
   void timeDown(int init) async{
     int countdown = init;
     Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -50,12 +48,10 @@ class LoginPageController extends GetxController {
     checkAgreement.value = !checkAgreement.value;
   }
 
-  //判断是否可以使用登录按钮
-  Function()? canLogin(){
-    return checkAgreement.value&&mailControllerText.value.isNotEmpty&&captchaControllerText.value.length>=6?onTapLogin:null;
+  Function()? canNext(){
+    return checkAgreement.value&&mailController.value.text.isNotEmpty&&captchaController.value.text.isNotEmpty?onTapNext:null;
   }
 
-  //发送验证码
   void onTapCaptcha() {
     printInfo(info: "验证码发送按钮触发");
     int initSec=60;
@@ -65,7 +61,7 @@ class LoginPageController extends GetxController {
     timeDown(initSec);
 
     printInfo(info: "发送验证码");
-    UserNetService().sendCaptcha(mailControllerText.value).then((value){
+    UserNetService().sendCaptcha(mailController.value.text).then((value){
       switch (value.statusCode){
         case Status.mailFormatError:
           snackbar.error("获取验证码失败", "请输入正确的邮箱", value.statusCode);
@@ -86,57 +82,44 @@ class LoginPageController extends GetxController {
     });
   }
 
-  void onTapLoginByPassword() {
-    printInfo(info: "跳转密码登录页");
-    Get.offNamed(RouteConfig.loginWithPasswordPage);
-    //Navigator.of(context).pushReplacementNamed(RouteConfig.loginWithPasswordPage);
-  }
-
-  void onTapRegister() {
-    printInfo(info: "跳转注册的验证手机号页");
-    Get.toNamed(RouteConfig.verifyPhonePage,arguments: {'newUser':true});
-    //Navigator.of(context).pushNamed(RouteConfig.verifyPhonePage);
-  }
-
-  void onTapLogin() {
-    printInfo(info: "登录事件按钮触发");
-
-    UserNetService().loginWithCaptcha(mailControllerText.value,captchaControllerText.value).then((value){
+  void onTapNext() {
+    printInfo(info: "跳转设置密码页");
+    //print(Get.arguments);
+    bool newUser=Get.arguments["newUser"] as bool;
+    UserNetService().loginWithCaptcha(mailController.value.text,captchaController.value.text).then((value){
       switch (value.statusCode){
         case Status.mailFormatError:
           snackbar.error("验证失败", "请输入正确的邮箱", value.statusCode);
-          captchaController.text=captchaControllerText.value="";//验证码框清空
+          captchaController.value.clear();//验证码框清空
+          captchaController.refresh();
           break;
         
         case Status.netError:
           snackbar.error("验证失败", "请检查网络设置", value.statusCode);
-          captchaController.text=captchaControllerText.value="";//验证码框清空
+          captchaController.value.clear();//验证码框清空
+          captchaController.refresh();
           break;
         
         case Status.captchaError:
           snackbar.error("验证失败", "请输入正确的验证码", value.statusCode);
-          captchaController.text=captchaControllerText.value="";//验证码框清空
-          break;
+          captchaController.value.clear();//验证码框清空
+          captchaController.refresh();
+          break;  
 
         case Status.captchaExpiration:
           snackbar.error("验证码超时", "请重新发送验证码", value.statusCode);
-          captchaController.text=captchaControllerText.value="";//验证码框清空
-          break;
-
-        case Status.successButUserNotExist:
-          printInfo(info: "跳转设置密码页,code:${value.statusCode}");
-          //TODO: 跳转设置密码页
-          Get.toNamed(RouteConfig.setPasswordPage,arguments:{'needSetInfo':true,'account':mailControllerText.value});
+          captchaController.value.clear();//验证码框清空
+          captchaController.refresh();
           break;
         
-        case Status.success:
-          printInfo(info: "登录成功,code:${value.statusCode}");
-          //TODO: 前往首页
-          Get.offAllNamed(RouteConfig.homePage);
+        case Status.successButUserNotExist||Status.success:
+          printInfo(info: "跳转设置密码页,code:${value.statusCode}");
+          //TODO: 跳转设置密码页
+          Get.offNamed(RouteConfig.setPasswordPage,arguments:{'needSetInfo':value.statusCode!=Status.success,'account':mailController.value.text});
           break;
         
         default:
-          snackbar.error("验证失败", "请检查网络设置", value.statusCode, exception:true);
+          snackbar.error("验证失败", "请检查网络设置", value.statusCode,exception: true);
           onInit();
           break;
       }
@@ -146,7 +129,5 @@ class LoginPageController extends GetxController {
   void onTapAgreement() {
     printInfo(info: "跳转协议页");
     Get.toNamed(RouteConfig.agreementInfoPage);
-    //Navigator.of(context).pushNamed(RouteConfig.agreementInfoPage);
   }
-
 }

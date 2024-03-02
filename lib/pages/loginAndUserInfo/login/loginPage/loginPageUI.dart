@@ -39,17 +39,17 @@ class LoginPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
               child: Obx(()=>UserTextFieldWidget(
-                controller: _lpc.phoneController,
-                onChanged: (value){_lpc.phoneControllerText.value = _lpc.phoneController.text = InputFilter.FilterNum(value);},
+                controller: _lpc.mailController,
+                onChanged: (value){_lpc.mailControllerText.value = _lpc.mailController.text = InputFilter.FilterEmail(value);},
                 readOnly: false,
-                keyboardType: TextInputType.phone,
+                keyboardType: TextInputType.emailAddress,
                 //textInputAction: TextInputAction.next,
-                hintText: "请输入手机号码",
-                suffixIcon: _lpc.phoneControllerText.value.isEmpty?null:IconButton(
+                hintText: "请输入邮箱",
+                suffixIcon: _lpc.mailControllerText.value.isEmpty?null:IconButton(
                         onPressed: () {
                           //清空输入框
-                          _lpc.phoneController.clear();
-                          _lpc.phoneControllerText.value="";
+                          _lpc.mailController.clear();
+                          _lpc.mailControllerText.value="";
                         },
                         icon: const Icon(Icons.clear,color: Colors.grey,),
                       ),
@@ -102,7 +102,7 @@ class LoginPage extends StatelessWidget {
             ),
 
             Obx(()=>LoginButton(onPressed: _lpc.canLogin()),)
-            //_lpc.checkAgreement.value&&_lpc.phoneControllerText.value.isNotEmpty&&_lpc.captchaControllerText.value.length>=captchaLenth?_lpc.onTapLogin:null
+            //_lpc.checkAgreement.value&&_lpc.mailControllerText.value.isNotEmpty&&_lpc.captchaControllerText.value.length>=captchaLenth?_lpc.onTapLogin:null
           ],
         ),
 

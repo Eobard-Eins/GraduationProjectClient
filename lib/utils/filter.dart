@@ -3,6 +3,9 @@
 import 'package:get/get.dart';
 
 class InputFilter{
+  static String FilterEmail(String s){
+    return s;
+  }
   static String FilterNum(String s){
     //print("【Filter】 FilterNum:input: $s");
     if(s.isEmpty) return s;

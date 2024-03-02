@@ -1,7 +1,4 @@
 
-
-import 'package:client_application/components/common/button/textButtonWithNoSplash.dart';
-import 'package:client_application/components/task/taskItem.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/models/Task.dart';
 import 'package:client_application/res/color.dart';

@@ -1,15 +1,15 @@
+import 'package:client_application/components/common/snackbar/snackbar.dart';
 import 'package:client_application/config/RouteConfig.dart';
-import 'package:client_application/res/color.dart';
 import 'package:client_application/services/UserNetService.dart';
 import 'package:client_application/utils/status.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginWithPasswordPageController extends GetxController {
-  TextEditingController phoneController=TextEditingController();
+  TextEditingController mailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
 
-  Rx<String> phoneControllerText= "".obs;
+  Rx<String> mailControllerText= "".obs;
   Rx<String> passwordControllerText= "".obs;
 
   Rx<bool> obscure=true.obs;
@@ -17,9 +17,9 @@ class LoginWithPasswordPageController extends GetxController {
   @override
   void onInit(){
     super.onInit();
-    phoneController.clear(); passwordController.clear();
+    mailController.clear(); passwordController.clear();
     passwordControllerText.value="";
-    phoneControllerText.value="";
+    mailControllerText.value="";
     obscure.value=true;
   }
 
@@ -30,7 +30,7 @@ class LoginWithPasswordPageController extends GetxController {
   
   //判断是否可用登录按钮
   Function()? canLogin(){
-    return phoneControllerText.value.isNotEmpty&&passwordControllerText.value.isNotEmpty?onTapLogin:null;
+    return mailControllerText.value.isNotEmpty&&passwordControllerText.value.isNotEmpty?onTapLogin:null;
   }
 
   void forgetPassword(){
@@ -54,29 +54,25 @@ class LoginWithPasswordPageController extends GetxController {
   void onTapLogin(){
     printInfo(info: "登录按钮触发");
 
-    UserNetService().loginWithPassword(phoneControllerText.value,passwordControllerText.value).then((value) {
+    UserNetService().loginWithPassword(mailControllerText.value,passwordControllerText.value).then((value) {
       switch (value.statusCode){
-        case Status.phoneFormatError:
-          printInfo(info: "手机号格式不匹配,code:${value.statusCode}");
-          Get.snackbar("登录失败", "请输入正确的手机号",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+        case Status.mailFormatError:
+          snackbar.error("登录失败", "请输入正确的邮箱", value.statusCode);
           passwordController.text=passwordControllerText.value="";//密码框清空
           break;
         
         case Status.netError:
-          printInfo(info: "网络错误,code:${value.statusCode}");
-          Get.snackbar("登录失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          snackbar.error("登录失败", "请检查网络设置", value.statusCode);
           passwordController.text=passwordControllerText.value="";//密码框清空
           break;
 
         case Status.userNotExist:
-          printInfo(info: "账号不存在,code:${value.statusCode}");
-          Get.snackbar("登录失败", "账号不存在，请确保输入的手机号正确",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          snackbar.error("登录失败", "账号不存在，请确保输入的邮箱正确", value.statusCode);
           passwordController.text=passwordControllerText.value="";//密码框清空
           break;
 
         case Status.passwordError:
-          printInfo(info: "密码错误,code:${value.statusCode}");
-          Get.snackbar("登录失败", "请输入正确的密码",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          snackbar.error("登录失败", "请输入正确的密码", value.statusCode);
           passwordController.text=passwordControllerText.value="";//密码框清空
           break;
         
@@ -87,10 +83,8 @@ class LoginWithPasswordPageController extends GetxController {
           break;
 
         default:
-          printInfo(info: "未知错误,code:${value.statusCode}");
-          Get.snackbar("登录失败", "请检查网络设置",icon: const Icon(Icons.error_outline,color: Coloors.red,),shouldIconPulse:false);
+          snackbar.error("登录失败", "请检查网络设置", value.statusCode, exception: true);
           onInit();
-
           break;
       }
     });    

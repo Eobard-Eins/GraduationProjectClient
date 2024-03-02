@@ -46,7 +46,7 @@ class UserTextFieldWidget extends StatelessWidget {
       keyboardType: readOnly==true?null:keyboardType,
       onTap: onTap,
       onChanged: onChanged,
-      maxLength: maxLength??11,
+      maxLength: maxLength??25,
       maxLines: maxLines??1,
       obscureText: obscureText??false,
       textInputAction: textInputAction,
