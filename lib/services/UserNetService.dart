@@ -23,7 +23,6 @@ class UserNetService extends GetConnect{
   @override
   void onInit(){
     super.onInit();
-
   }
 
 
@@ -38,11 +37,14 @@ class UserNetService extends GetConnect{
     if(!Discriminator.accountOk(account)){
       return Result.error(statusCode:Status.mailFormatError);
     }
-    //TODO:
+
     final Result res=await get("$_baseUrl/userLogin/loginWithPassword",query:{"mailAddress":account,"password":password}).then((value){
       //value.printInfo();
       //printError(info:value.body.toString());
-      if(value.isOk){
+      if(!value.isOk){
+        printInfo(info:"网络异常，不能连接服务器");
+        return Result.error(statusCode: Status.netError);
+      }else{
         printInfo(info:"网络正常,${value.body.toString()}");
         if(value.body['statusCode']!=Status.success){
           printInfo(info:"网络正常，服务器返回错误码：${value.body['statusCode']}");
@@ -55,16 +57,12 @@ class UserNetService extends GetConnect{
         SpUtils.setBool("isLogin", true);
         SpUtils.setInt("lastLoginTime",DateTime.now().millisecondsSinceEpoch);
         SpUtils.setString("account", u.mailAddress);
-        SpUtils.setString("username", u.username??"用户${u.mailAddress}");
+        SpUtils.setString("username", u.username??"用户${u.mailAddress.split('@')[0]}");
         SpUtils.setString("gender", u.gender??"未知");
         SpUtils.setString("avatar", u.avatar);//存头像的网络url
         SpUtils.setDouble("point", u.point);
         return Result.success(data: u);
-      }else{
-        printInfo(info:"网络异常，不能连接服务器");
-        return Result.error(statusCode: Status.netError);
       }
-      
     }).onError((error, stackTrace){
       printInfo(info:"网络异常且未知错误");
       return Result.error(statusCode: Status.netError);
@@ -72,52 +70,69 @@ class UserNetService extends GetConnect{
     return res;
   }
 
-  //综合已有账号和新账号的验证，前端接口分三种api
   Future<Result> loginWithCaptcha(String account,String captcha) async{
     if(!Discriminator.accountOk(account)){
       return Result.error(statusCode:Status.mailFormatError);
     }
     //TODO:
-    await TimeTestModel(3);
+    final Result res=await get("$_baseUrl/userLogin/loginWithCaptcha",query:{"mailAddress":account,"captcha":captcha}).then((value){
+      if(!value.isOk){
+        printInfo(info:"网络异常，不能连接服务器");
+        return Result.error(statusCode: Status.netError);
+      }else{
+        printInfo(info:"网络正常,${value.body.toString()}");
+        if(value.body['statusCode']!=Status.success){
+          if(value.body['statusCode']==Status.successButUserNotExist){
+            SpUtils.setBool("isLogin", false);
+          }
+          printInfo(info:"网络正常，服务器返回错误码：${value.body['statusCode']}");
+          return Result.error(statusCode:value.body['statusCode']);
+        }
+        
+        User u=User.fromJson(value.body['data']);
+        printInfo(info:"解析User：${u.mailAddress}");
+        /*本地缓存*/ 
+        SpUtils.setBool("isLogin", true);
+        SpUtils.setInt("lastLoginTime",DateTime.now().millisecondsSinceEpoch);
+        SpUtils.setString("account", u.mailAddress);
+        SpUtils.setString("username", u.username??"用户${u.mailAddress.split('@')[0]}");
+        SpUtils.setString("gender", u.gender??"未知");
+        SpUtils.setString("avatar", u.avatar);//存头像的网络url
+        SpUtils.setDouble("point", u.point);
+        return Result.success(data: u);
+      }
+    }).onError((error, stackTrace){
+      printInfo(info:"网络异常且未知错误");
+      return Result.error(statusCode: Status.netError);
+    });
 
-
-    return Result.success(data: true);
+    return res;
   }
-
-  //用于已有账号的验证码验证
-  Future<Result> loginWithCaptchaByUserExist(String account,String captcha) async{
-    if(!Discriminator.accountOk(account)){
-      return Result.error(statusCode:Status.mailFormatError);
-    }
-    //TODO:
-    await TimeTestModel(3);
-
-
-    return Result.success(data: true);
-  }
-
-  //用于新账号的验证码验证
-  Future<Result> loginWithCaptchaByUserNotExist(String account,String captcha) async{
-    if(!Discriminator.accountOk(account)){
-      return Result.error(statusCode:Status.mailFormatError);
-    }
-    //TODO:
-    await TimeTestModel(3);
-
-
-    return Result.success(data: true);
-  }
-  
 
   Future<Result> sendCaptcha(String account) async{
     if(!Discriminator.accountOk(account)){
       return Result.error(statusCode:Status.mailFormatError);
     }
-    //TODO:
-    await TimeTestModel(3);
+    
+    final Result res=await get("$_baseUrl/userLogin/sendCaptcha",query:{"mailAddress":account}).then((value){
+      if(!value.isOk){
+        printInfo(info:"网络异常，不能连接服务器");
+        return Result.error(statusCode: Status.netError);
+      }else{
+        printInfo(info:"网络正常,${value.body.toString()}");
+        if(value.body['statusCode']!=Status.success){
+          printInfo(info:"网络正常，服务器返回错误码：${value.body['statusCode']}");
+          return Result.error(statusCode:value.body['statusCode']);
+        }
 
+        return Result.success(data: value.body['data']);
+      }
+    }).onError((error, stackTrace){
+      printInfo(info:"网络异常且未知错误");
+      return Result.error(statusCode: Status.netError);
+    });
 
-    return Result.success(data: true);
+    return res;
   }
   
   Future<Result> setPassword(String account,String password,String passwordAgain) async{

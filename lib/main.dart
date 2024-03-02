@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           ),
         debugShowCheckedModeBanner: false,
         title: 'Demo',
-        initialRoute: initJudge()?RouteConfig.homePage:RouteConfig.loginWithPasswordPage,
+        initialRoute: goHome()?RouteConfig.homePage:RouteConfig.loginWithCaptchaPage,
         getPages: RouteConfig.getPages,
         unknownRoute: GetPage(name: '/notfound', page: () => const Scaffold(body: Center(child: Text("No Page Route Provided"),))),
         
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
     
   }
 
-  bool initJudge(){
+  bool goHome(){
     if(SpUtils.getBool("isLogin")){//true
       int lt=SpUtils.getInt("lastLoginTime");
       int nt=DateTime.now().millisecondsSinceEpoch;

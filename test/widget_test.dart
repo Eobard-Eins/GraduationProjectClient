@@ -9,6 +9,7 @@ import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginPageUI.dart';
 import 'package:client_application/services/UserNetService.dart';
 import 'package:client_application/models/User.dart';
+import 'package:client_application/utils/discriminator.dart';
 import 'package:client_application/utils/localStorage.dart';
 import 'package:client_application/utils/result.dart';
 import 'package:flutter/material.dart';
@@ -21,29 +22,10 @@ bool initJudge(){
     return SpUtils.getBool("isLogin");
   }
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Demo',
-        initialRoute: initJudge()?RouteConfig.homePage:RouteConfig.loginWithCaptchaPage,
-        getPages: RouteConfig.getPages,
-        unknownRoute: GetPage(name: '/notfound', page: () => const Scaffold(body: Center(child: Text("No Page Route Provided"),))),
-      ));
+  // testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+    
+  // });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
-
-
+  print(Discriminator.accountOk("123456a564.com"));
   
 }

@@ -47,7 +47,7 @@ class LoginWithPasswordPageController extends GetxController {
 
   void onTapRegister() {
     printInfo(info: "跳转注册页");
-    Get.toNamed(RouteConfig.verifyPhonePage,arguments: {'newUser':true});
+    Get.toNamed(RouteConfig.verifyPhonePage);//,arguments: {'newUser':true});
     //Navigator.of(context).pushNamed(RouteConfig.verifyPhonePage);
   }
 

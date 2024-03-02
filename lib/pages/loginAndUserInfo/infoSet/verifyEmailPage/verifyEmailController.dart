@@ -85,7 +85,7 @@ class VerifymailController extends GetxController{
   void onTapNext() {
     printInfo(info: "跳转设置密码页");
     //print(Get.arguments);
-    bool newUser=Get.arguments["newUser"] as bool;
+    //bool newUser=Get.arguments["newUser"] as bool;
     UserNetService().loginWithCaptcha(mailController.value.text,captchaController.value.text).then((value){
       switch (value.statusCode){
         case Status.mailFormatError:

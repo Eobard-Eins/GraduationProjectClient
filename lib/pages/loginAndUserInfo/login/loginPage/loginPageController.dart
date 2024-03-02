@@ -94,7 +94,7 @@ class LoginPageController extends GetxController {
 
   void onTapRegister() {
     printInfo(info: "跳转注册的验证手机号页");
-    Get.toNamed(RouteConfig.verifyPhonePage,arguments: {'newUser':true});
+    Get.toNamed(RouteConfig.verifyPhonePage);//,arguments: {'newUser':true});
     //Navigator.of(context).pushNamed(RouteConfig.verifyPhonePage);
   }
 
