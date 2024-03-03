@@ -1,6 +1,6 @@
 
-import 'package:client_application/components/common/snackbar/snackbar.dart';
-import 'package:client_application/components/user/avatarFromLocal.dart';
+import 'package:client_application/components/display/snackbar.dart';
+import 'package:client_application/components/img/avatarFromLocal.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/services/UserNetService.dart';

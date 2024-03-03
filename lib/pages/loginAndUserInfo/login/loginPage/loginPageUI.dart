@@ -1,10 +1,10 @@
 
 import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginPageController.dart';
 import 'package:get/get.dart';
-import 'package:client_application/components/common/button/textButtonWithNoSplash.dart';
-import 'package:client_application/components/login/checkAgreement.dart';
-import 'package:client_application/components/common/button/loginButton.dart';
-import 'package:client_application/components/common/input/textField.dart';
+import 'package:client_application/components/button/textButtonWithNoSplash.dart';
+import 'package:client_application/components/display/checkAgreement.dart';
+import 'package:client_application/components/button/loginButton.dart';
+import 'package:client_application/components/text/textField.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/utils/filter.dart';
 import 'package:flutter/material.dart';

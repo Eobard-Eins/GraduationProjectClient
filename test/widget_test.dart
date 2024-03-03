@@ -11,6 +11,7 @@ import 'package:client_application/services/UserNetService.dart';
 import 'package:client_application/models/User.dart';
 import 'package:client_application/utils/discriminator.dart';
 import 'package:client_application/utils/localStorage.dart';
+import 'package:client_application/utils/locationUtils.dart';
 import 'package:client_application/utils/result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,10 +23,10 @@ bool initJudge(){
     return SpUtils.getBool("isLogin");
   }
 void main() {
-  // testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    
-  // });
+  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+    print((await LocationUtils().search("韩城", "禹州市")).toString());
+  });
 
-  print(Discriminator.accountOk("123456a564.com"));
+  
   
 }

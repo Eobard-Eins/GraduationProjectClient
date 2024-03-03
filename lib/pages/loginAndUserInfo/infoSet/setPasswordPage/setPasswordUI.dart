@@ -1,6 +1,6 @@
 
-import 'package:client_application/components/common/button/squareTextButton.dart';
-import 'package:client_application/components/common/input/textField.dart';
+import 'package:client_application/components/button/squareTextButton.dart';
+import 'package:client_application/components/text/textField.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/setPasswordPage/setPasswordController.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/utils/filter.dart';

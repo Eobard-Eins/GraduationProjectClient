@@ -1,7 +1,7 @@
 
-import 'package:client_application/components/common/button/textButtonWithNoSplash.dart';
-import 'package:client_application/components/common/input/searchBar.dart';
-import 'package:client_application/components/task/taskItem.dart';
+import 'package:client_application/components/button/textButtonWithNoSplash.dart';
+import 'package:client_application/components/text/searchBar.dart';
+import 'package:client_application/components/item/taskItem.dart';
 import 'package:client_application/pages/home/task/taskPageController.dart';
 import 'package:client_application/res/color.dart';
 import 'package:flutter/material.dart';
@@ -104,6 +104,7 @@ class TaskPage extends StatelessWidget {
                           _tpc.searchController.value.text=value;
                           _tpc.searchController.refresh();
                         },
+                        prefixIconFunc: _tpc.search,
                         suffixIcon: _tpc.searchController.value.text.isEmpty?null:
                         IconButton(
                           onPressed: () {
@@ -215,6 +216,7 @@ class TaskPage extends StatelessWidget {
 
   void dialog(){
     Get.defaultDialog(
+      backgroundColor: Colors.white,
       content: Column(
         children: [
           Container(
@@ -247,7 +249,7 @@ class TaskPage extends StatelessWidget {
                   activeColor: Coloors.mainLight,
                   thumbColor: Coloors.main,
                   //滑块右侧的滚动条颜色
-                  // inactiveColor: Colors.blue,
+                  inactiveColor: Coloors.grey,
                   //气泡
                   label: _tpc.distance.value==50?"无限制":(_tpc.distance.value==0?"<100m":"${_tpc.distance.value.toStringAsFixed(1)}Km"),
                 )),
@@ -288,7 +290,7 @@ class TaskPage extends StatelessWidget {
       ),
       title:"筛选",
       titleStyle: const TextStyle(
-        fontFamily: 'SmileySans',
+        
         letterSpacing: 2,
         fontSize: 30,
       )

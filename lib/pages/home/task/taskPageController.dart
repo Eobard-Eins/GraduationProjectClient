@@ -88,12 +88,12 @@ class TaskPageController extends GetxController {
     scrollController.animateTo(0, duration: const Duration(milliseconds: 800), curve: Curves.easeInOut);
   }
   void addNewTask() {
+    Get.toNamed(RouteConfig.newTaskPage);
   }
   void search() {
+    printInfo(info:"search");
   }
-  void filter(){
-
-  }
+  
   void tapTask(int id){
     printInfo(info:"tapTask${id}");
     Get.toNamed(RouteConfig.taskInfoPage,arguments:{'id':id});

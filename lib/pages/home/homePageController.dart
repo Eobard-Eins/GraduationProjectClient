@@ -3,15 +3,17 @@ import 'package:client_application/pages/home/community/communityPageUI.dart';
 import 'package:client_application/pages/home/me/mePageUI.dart';
 import 'package:client_application/pages/home/task/taskPageController.dart';
 import 'package:client_application/pages/home/task/taskPageUI.dart';
+import 'package:client_application/res/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oktoast/oktoast.dart';
 
 class HomePageController extends GetxController {
   /// 响应式成员变量，默认位置指引0
   final _currentPage = 0.obs;
   set currentPage(index) => _currentPage.value = index;
   get currentPage => _currentPage.value;
-
+  DateTime? _lastQuitTime;
   /// PageView页面控制器
   late PageController pageController;
   //Page页面集合
@@ -31,6 +33,7 @@ class HomePageController extends GetxController {
 
   onPageChanged(int index) {
     currentPage = index;
+    printInfo(info:"当前page：$currentPage");
   }
 
   /// 在Widget内存中分配后立即调用，可以用它来初始化initialize一些东西
@@ -77,5 +80,28 @@ class HomePageController extends GetxController {
     ];
 
     tabPageBodies = <Widget>[TaskPage(), CommunityPage(), ChatPage(), MePage()];
+  }
+
+  Future<bool> popScope() async {
+    printInfo(info:"进入返回拦截");
+    
+    if(currentPage!=0){
+      pageController.jumpToPage(0);
+      return false;
+    }else{
+      if (_lastQuitTime == null ||
+          DateTime.now().difference(_lastQuitTime!).inSeconds > 1) {
+        printInfo(info:'再按一次 Back 按钮退出');
+        //Get.snackbar("再次返回退出","",snackPosition: SnackPosition.BOTTOM,duration: const Duration(seconds: 1,milliseconds: 250));
+        showToast("再次返回退出",backgroundColor: Coloors.greyDeep, position: const ToastPosition(align: Alignment.bottomCenter,offset: -20),duration: const Duration(seconds: 1,milliseconds: 750),textPadding: const EdgeInsets.symmetric(horizontal: 15,vertical: 5));
+        _lastQuitTime = DateTime.now();
+        return false;
+      } else {
+        printInfo(info:'正常返回');
+        return true;
+      }
+
+    }
+    //拦截 返回true 表示不拦截
   }
 }

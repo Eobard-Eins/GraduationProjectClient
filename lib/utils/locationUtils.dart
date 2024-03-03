@@ -8,10 +8,46 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:amap_flutter_location/amap_flutter_location.dart';
 import 'package:amap_flutter_location/amap_location_option.dart';
  
-class LocationUtils {
+class LocationUtils extends GetConnect {
     static final AMapFlutterLocation flutterLocation = AMapFlutterLocation();
     static PermissionStatus? permissionStatus;
     static late StreamSubscription<Map<String, Object>> locationListener;
+
+    LocationUtils._internal();
+    factory LocationUtils() => _instance;
+    static final LocationUtils _instance = LocationUtils._internal();
+    static LocationUtils getInstance() => _instance;
+
+    Future search(String add,String region,{int pageSize=10})async{
+      var res= await get("https://restapi.amap.com/v5/place/text",query: {"keywords":add,"region":region,"city_limit":true.toString(),"page_size":pageSize.toString(),"key":staticValue.GaoDeKeyOfWeb}).then((value){
+        if(!value.isOk){
+          printInfo(info:"网络异常，不能连接服务器");
+          return [];
+        }else{
+          printInfo(info:"POI API请求成功");
+          List pois=value.body['pois'];
+          int k=int.parse(value.body['count']);
+          List ls=[];
+          for(int i=0;i<k;i++){
+            
+            String address="${pois[i]['pname']}-${pois[i]['cityname']}-${pois[i]['adname']}-${pois[i]['address']}";
+
+            String name=pois[i]['name'];
+
+            String location=pois[i]['location'];
+            double longitude=double.parse(location.split(',')[0]);
+            double latitude=double.parse(location.split(',')[1]);
+            //printInfo(info:{"name":name, "address":address, "longitude":longitude, "latitude":latitude}.toString());
+            ls.add({"name":name, "address":address, "longitude":longitude, "latitude":latitude});
+          }
+          return ls;
+        }
+      }).onError((error, stackTrace){
+        printError(info:"POI API请求失败,$error");
+        return [];
+      });
+      return res;
+    }
  
     
     static getLocation (Function(dynamic result) onLocationChanged,{bool onceLocation=false, String androidKey=staticValue.GaoDeKeyOfAndroid, String iosKey=staticValue.GaoDeKeyOfIos}){

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:client_application/components/common/snackbar/snackbar.dart';
+import 'package:client_application/components/display/snackbar.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/services/UserNetService.dart';
 import 'package:client_application/utils/status.dart';

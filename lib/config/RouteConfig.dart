@@ -1,5 +1,6 @@
 
 import 'package:client_application/pages/home/homePageUI.dart';
+import 'package:client_application/pages/home/task/newTask/newTaskPageUI.dart';
 import 'package:client_application/pages/home/task/taskInfo/taskInfoPageUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/userInitProfile/setUserInitProfileUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/login/agreementPage/agreementPageUI.dart';
@@ -25,7 +26,7 @@ class RouteConfig {
   static const String homePage="/homePage";
 
   static const String taskInfoPage="/taskInfoPage";
-
+  static const String newTaskPage="/newTaskPage";
 
   static List<GetPage<dynamic>>? getPages=[
     GetPage(
@@ -64,6 +65,10 @@ class RouteConfig {
       name: taskInfoPage, 
       page: ()=>TaskInfoPage(),
     ),
+    GetPage(
+      name: newTaskPage, 
+      page: ()=>NewTaskPage(),
+    )
   ];
 
 }

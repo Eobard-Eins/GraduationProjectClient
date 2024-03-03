@@ -22,14 +22,10 @@ class AvatarFromNet extends StatelessWidget {
         shape: boxShape??BoxShape.rectangle,
         image: DecorationImage(
           fit: BoxFit.cover, // 设置图片填充方式（如：适应容器尺寸）
-          image: NetworkImage(imageUrl),
+          image: NetworkImage("https://$imageUrl"),
         ),
       ),
       clipBehavior: Clip.hardEdge,
-      child: Image.network(
-        imageUrl,
-        fit: BoxFit.cover,
-      ),
     );
   }
 }

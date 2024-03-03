@@ -1,7 +1,7 @@
 
-import 'package:client_application/components/common/button/squareTextButton.dart';
-import 'package:client_application/components/common/display/bottomSheet.dart';
-import 'package:client_application/components/common/input/textField.dart';
+import 'package:client_application/components/button/squareTextButton.dart';
+import 'package:client_application/components/display/shortHeadBar.dart';
+import 'package:client_application/components/text/textField.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/setNameAndAvatarPage/setNameAndAvatarController.dart';
 import 'package:client_application/res/color.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +31,7 @@ class SetNameAndAvatarPage extends StatelessWidget {
 
         body: Column(children: [
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 0),
+            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
             child: Text(
               "设置头像和用户名，用户名应在3~16个字符之间",
               style: TextStyle(
@@ -48,14 +48,14 @@ class SetNameAndAvatarPage extends StatelessWidget {
 
           
           GestureDetector(
-            onTap: ImagePickerTypeBottomSheet(context: context,openGallery: _saac.openGallery,takePhoto: _saac.takePhoto).create,
+            onTap: ImagePickerTypeBottomSheet,
             child: Obx(()=>_saac.imageView()),
           ),
 
 
 
 
-          const SizedBox(height: 30),
+          const SizedBox(height: 40),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 0),
             child: Obx(()=>UserTextFieldWidget(
@@ -65,8 +65,6 @@ class SetNameAndAvatarPage extends StatelessWidget {
                 _saac.usernameController.refresh();
               },
               readOnly: false,
-              keyboardType: TextInputType.name,
-              obscureText: true,
               maxLength: 16,
               textInputAction: TextInputAction.done,
               //TODO:
@@ -99,6 +97,64 @@ class SetNameAndAvatarPage extends StatelessWidget {
                 onTap:
                     _saac.canNext()))));
   }
-
+  void ImagePickerTypeBottomSheet(){
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.only(top:10,left: 20,right: 20),
+        height: 150,
+        child: Column(children: [
+          const ShortHeadBar(),
+          const Padding(padding: EdgeInsets.symmetric(vertical: 15)),
+          Row(children: [
+            Expanded(child: InkWell(
+              onTap: _saac.openGallery,
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              child: Container(
+                alignment: Alignment.center,
+                
+                child:const Column(mainAxisAlignment: MainAxisAlignment.center,crossAxisAlignment: CrossAxisAlignment.center,children: [
+                  Icon(
+                    Icons.photo_library,
+                    color: Coloors.main,
+                    size: 50,
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: 5)),
+                  Text("从相册选择")
+                ]),
+              ),)
+            ),
+            Padding(padding: const EdgeInsets.symmetric(horizontal: 10),child: Container(
+              height: 40,
+              width: 1,
+              decoration: const BoxDecoration(color: Color.fromARGB(255, 181, 181, 181)), 
+            ),),
+            Expanded(child: InkWell(
+              onTap:_saac.takePhoto,
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              borderRadius: BorderRadius.circular(50),
+              child: Container(
+                alignment: Alignment.center,
+                
+                child: const Column(mainAxisAlignment: MainAxisAlignment.center,crossAxisAlignment: CrossAxisAlignment.center,children: [
+                  Icon(
+                    Icons.camera_sharp,
+                    color: Coloors.main,
+                    size: 50,
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: 5)),
+                  Text("拍照")
+                ]),
+              ),)
+            )
+          ],)
+            
+          ]
+        ),
+      ),
+      backgroundColor: Colors.white
+    );
+  }
   
 }

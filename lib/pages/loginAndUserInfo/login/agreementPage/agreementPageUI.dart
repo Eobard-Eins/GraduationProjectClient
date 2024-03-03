@@ -1,4 +1,4 @@
-import 'package:client_application/components/common/display/scrollableText.dart';
+import 'package:client_application/components/text/scrollableText.dart';
 import 'package:flutter/material.dart';
 
 class AgreementPage extends StatelessWidget {

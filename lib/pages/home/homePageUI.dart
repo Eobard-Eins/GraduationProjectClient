@@ -8,11 +8,14 @@ class HomePage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+   return WillPopScope(
+      onWillPop: _hpc.popScope,
+      child:  Scaffold(
      //appBar: AppBar(title: Text('BottomNavigationBar'),),
      bottomNavigationBar: _buildBottomNavigationBar(),
      body: _buildPageView(),
-   );
+   ));
+  
   }
 
   Widget _buildBottomNavigationBar(){

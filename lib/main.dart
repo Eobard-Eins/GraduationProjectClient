@@ -4,6 +4,7 @@ import 'package:client_application/res/color.dart';
 import 'package:client_application/utils/localStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oktoast/oktoast.dart';
 
 void main() async{
   //runApp(MyApp());
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return GetMaterialApp(
+    return OKToast(child: GetMaterialApp(
         theme: ThemeData(
           primaryColor: Coloors.main,
           primaryColorLight: Coloors.mainLight,
@@ -28,11 +29,11 @@ class MyApp extends StatelessWidget {
           ),
         debugShowCheckedModeBanner: false,
         title: '帮帮',
-        initialRoute: goHome()?RouteConfig.homePage:RouteConfig.loginWithCaptchaPage,
+        initialRoute: goHome()?RouteConfig.homePage:RouteConfig.setNameAndAvatarPage,
         getPages: RouteConfig.getPages,
         unknownRoute: GetPage(name: '/notfound', page: () => const Scaffold(body: Center(child: Text("No Page Route Provided"),))),
         
-      );
+      ));
     
   }
 
