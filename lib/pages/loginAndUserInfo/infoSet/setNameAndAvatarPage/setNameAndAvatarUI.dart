@@ -1,6 +1,7 @@
 
 import 'package:client_application/components/button/squareTextButton.dart';
-import 'package:client_application/components/display/shortHeadBar.dart';
+import 'package:client_application/components/img/avatarFromLocal.dart';
+import 'package:client_application/components/img/imgPicker.dart';
 import 'package:client_application/components/text/textField.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/setNameAndAvatarPage/setNameAndAvatarController.dart';
 import 'package:client_application/res/color.dart';
@@ -27,8 +28,6 @@ class SetNameAndAvatarPage extends StatelessWidget {
           centerTitle: true,
         ),
 
-
-
         body: Column(children: [
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
@@ -44,16 +43,11 @@ class SetNameAndAvatarPage extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-
-
           
           GestureDetector(
-            onTap: ImagePickerTypeBottomSheet,
-            child: Obx(()=>_saac.imageView()),
+            onTap: ()=>ImgPacker(_saac.imgPath),
+            child: Obx(()=>imageView()),
           ),
-
-
-
 
           const SizedBox(height: 40),
           Padding(
@@ -97,64 +91,34 @@ class SetNameAndAvatarPage extends StatelessWidget {
                 onTap:
                     _saac.canNext()))));
   }
-  void ImagePickerTypeBottomSheet(){
-    Get.bottomSheet(
-      Container(
-        padding: const EdgeInsets.only(top:10,left: 20,right: 20),
-        height: 150,
-        child: Column(children: [
-          const ShortHeadBar(),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 15)),
-          Row(children: [
-            Expanded(child: InkWell(
-              onTap: _saac.openGallery,
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
-              child: Container(
-                alignment: Alignment.center,
-                
-                child:const Column(mainAxisAlignment: MainAxisAlignment.center,crossAxisAlignment: CrossAxisAlignment.center,children: [
-                  Icon(
-                    Icons.photo_library,
-                    color: Coloors.main,
-                    size: 50,
-                  ),
-                  Padding(padding: EdgeInsets.only(bottom: 5)),
-                  Text("从相册选择")
-                ]),
-              ),)
-            ),
-            Padding(padding: const EdgeInsets.symmetric(horizontal: 10),child: Container(
-              height: 40,
-              width: 1,
-              decoration: const BoxDecoration(color: Color.fromARGB(255, 181, 181, 181)), 
-            ),),
-            Expanded(child: InkWell(
-              onTap:_saac.takePhoto,
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
-              borderRadius: BorderRadius.circular(50),
-              child: Container(
-                alignment: Alignment.center,
-                
-                child: const Column(mainAxisAlignment: MainAxisAlignment.center,crossAxisAlignment: CrossAxisAlignment.center,children: [
-                  Icon(
-                    Icons.camera_sharp,
-                    color: Coloors.main,
-                    size: 50,
-                  ),
-                  Padding(padding: EdgeInsets.only(bottom: 5)),
-                  Text("拍照")
-                ]),
-              ),)
-            )
-          ],)
-            
-          ]
+  //头像
+  Widget imageView() {
+    if (_saac.imgPath.value == null) {
+      return Container(
+        padding: const EdgeInsets.all(26),
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Coloors.greyLight,
         ),
-      ),
-      backgroundColor: Colors.white
-    );
+        child: const Padding(
+            padding: EdgeInsets.only(bottom: 3, right: 3),
+            child: Icon(
+              Icons.add_a_photo_rounded,
+              color: Coloors.grey,
+              size: 48,
+            )),
+      );
+    } else {
+      return Container(
+        padding: const EdgeInsets.all(0),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          //设置描边
+          border: Border.all(color: Coloors.greyLight, width: 1),
+          color: Colors.transparent,
+        ),
+        child: avatarFromLocal(image: _saac.imgPath.value,size: 50,)
+      );
+    }
   }
-  
 }
