@@ -7,7 +7,26 @@ import 'package:image_picker/image_picker.dart';
 class ImgPacker{
   //设置图片挑选器
   final ImagePicker _picker = ImagePicker();
-  ImgPacker(Rx<XFile?> imgPath){
+  ImgPacker.single(Rx<XFile?> imgPath){
+    view((image){
+      imgPath.value=image;
+      imgPath.refresh();
+    },(image){
+      imgPath.value=image;
+      imgPath.refresh();
+    });
+  }
+  ImgPacker.all(RxList<XFile?> imgs){
+    view((image){
+      imgs.add(image);
+      imgs.refresh();
+    },(image){
+      imgs.add(image);
+      imgs.refresh();
+    });
+  }
+
+  view(Function(XFile?) gallery,Function camera){
     Get.bottomSheet(
       Container(
         padding: const EdgeInsets.only(top:10,left: 20,right: 20),
@@ -20,8 +39,9 @@ class ImgPacker{
               onTap: () async {
                 Get.back();
                 final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-                imgPath.value=image;
-                imgPath.refresh();
+                if(image!=null){
+                  gallery(image);
+                }
               },
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
@@ -48,8 +68,10 @@ class ImgPacker{
               onTap:() async {
                 Get.back();
                 final XFile? image = await _picker.pickImage(source: ImageSource.camera);
-                imgPath.value=image;
-                imgPath.refresh();
+                if (image!=null){
+                  camera(image);
+                }
+                
               },
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,

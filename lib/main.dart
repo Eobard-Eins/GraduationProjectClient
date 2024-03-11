@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
 
-void main() async{
+void main() async{ 
   //runApp(MyApp());
   WidgetsFlutterBinding.ensureInitialized();
   await SpUtils.getInstance();//初始化本地持续化存储器
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
           ),
         debugShowCheckedModeBanner: false,
         title: '帮帮',
-        initialRoute: goHome()?RouteConfig.homePage:RouteConfig.setNameAndAvatarPage,
+        initialRoute: goHome()?RouteConfig.homePage:RouteConfig.homePage,
         getPages: RouteConfig.getPages,
         unknownRoute: GetPage(name: '/notfound', page: () => const Scaffold(body: Center(child: Text("No Page Route Provided"),))),
         

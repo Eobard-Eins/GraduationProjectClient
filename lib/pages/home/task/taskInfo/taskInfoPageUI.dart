@@ -1,5 +1,4 @@
 import 'package:client_application/pages/home/task/taskInfo/taskInfoPageController.dart';
-import 'package:client_application/res/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,10 +21,10 @@ class TaskInfoPage extends StatelessWidget{
       body: Container(
         child: Text(_tipc.id.value),
       ),
-      bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: const BottomAppBar(
         color: Colors.red,
-        child:Text("111"),
         height: 55,
+        child:Text("111"),
       )
     );
   }

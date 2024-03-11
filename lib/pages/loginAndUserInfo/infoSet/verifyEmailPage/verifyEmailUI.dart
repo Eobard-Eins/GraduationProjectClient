@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 //用于修改密码前、注册账号前验证手机号
-class VerifyPhonePage extends StatelessWidget {
+class VerifyEmailPage extends StatelessWidget {
   final VerifymailController _vpc=Get.put<VerifymailController>(VerifymailController());
   final int captchaLenth=6;
   @override
@@ -78,20 +78,20 @@ class VerifyPhonePage extends StatelessWidget {
                 suffixIcon: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                      IconButton(
-                        onPressed: _vpc.captchaController.value.text.isEmpty?null:() {
-                          //清空输入框
-                          _vpc.captchaController.value.clear();
-                          _vpc.captchaController.refresh();
-                        },
-                        icon: Icon(Icons.clear,color:_vpc.captchaController.value.text.isEmpty?Colors.transparent: Colors.grey,),
-                      ),
-                  TextButtonWithNoSplash(
-                    onTap: _vpc.hasGetCaptcha.value?null:_vpc.onTapCaptcha,
-                    text: _vpc.hasGetCaptcha.value?_vpc.captchaHintText.value:"获取验证码",
-                    fontSize: 16,
-                    color: _vpc.hasGetCaptcha.value?Colors.grey:Coloors.main,
-                  ),
+                    IconButton(
+                      onPressed: _vpc.captchaController.value.text.isEmpty?null:() {
+                        //清空输入框
+                        _vpc.captchaController.value.clear();
+                        _vpc.captchaController.refresh();
+                      },
+                      icon: Icon(Icons.clear,color:_vpc.captchaController.value.text.isEmpty?Colors.transparent: Colors.grey,),
+                    ),
+                    TextButtonWithNoSplash(
+                      onTap: _vpc.hasGetCaptcha.value?null:_vpc.onTapCaptcha,
+                      text: _vpc.hasGetCaptcha.value?_vpc.captchaHintText.value:"获取验证码",
+                      fontSize: 16,
+                      color: _vpc.hasGetCaptcha.value?Colors.grey:Coloors.main,
+                    ),
                 ],),
               ),)
             ),

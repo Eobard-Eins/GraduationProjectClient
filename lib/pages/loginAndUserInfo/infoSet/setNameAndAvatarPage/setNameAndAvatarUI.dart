@@ -45,7 +45,7 @@ class SetNameAndAvatarPage extends StatelessWidget {
           ),
           
           GestureDetector(
-            onTap: ()=>ImgPacker(_saac.imgPath),
+            onTap: ()=>ImgPacker.single(_saac.imgPath),
             child: Obx(()=>imageView()),
           ),
 
@@ -95,7 +95,8 @@ class SetNameAndAvatarPage extends StatelessWidget {
   Widget imageView() {
     if (_saac.imgPath.value == null) {
       return Container(
-        padding: const EdgeInsets.all(26),
+        height: 100,
+        width: 100,
         decoration: const BoxDecoration(
           shape: BoxShape.circle,
           color: Coloors.greyLight,
@@ -109,16 +110,7 @@ class SetNameAndAvatarPage extends StatelessWidget {
             )),
       );
     } else {
-      return Container(
-        padding: const EdgeInsets.all(0),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          //设置描边
-          border: Border.all(color: Coloors.greyLight, width: 1),
-          color: Colors.transparent,
-        ),
-        child: avatarFromLocal(image: _saac.imgPath.value,size: 50,)
-      );
+      return avatarFromLocal(image: _saac.imgPath.value,size: 100,boxShape: BoxShape.circle,);
     }
   }
 }

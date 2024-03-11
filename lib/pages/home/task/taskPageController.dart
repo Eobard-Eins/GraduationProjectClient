@@ -2,7 +2,6 @@
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/models/Task.dart';
 import 'package:client_application/res/color.dart';
-import 'package:client_application/services/UserNetService.dart';
 import 'package:client_application/utils/localStorage.dart';
 import 'package:client_application/utils/locationUtils.dart';
 import 'package:client_application/utils/timeUtils.dart';

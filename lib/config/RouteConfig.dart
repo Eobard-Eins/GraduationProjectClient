@@ -17,7 +17,7 @@ class RouteConfig {
   static const String loginWithPasswordPage="/loginWithPasswordPage";
 
   static const String agreementInfoPage="/agreementInfoPage";
-  static const String verifyPhonePage="/verifyPhonePage";
+  static const String verifyEmailPage="/verifyEmailPage";
   
   static const String setPasswordPage="/setPasswordPage";
   static const String setNameAndAvatarPage="/setNameAndAvatarPage";
@@ -42,8 +42,8 @@ class RouteConfig {
       page: () => const AgreementPage(),
     ),
     GetPage(
-      name: verifyPhonePage,
-      page: () => VerifyPhonePage(),
+      name: verifyEmailPage,
+      page: () => VerifyEmailPage(),
     ),
     GetPage(
       name: setPasswordPage,
