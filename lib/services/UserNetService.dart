@@ -4,11 +4,11 @@ import 'dart:async';
 
 import 'package:client_application/services/Dio.dart';
 import 'package:client_application/models/User.dart';
-import 'package:client_application/utils/discriminator.dart';
+import 'package:client_application/utils/input/discriminator.dart';
 import 'package:client_application/utils/localStorage.dart';
-import 'package:client_application/utils/result.dart';
-import 'package:client_application/utils/staticValue.dart';
-import 'package:client_application/utils/status.dart';
+import 'package:client_application/utils/res/result.dart';
+import 'package:client_application/res/staticValue.dart';
+import 'package:client_application/utils/res/status.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 

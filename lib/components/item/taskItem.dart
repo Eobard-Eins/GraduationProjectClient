@@ -1,6 +1,6 @@
 import 'package:client_application/components/img/avatarFromNet.dart';
 import 'package:client_application/res/color.dart';
-import 'package:client_application/utils/staticValue.dart';
+import 'package:client_application/res/staticValue.dart';
 import 'package:flutter/material.dart';
 
 class TaskItem extends StatelessWidget {

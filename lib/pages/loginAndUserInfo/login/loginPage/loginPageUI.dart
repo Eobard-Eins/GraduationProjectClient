@@ -6,7 +6,7 @@ import 'package:client_application/components/display/checkAgreement.dart';
 import 'package:client_application/components/button/loginButton.dart';
 import 'package:client_application/components/text/textField.dart';
 import 'package:client_application/res/color.dart';
-import 'package:client_application/utils/filter.dart';
+import 'package:client_application/utils/input/filter.dart';
 import 'package:flutter/material.dart';
 
 //登录页面，使用验证码登录

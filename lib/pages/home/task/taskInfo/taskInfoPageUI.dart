@@ -19,7 +19,7 @@ class TaskInfoPage extends StatelessWidget{
           centerTitle: true,
         ),
       body: Container(
-        child: Text(_tipc.id.value),
+        child: Text(_tipc.account.value),
       ),
       bottomNavigationBar: const BottomAppBar(
         color: Colors.red,

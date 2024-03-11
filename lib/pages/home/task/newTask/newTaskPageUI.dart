@@ -17,7 +17,10 @@ class NewTaskPage extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text("发布"),
+          title: const Text("发布",style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),),
           centerTitle: true,
           surfaceTintColor: Colors.transparent,
         ),

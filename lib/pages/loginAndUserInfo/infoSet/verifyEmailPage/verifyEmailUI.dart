@@ -5,7 +5,7 @@ import 'package:client_application/components/display/checkAgreement.dart';
 import 'package:client_application/components/text/textField.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/verifyEmailPage/verifyEmailController.dart';
 import 'package:client_application/res/color.dart';
-import 'package:client_application/utils/filter.dart';
+import 'package:client_application/utils/input/filter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

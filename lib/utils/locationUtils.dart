@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:client_application/res/color.dart';
-import 'package:client_application/utils/staticValue.dart';
+import 'package:client_application/res/staticValue.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
