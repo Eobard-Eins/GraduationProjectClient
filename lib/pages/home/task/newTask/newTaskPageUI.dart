@@ -1,3 +1,4 @@
+
 import 'package:client_application/components/button/littleButton.dart';
 import 'package:client_application/components/button/textButtonWithNoSplash.dart';
 import 'package:client_application/components/display/shortHeadBar.dart';
@@ -6,9 +7,11 @@ import 'package:client_application/components/img/avatarFromLocal.dart';
 import 'package:client_application/components/img/imgPicker.dart';
 import 'package:client_application/pages/home/task/newTask/newTaskPageController.dart';
 import 'package:client_application/res/color.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 
 class NewTaskPage extends StatelessWidget{
@@ -66,8 +69,8 @@ class NewTaskPage extends StatelessWidget{
             Padding(padding: const EdgeInsets.symmetric(),child:LittleButton(text: "", onTap: BottomSheetOfFullInput, icon: Icons.fullscreen,color: const Color.fromARGB(255, 245, 245, 245),),),
           ],),
           const Padding(padding: EdgeInsets.only(top: 20,bottom: 10),child:Divider(height:0.2,indent:0,endIndent: 0,color: Coloors.greyLight,),),
-          horizontalButton("添加地点", Icons.place_outlined, Icons.chevron_right,BottomSheetOfLocation,),
-          horizontalButton("添加截止时间", Icons.schedule_outlined, Icons.chevron_right,BottomSheetOfTime,),
+          horizontalButton(_ntpc.date.value==""?"添加地点":_ntpc.locationName.value, Icons.place_outlined, Icons.chevron_right,BottomSheetOfLocation,),
+          horizontalButton(_ntpc.date.value==""?"添加截止时间":"${_ntpc.date.value}前", Icons.schedule_outlined, Icons.chevron_right,()=>BottomSheetOfTime(context),),
           Padding(padding: const EdgeInsets.symmetric(vertical:10),
             child:SizedBox(
               height: 100,
@@ -208,8 +211,49 @@ class NewTaskPage extends StatelessWidget{
       isScrollControlled: true,
     );
   }
-  void BottomSheetOfTime(){
-    
+  void BottomSheetOfTime(BuildContext context){
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.only(top:10,left: 20,right: 20),
+        child: Column(children: [
+          const ShortHeadBar(),
+          const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+          Row(children: [
+            Padding(padding: const EdgeInsets.only(left: 0),child:TextButton(
+              onPressed: (){Get.back();},
+              style: ButtonStyle(
+                backgroundColor: const MaterialStatePropertyAll(Coloors.greyLight),
+                foregroundColor: const MaterialStatePropertyAll(Colors.black),
+                shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+              ), 
+              child: const Text("取消")
+            )),
+            const Spacer(),
+            Padding(padding: const EdgeInsets.only(right: 0),child:TextButton(
+              onPressed: Get.back,
+              style: ButtonStyle(
+                backgroundColor: const MaterialStatePropertyAll(Coloors.main),
+                foregroundColor: const MaterialStatePropertyAll(Colors.white),
+                shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+              ), 
+              child: const Text("搜索")
+            ))
+          ],),
+
+          Expanded(child: CupertinoDatePicker(
+            initialDateTime: DateTime.now(),
+            onDateTimeChanged: (value) => _ntpc.time.value=value,
+            mode:CupertinoDatePickerMode.dateAndTime,
+            use24hFormat: T,
+            minimumDate: DateTime.now().add(const Duration(days: -1)),
+            maximumDate: DateTime(2100,12,31,23,59,59),
+          ))
+        ])
+      ),
+      backgroundColor: Colors.white,
+    ).whenComplete((){
+      printInfo(info:"time弹窗结束:${_ntpc.time.value.toString()}");
+    });
   }
   void BottomSheetOfLocation(){
     Get.bottomSheet(
@@ -289,10 +333,11 @@ class NewTaskPage extends StatelessWidget{
                 onTap:(){
                   _ntpc.longitude.value=_ntpc.POIS[index]['longitude'];
                   _ntpc.latitude.value=_ntpc.POIS[index]['latitude'];
+                  _ntpc.locationName.value=_ntpc.POIS[index]['name'];
                   printInfo(info:"latitude:${_ntpc.latitude.value} longitude:${_ntpc.longitude.value}");
                   Get.back();
                 },
-                child: Column(children: [//TODO: 此处删了个Container
+                child: Column(children: [//此处优化掉了一个Container，UI效果不变
                     const Padding(padding: EdgeInsets.only(bottom: 5)),
                     Row(
                     children: [

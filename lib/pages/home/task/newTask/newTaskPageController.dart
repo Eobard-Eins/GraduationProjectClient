@@ -1,5 +1,5 @@
 
-import 'package:client_application/utils/locationUtils.dart';
+import 'package:client_application/services/locationUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,9 +10,12 @@ class NewTaskPageController extends GetxController {
   Rx<TextEditingController> titleInputController=TextEditingController().obs;
   Rx<TextEditingController> contentInputController=TextEditingController().obs;
   RxList POIS=RxList();
+  Rx<String> locationName="".obs;
+  Rx<String> date="".obs;
   RxList<XFile?> imgs=RxList();
   RxDouble longitude=0.0.obs;
   RxDouble latitude=0.0.obs;
+  Rx<DateTime> time=DateTime.now().obs;
 
   @override
   void onInit() {
@@ -21,6 +24,9 @@ class NewTaskPageController extends GetxController {
     imgs=RxList();
     longitude.value=0.0;
     latitude.value=0.0;
+    time.value=DateTime.now();
+    locationName.value="";
+    date.value="";
     cityInputController.value.clear();
     cityInputController.refresh();
     addressInputController.value.clear();

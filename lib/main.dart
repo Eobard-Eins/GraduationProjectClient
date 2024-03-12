@@ -3,6 +3,7 @@ import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/utils/localStorage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
 
@@ -29,6 +30,13 @@ class MyApp extends StatelessWidget {
           ),
         debugShowCheckedModeBanner: false,
         title: '帮帮',
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          // 添加对Cupertino (iOS风格) 组件的本地化支持
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [Locale('zh', 'CN')], 
         initialRoute: goHome()?RouteConfig.homePage:RouteConfig.homePage,
         getPages: RouteConfig.getPages,
         unknownRoute: GetPage(name: '/notfound', page: () => const Scaffold(body: Center(child: Text("No Page Route Provided"),))),

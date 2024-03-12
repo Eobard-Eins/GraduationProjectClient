@@ -10,7 +10,7 @@ import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginP
 import 'package:client_application/services/UserNetService.dart';
 import 'package:client_application/models/User.dart';
 import 'package:client_application/utils/localStorage.dart';
-import 'package:client_application/utils/locationUtils.dart';
+import 'package:client_application/services/locationUtils.dart';
 import 'package:client_application/utils/res/result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
