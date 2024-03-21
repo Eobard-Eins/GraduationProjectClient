@@ -1,4 +1,4 @@
-import 'package:client_application/components/img/avatarFromNet.dart';
+import 'package:client_application/components/img/imgFromNet.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/res/staticValue.dart';
 import 'package:flutter/material.dart';
@@ -41,9 +41,9 @@ class TaskItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(15.0), // 圆角
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.2), // 阴影颜色
+                color: Coloors.greyDeep.withOpacity(0.1), // 阴影颜色
                 offset: const Offset(0.0, 3.0), // 阴影偏移量
-                blurRadius: 8.0, // 阴影模糊半径
+                blurRadius: 4.0, // 阴影模糊半径
                 spreadRadius: 2.0, // 阴影扩散半径
               ),
             ],
@@ -64,7 +64,7 @@ class TaskItem extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
                     child:Row(
                       children: [
-                        AvatarFromNet(
+                        ImgFromNet(
                           width: 30,
                           height: 30,
                           boxShape: BoxShape.circle,

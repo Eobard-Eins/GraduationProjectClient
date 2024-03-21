@@ -4,7 +4,7 @@ import 'package:client_application/res/color.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class avatarFromLocal extends StatelessWidget {
+class ImgFromLocal extends StatelessWidget {
   final XFile? image;
   final double? size;
   final Color? backgroundColor;
@@ -13,7 +13,7 @@ class avatarFromLocal extends StatelessWidget {
   final Function()? close;
   final double? closeButtonSize;
 
-  const avatarFromLocal({super.key,this.image,this.size, this.backgroundColor,this.boxShape,this.needBorder=true,this.close,this.closeButtonSize});
+  const ImgFromLocal({super.key,this.image,this.size, this.backgroundColor,this.boxShape,this.needBorder=true,this.close,this.closeButtonSize});
 
   @override
   Widget build(BuildContext context) {

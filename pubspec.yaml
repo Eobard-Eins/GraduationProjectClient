@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  
   flutter_localizations:
     sdk: flutter  
   flutter:
@@ -48,6 +49,8 @@ dependencies:
   permission_handler: ^8.1.4
   oktoast: ^3.3.1
   flutter_cupertino_datetime_picker: ^3.0.0
+  photo_view: ^0.14.0
+  unicode: ^0.3.0
   
 dev_dependencies:
   flutter_test:

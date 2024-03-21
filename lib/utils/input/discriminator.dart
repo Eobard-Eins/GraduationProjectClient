@@ -22,4 +22,17 @@ class Discriminator{
     //TODO: 
     return true;
   }
+
+  static List<String> getLabels(String content){
+    // 正则表达式
+    final pattern = RegExp(r'#[\u4e00-\u9fa5\w\d]+#');
+    
+    // 提取所有匹配项
+    final matches = pattern.allMatches(content);
+    
+    // 将匹配到的分隔符存入一个集合，避免重复处理
+    List<String> separators = matches.map((match) => match[0]!).toSet().toList();   
+
+    return separators;
+  }
 }

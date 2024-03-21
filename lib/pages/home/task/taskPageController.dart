@@ -27,7 +27,7 @@ class TaskPageController extends GetxController {
     tasks.clear();
     distance.value=SpUtils.getDouble('distance',defaultValue: 10.0);
     distanceInSearch=distance.value;
-    location.value="- - -";
+    location.value=" - - - ";
     allLoaded.value=false;
     isLoading.value=false;
     gettingLocation.value=false;

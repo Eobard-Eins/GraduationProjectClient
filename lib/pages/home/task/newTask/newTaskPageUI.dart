@@ -1,9 +1,10 @@
 
+import 'package:client_application/components/button/horizontalButton.dart';
 import 'package:client_application/components/button/littleButton.dart';
 import 'package:client_application/components/button/textButtonWithNoSplash.dart';
 import 'package:client_application/components/display/shortHeadBar.dart';
 import 'package:client_application/components/display/snackbar.dart';
-import 'package:client_application/components/img/avatarFromLocal.dart';
+import 'package:client_application/components/img/imgFromLocal.dart';
 import 'package:client_application/components/img/imgPicker.dart';
 import 'package:client_application/pages/home/task/newTask/newTaskPageController.dart';
 import 'package:client_application/res/color.dart';
@@ -16,6 +17,7 @@ import 'package:image_picker/image_picker.dart';
 
 class NewTaskPage extends StatelessWidget{
   final NewTaskPageController _ntpc=Get.put<NewTaskPageController>(NewTaskPageController());
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,8 +41,10 @@ class NewTaskPage extends StatelessWidget{
               _ntpc.titleInputController.refresh();
             },
             maxLines: 1,
-
+            maxLength: 30,
             decoration: InputDecoration(
+              counterText: "",
+              suffixText: "${_ntpc.titleInputController.value.text.length}/30",
               hintText: "标题",
               hintStyle: const TextStyle(color: Color.fromARGB(255, 115, 115, 115),fontSize: 16,fontWeight: FontWeight.normal,),
               enabledBorder: const UnderlineInputBorder(
@@ -66,11 +70,12 @@ class NewTaskPage extends StatelessWidget{
           Row(children: [
             Padding(padding: const EdgeInsets.symmetric(),child:LittleButton(text: "标签", onTap: _ntpc.addTag, icon: Icons.tag,color: const Color.fromARGB(255, 245, 245, 245),),),
             const Spacer(),
+            Padding(padding: const EdgeInsets.symmetric(horizontal: 10),child:Text("${_ntpc.contentInputController.value.text.length}/300"),),
             Padding(padding: const EdgeInsets.symmetric(),child:LittleButton(text: "", onTap: BottomSheetOfFullInput, icon: Icons.fullscreen,color: const Color.fromARGB(255, 245, 245, 245),),),
           ],),
           const Padding(padding: EdgeInsets.only(top: 20,bottom: 10),child:Divider(height:0.2,indent:0,endIndent: 0,color: Coloors.greyLight,),),
-          horizontalButton(_ntpc.date.value==""?"添加地点":_ntpc.locationName.value, Icons.place_outlined, Icons.chevron_right,BottomSheetOfLocation,),
-          horizontalButton(_ntpc.date.value==""?"添加截止时间":"${_ntpc.date.value}前", Icons.schedule_outlined, Icons.chevron_right,()=>BottomSheetOfTime(context),),
+          HorizontalButton(text: _ntpc.locationName.value==""?"添加地点":_ntpc.locationName.value, icon: Icons.place_outlined, onTap: BottomSheetOfLocation),
+          HorizontalButton(text: _ntpc.date.value==""?"添加截止时间":"${_ntpc.date.value}前", icon: Icons.schedule_outlined, onTap: ()=>BottomSheetOfTime(context)),
           Padding(padding: const EdgeInsets.symmetric(vertical:10),
             child:SizedBox(
               height: 100,
@@ -80,12 +85,12 @@ class NewTaskPage extends StatelessWidget{
                   crossAxisCount: 1,
                 ),
                 // 元素总个数
-                itemCount:  _ntpc.imgs.length+1,
+                itemCount:  _ntpc.imgs.length>=9?_ntpc.imgs.length:_ntpc.imgs.length+1,
                 // 单个子元素
                 itemBuilder: (BuildContext context, int index) => index==_ntpc.imgs.length?
                     InkWell(
                       onTap: ()=>_ntpc.imgs.length>=9?
-                          snackbar.error("超出", "message",0):
+                          snackbar.warnning("警告", "超出上传图片最大数量"):
                           ImgPacker.all(_ntpc.imgs),
                       child:Container(
                         height: 100,
@@ -95,7 +100,7 @@ class NewTaskPage extends StatelessWidget{
                         child: const Icon(Icons.add,size: 60,color: Colors.white,),
                       )
                     ):
-                    avatarFromLocal(image: _ntpc.imgs[index], size: 100,close: () {
+                    ImgFromLocal(image: _ntpc.imgs[index], size: 100,close: () {
                       _ntpc.imgs.remove(_ntpc.imgs[index]);
                       _ntpc.imgs.refresh();
                     },),
@@ -126,28 +131,11 @@ class NewTaskPage extends StatelessWidget{
   List<Widget> images(){
     List<Widget> res=[];
     for(XFile? i in _ntpc.imgs){
-      res.add(Padding(padding: const EdgeInsets.symmetric(horizontal: 5),child: avatarFromLocal(image: i, size: 100,),));
+      res.add(Padding(padding: const EdgeInsets.symmetric(horizontal: 5),child: ImgFromLocal(image: i, size: 100,),));
     }
     return res;
   }
-  Widget horizontalButton(String text,IconData iconA, IconData  iconB,Function()? onTap){
-    return Column(children: [
-      InkWell(
-        onTap: onTap,
-        child: SizedBox(
-          height: 40,
-          child: Row(
-            children: [
-                Padding(padding: const EdgeInsets.only(right: 10),child: Icon(iconA,color: Coloors.greyDeep,size:22),),
-                Expanded(child: Text(text,style: const TextStyle(fontSize: 16,color: Coloors.greyDeep),),),
-                Padding(padding: const EdgeInsets.only(left: 5,right: 5),child: Icon(iconB,color: Coloors.greyDeep,size:20),),
-              ],
-            ),
-        )
-      ),
-      const Padding(padding: EdgeInsets.only(top: 10,bottom: 10),child:Divider(height:0.2,indent:0,endIndent: 0,color: Coloors.greyLight,),),
-    ],);
-  }
+
   Widget content(double? height,bool autfocus,EdgeInsetsGeometry padding){
     return Container(
       height: height,
@@ -158,16 +146,19 @@ class NewTaskPage extends StatelessWidget{
           controller: _ntpc.contentInputController.value,
           cursorColor: Coloors.main,
           autofocus: autfocus,
-          onChanged: (value) {
-            _ntpc.contentInputController.value.text = value;
-            _ntpc.contentInputController.refresh();
-          },
+          focusNode: _ntpc.focusNode,
+          // onChanged: (value) {
+          //   _ntpc.contentInputController.value.text = value;
+          //   _ntpc.contentInputController.refresh();
+          // },
           style: const TextStyle(
             fontSize: 16,
             color: Coloors.greyDeep
           ),
           maxLines: null,
+          maxLength: 300,
           decoration: const InputDecoration(
+            counterText: "",
             hintText: "内容",
             hintStyle: TextStyle(color: Color.fromARGB(255, 115, 115, 115),fontSize: 16,fontWeight: FontWeight.normal,),
             enabledBorder: UnderlineInputBorder(
@@ -197,6 +188,7 @@ class NewTaskPage extends StatelessWidget{
           Row(children: [
             Padding(padding: const EdgeInsets.symmetric(),child:LittleButton(text: "标签", onTap: _ntpc.addTag, icon: Icons.tag, ),),
             const Spacer(),
+            Padding(padding: const EdgeInsets.symmetric(horizontal: 10),child:Text("${_ntpc.contentInputController.value.text.length}/300"),),
             Padding(padding: const EdgeInsets.symmetric(),child:LittleButton(text: "", onTap: (){Get.back();FocusScope.of(Get.context!).requestFocus(FocusNode());}, icon: Icons.fullscreen_exit, ),),
           ],),
           const Padding(padding: EdgeInsets.only(top: 20,bottom: 10),child:Divider(height:0.2,indent:0,endIndent: 0,color: Coloors.greyLight,),),
@@ -212,6 +204,7 @@ class NewTaskPage extends StatelessWidget{
     );
   }
   void BottomSheetOfTime(BuildContext context){
+    var v=DateTime.now();
     Get.bottomSheet(
       Container(
         padding: const EdgeInsets.only(top:10,left: 20,right: 20),
@@ -230,22 +223,25 @@ class NewTaskPage extends StatelessWidget{
             )),
             const Spacer(),
             Padding(padding: const EdgeInsets.only(right: 0),child:TextButton(
-              onPressed: Get.back,
+              onPressed: (){
+                _ntpc.date.value="截止至${v.year}-${v.month}-${v.day} ${v.hour}:${v.minute}";
+                Get.back();
+              },
               style: ButtonStyle(
                 backgroundColor: const MaterialStatePropertyAll(Coloors.main),
                 foregroundColor: const MaterialStatePropertyAll(Colors.white),
                 shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
               ), 
-              child: const Text("搜索")
+              child: const Text("完成")
             ))
           ],),
 
           Expanded(child: CupertinoDatePicker(
-            initialDateTime: DateTime.now(),
-            onDateTimeChanged: (value) => _ntpc.time.value=value,
+            initialDateTime: v,
+            onDateTimeChanged: (value) => v=value,
             mode:CupertinoDatePickerMode.dateAndTime,
             use24hFormat: T,
-            minimumDate: DateTime.now().add(const Duration(days: -1)),
+            minimumDate: v.add(const Duration(days: -1)),
             maximumDate: DateTime(2100,12,31,23,59,59),
           ))
         ])
@@ -337,7 +333,7 @@ class NewTaskPage extends StatelessWidget{
                   printInfo(info:"latitude:${_ntpc.latitude.value} longitude:${_ntpc.longitude.value}");
                   Get.back();
                 },
-                child: Column(children: [//此处优化掉了一个Container，UI效果不变
+                child: Column(children: [
                     const Padding(padding: EdgeInsets.only(bottom: 5)),
                     Row(
                     children: [

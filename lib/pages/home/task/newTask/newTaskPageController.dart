@@ -17,6 +17,7 @@ class NewTaskPageController extends GetxController {
   RxDouble latitude=0.0.obs;
   Rx<DateTime> time=DateTime.now().obs;
 
+  final FocusNode focusNode = FocusNode();
   @override
   void onInit() {
     super.onInit();
@@ -45,7 +46,9 @@ class NewTaskPageController extends GetxController {
   void upload(){}
 
   void addTag(){
-    contentInputController.value.text+=" #";
+    contentInputController.value.text+=" ## ";
+    contentInputController.value.selection=TextSelection(baseOffset: contentInputController.value.text.length-2, extentOffset: contentInputController.value.text.length-2);
     contentInputController.refresh();
+    FocusScope.of(Get.context!).requestFocus(focusNode);
   }
 }

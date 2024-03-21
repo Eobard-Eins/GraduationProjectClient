@@ -1,10 +1,8 @@
-import 'package:client_application/components/text/scrollableText.dart';
+
 import 'package:flutter/material.dart';
 
 class AgreementPage extends StatelessWidget {
   const AgreementPage({super.key});
-  final String info =
-      """本平台为湘潭大学毕业设计作品，暂不作为商用用途，暂不开源！""";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +19,19 @@ class AgreementPage extends StatelessWidget {
           ),
           centerTitle: true,
         ),
-        body: ScrollableText(text: info)
+        body: const SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+          child: Text(
+            """本平台为湘潭大学毕业设计作品，暂不作为商用用途，暂不开源！""",
+            style: TextStyle(
+                color: Color.fromARGB(255, 94, 94, 94),
+                fontSize: 14,
+                fontWeight: FontWeight.w300,
+              ),
+          ),
+        ),
+      )
     );
   }
 }

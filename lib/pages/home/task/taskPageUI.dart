@@ -22,147 +22,145 @@ class TaskPage extends StatelessWidget {
           backgroundColor: Colors.white,
           scrolledUnderElevation: 0,
         ),
-        body: Container(
-          child:Column(
-            children: [
-              Container(
-                  padding: const EdgeInsets.only(left: 20,right:20,bottom: 15),
-                  decoration: const BoxDecoration(color: Colors.white),
-                  child: Row(children: [
-                    const Text(
-                      '首页',
-                      style: TextStyle(
-                          fontFamily: 'SmileySans',
-                          fontSize: 50,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    const Spacer(),
-                    IconButton(
-                      padding: const EdgeInsets.only(top: 5,right: 10),
-                      iconSize: 50,
-                      highlightColor: Colors.transparent,
-                      onPressed: _tpc.addNewTask,
-                      icon: const Icon(
-                        Icons.add_circle_outlined,
-                        color: Coloors.main,
-                      ))
-                  ])),
-              //const Divider(height: 1,color: Coloors.greyLight,),
-
-              //搜索栏
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05), // 阴影颜色
-                      offset: const Offset(0.0, 4.0), // 阴影偏移量
-                      blurRadius: 8.0, // 阴影模糊半径
-                      spreadRadius: 2.0, // 阴影扩散半径
-                    ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15,right:15),
-                      child: Obx(()=>InkWell(
-                        onTap: _tpc.gettingLocation.value?_tpc.stopLocation:_tpc.getLocation,
-                        highlightColor: Colors.transparent, // 透明色
-                        splashColor: Colors.transparent,
-                        child: _tpc.gettingLocation.value?const Row(
-                          children: [
-                            Padding(padding: EdgeInsets.only(right: 5)),
-                            SizedBox(
-                              width: 14,
-                              height: 14,
-                              child: CircularProgressIndicator(
-                                color: Coloors.main,
-                                strokeWidth: 3,
-                              ),
+        body: Column(
+          children: [
+            Container(
+                padding: const EdgeInsets.only(left: 20,right:20,bottom: 15),
+                decoration: const BoxDecoration(color: Colors.white),
+                child: Row(children: [
+                  const Text(
+                    '首页',
+                    style: TextStyle(
+                        fontFamily: 'SmileySans',
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    padding: const EdgeInsets.only(top: 5,right: 10),
+                    iconSize: 50,
+                    highlightColor: Colors.transparent,
+                    onPressed: _tpc.addNewTask,
+                    icon: const Icon(
+                      Icons.add_circle_outlined,
+                      color: Coloors.main,
+                    ))
+                ])),
+            //const Divider(height: 1,color: Coloors.greyLight,),
+        
+            //搜索栏
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05), // 阴影颜色
+                    offset: const Offset(0.0, 4.0), // 阴影偏移量
+                    blurRadius: 8.0, // 阴影模糊半径
+                    spreadRadius: 2.0, // 阴影扩散半径
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15,right:15),
+                    child: Obx(()=>InkWell(
+                      onTap: _tpc.gettingLocation.value?_tpc.stopLocation:_tpc.getLocation,
+                      highlightColor: Colors.transparent, // 透明色
+                      splashColor: Colors.transparent,
+                      child: _tpc.gettingLocation.value?const Row(
+                        children: [
+                          Padding(padding: EdgeInsets.only(right: 5)),
+                          SizedBox(
+                            width: 14,
+                            height: 14,
+                            child: CircularProgressIndicator(
+                              color: Coloors.main,
+                              strokeWidth: 3,
                             ),
-                            Padding(padding: EdgeInsets.only(right: 5)),
-                            Text("定位中",style: TextStyle(
-                              fontSize: 16
-                            ),)
-                          ],
-                        ):Row(children: [
-                          const Icon(Icons.place,color: Coloors.main,),
-                          Text(_tpc.location.value,style: const TextStyle(
+                          ),
+                          Padding(padding: EdgeInsets.only(right: 5)),
+                          Text("定位中",style: TextStyle(
                             fontSize: 16
                           ),)
-                        ],),))
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Obx(() => SearchInput(
-                        controller: _tpc.searchController.value, 
-                        height: 40, 
-                        hintText: " 搜索",
-                        onChanged: (value) {
-                          _tpc.searchController.value.text=value;
-                          _tpc.searchController.refresh();
-                        },
-                        prefixIconFunc: _tpc.search,
-                        suffixIcon: _tpc.searchController.value.text.isEmpty?null:
-                        IconButton(
-                          onPressed: () {
-                                //清空输入框
-                                _tpc.searchController.value.clear();
-                                _tpc.searchController.refresh();
-                              },
-                              icon: const Icon(
-                                Icons.cancel,
-                                color: Colors.grey,
-                              ),
+                        ],
+                      ):Row(children: [
+                        const Icon(Icons.place,color: Coloors.main,),
+                        Text(_tpc.location.value,style: const TextStyle(
+                          fontSize: 16
+                        ),)
+                      ],),))
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Obx(() => SearchInput(
+                      controller: _tpc.searchController.value, 
+                      height: 40, 
+                      hintText: " 搜索",
+                      onChanged: (value) {
+                        _tpc.searchController.value.text=value;
+                        _tpc.searchController.refresh();
+                      },
+                      prefixIconFunc: _tpc.search,
+                      suffixIcon: _tpc.searchController.value.text.isEmpty?null:
+                      IconButton(
+                        onPressed: () {
+                              //清空输入框
+                              _tpc.searchController.value.clear();
+                              _tpc.searchController.refresh();
+                            },
+                            icon: const Icon(
+                              Icons.cancel,
+                              color: Colors.grey,
                             ),
-                      )
-                    ),),
-                    
-                    Container(
-                      padding: const EdgeInsets.only(left: 5,right:5),
-                      child: IconButton(
-                        onPressed: dialog,
-                        icon: const Icon(Icons.filter_alt,color: Coloors.greyDeep,),
-                      )
+                          ),
                     )
-                  ],
-                ),
+                  ),),
+                  
+                  Container(
+                    padding: const EdgeInsets.only(left: 5,right:5),
+                    child: IconButton(
+                      onPressed: dialog,
+                      icon: const Icon(Icons.filter_alt,color: Coloors.greyDeep,),
+                    )
+                  )
+                ],
               ),
-              
-              
-              Expanded(
-                child: 
-                  Obx(() => RefreshIndicator(
-                    onRefresh: _tpc.refreshByPull,
-                    color: Coloors.main,
-                    displacement: 30,
-                    
-                    child: MasonryGridView.builder(
-                      // 展示几列
-                      gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 1,
-
-                      ),
-                      // 元素总个数
-                      itemCount: _tpc.tasks.length+((_tpc.isLoading.value||_tpc.allLoaded.value)?1:0),
-                      // 单个子元素
-                      itemBuilder: (BuildContext context, int index) => TaskCard(context,index),
-                      // // 纵向元素间距MasonryGridView
-                      //mainAxisSpacing: 25,
-                      // // 横向元素间距
-                      // crossAxisSpacing: 10,
-                      //本身不滚动，让外面的singlescrollview来滚动
-                      //physics:const NeverScrollableScrollPhysics(), 
-                      shrinkWrap: true, //收缩，让元素宽度自适应
-                      controller: _tpc.scrollController,
-                      
+            ),
+            
+            
+            Expanded(
+              child: 
+                Obx(() => RefreshIndicator(
+                  onRefresh: _tpc.refreshByPull,
+                  color: Coloors.main,
+                  displacement: 30,
+                  
+                  child: MasonryGridView.builder(
+                    // 展示几列
+                    gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1,
+        
                     ),
-                  ))
-              ),
-            ],
-          )
+                    // 元素总个数
+                    itemCount: _tpc.tasks.length+((_tpc.isLoading.value||_tpc.allLoaded.value)?1:0),
+                    // 单个子元素
+                    itemBuilder: (BuildContext context, int index) => TaskCard(context,index),
+                    // // 纵向元素间距MasonryGridView
+                    //mainAxisSpacing: 25,
+                    // // 横向元素间距
+                    // crossAxisSpacing: 10,
+                    //本身不滚动，让外面的singlescrollview来滚动
+                    //physics:const NeverScrollableScrollPhysics(), 
+                    shrinkWrap: true, //收缩，让元素宽度自适应
+                    controller: _tpc.scrollController,
+                    
+                  ),
+                ))
+            ),
+          ],
         )
       );
   }

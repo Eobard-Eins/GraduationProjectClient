@@ -1,6 +1,6 @@
 
 import 'package:client_application/components/button/squareTextButton.dart';
-import 'package:client_application/components/img/avatarFromLocal.dart';
+import 'package:client_application/components/img/imgFromLocal.dart';
 import 'package:client_application/components/img/imgPicker.dart';
 import 'package:client_application/components/text/textField.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/setNameAndAvatarPage/setNameAndAvatarController.dart';
@@ -110,7 +110,7 @@ class SetNameAndAvatarPage extends StatelessWidget {
             )),
       );
     } else {
-      return avatarFromLocal(image: _saac.imgPath.value,size: 100,boxShape: BoxShape.circle,);
+      return ImgFromLocal(image: _saac.imgPath.value,size: 100,boxShape: BoxShape.circle,);
     }
   }
 }
