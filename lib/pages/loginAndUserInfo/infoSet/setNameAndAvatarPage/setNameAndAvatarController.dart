@@ -35,7 +35,7 @@ class SetNameAndAvatarController extends GetxController{
           usernameController: usernameController, 
           account: account,
           onSuccess: ()=>needSetInfo?
-              Get.offNamed(RouteConfig.setUserInitProfilePage,arguments:{'needSetInfo':true,'account':account}):
+              Get.offNamed(RouteConfig.homePage,arguments:{'needSetInfo':true,'account':account}):
               Get.back()
         )
     );

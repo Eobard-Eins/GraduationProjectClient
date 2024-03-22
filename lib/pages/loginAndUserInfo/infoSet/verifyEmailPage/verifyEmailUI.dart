@@ -20,25 +20,23 @@ class VerifyEmailPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           //标题
-          title: const Text(
-            "邮箱验证",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              color: Coloors.main,
-            ),
-            textAlign: TextAlign.center,
-          ),
           centerTitle: true,
         ),
         body: Column(
           children: [
-            const SizedBox(
-              height: 60,
+            Container(
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.symmetric(horizontal: 30,),
+              child:const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(padding:EdgeInsets.only(bottom: 10),child:Text("验证",style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),),
+                  Padding(padding:EdgeInsets.only(bottom: 5),child:Text("请验证您的邮箱",style: TextStyle(fontSize: 13),))
+                ],)
             ),
             //账号输入
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _vpc.mailController.value,
                 onChanged: (value){
@@ -61,7 +59,7 @@ class VerifyEmailPage extends StatelessWidget {
             ),
             //验证码输入
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 0),
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 0),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _vpc.captchaController.value,
                 maxLength: captchaLenth,

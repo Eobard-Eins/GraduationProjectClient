@@ -15,16 +15,7 @@ class LoginWithPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [ Color.fromARGB(255, 245, 241, 226),Color.fromARGB(255, 228, 218, 245), Color.fromARGB(255, 225, 238, 244)],
-        ), 
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
+    return Scaffold(
         appBar: AppBar(
           //标题
           title: const Padding(padding: EdgeInsets.only(top:30),child: Text(
@@ -111,7 +102,6 @@ class LoginWithPasswordPage extends StatelessWidget {
           ],
         ),
         
-      ),
     );
     
         

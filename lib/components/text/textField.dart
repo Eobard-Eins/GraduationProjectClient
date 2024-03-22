@@ -1,3 +1,4 @@
+import 'package:client_application/res/color.dart';
 import 'package:flutter/material.dart';
 
 class UserTextFieldWidget extends StatelessWidget {
@@ -62,10 +63,10 @@ class UserTextFieldWidget extends StatelessWidget {
         hintText: hintText,
         hintStyle: const TextStyle(color: Color.fromARGB(255, 115, 115, 115),fontSize: 16,fontWeight: FontWeight.normal),
         enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Color.fromARGB(255, 115, 115, 115)),
+          borderSide: BorderSide(color: Coloors.greyLight),
         ),
         focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Color.fromARGB(255, 115, 115, 115)),
+          borderSide: BorderSide(color: Coloors.grey),
         ),
       ),
     );

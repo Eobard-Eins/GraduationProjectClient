@@ -23,7 +23,7 @@ class AgreementPage extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
           child: Text(
-            """本平台为湘潭大学毕业设计作品，暂不作为商用用途，暂不开源！""",
+            """本平台为湘潭大学本科毕业设计作品，暂不作为商用用途，暂不开源！""",
             style: TextStyle(
                 color: Color.fromARGB(255, 94, 94, 94),
                 fontSize: 14,
