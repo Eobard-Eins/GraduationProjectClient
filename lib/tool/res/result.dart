@@ -1,5 +1,5 @@
 
-import 'package:client_application/utils/res/status.dart';
+import 'package:client_application/tool/res/status.dart';
 
 class Result<T> {
   T? data;

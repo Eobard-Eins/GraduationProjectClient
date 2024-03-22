@@ -1,6 +1,6 @@
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/staticValue.dart';
-import 'package:client_application/utils/localStorage.dart';
+import 'package:client_application/tool/localStorage.dart';
 import 'package:get/get.dart';
 class MePageController extends GetxController{
   Rx<String> username="".obs;
