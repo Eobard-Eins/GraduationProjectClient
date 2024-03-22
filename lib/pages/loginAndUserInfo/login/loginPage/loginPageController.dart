@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:client_application/components/display/snackbar.dart';
 import 'package:client_application/config/RouteConfig.dart';
-import 'package:client_application/services/UserNetService.dart';
+import 'package:client_application/services/services/UserNetService.dart';
 import 'package:client_application/utils/res/status.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

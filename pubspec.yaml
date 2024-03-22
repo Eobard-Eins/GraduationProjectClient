@@ -1,5 +1,5 @@
 name: client_application
-description: "A new Flutter project."
+description: "graduation project"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -94,6 +94,9 @@ flutter:
     - family: SmileySans
       fonts:
         - asset: lib/res/fonts/SmileySans-Oblique.ttf
+  assets:
+       - lib/res/images/SchoolLogo.png
+       - lib/res/images/AppLogo.png
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

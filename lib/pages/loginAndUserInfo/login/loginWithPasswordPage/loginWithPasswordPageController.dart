@@ -1,25 +1,22 @@
 import 'package:client_application/components/display/snackbar.dart';
 import 'package:client_application/config/RouteConfig.dart';
-import 'package:client_application/services/UserNetService.dart';
+import 'package:client_application/services/services/UserNetService.dart';
+import 'package:client_application/services/utils/userNetUtils.dart';
 import 'package:client_application/utils/res/status.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginWithPasswordPageController extends GetxController {
-  TextEditingController mailController=TextEditingController();
-  TextEditingController passwordController=TextEditingController();
-
-  Rx<String> mailControllerText= "".obs;
-  Rx<String> passwordControllerText= "".obs;
+  Rx<TextEditingController> mailController=TextEditingController().obs;
+  Rx<TextEditingController> passwordController=TextEditingController().obs;
 
   Rx<bool> obscure=true.obs;
 
   @override
   void onInit(){
     super.onInit();
-    mailController.clear(); passwordController.clear();
-    passwordControllerText.value="";
-    mailControllerText.value="";
+    mailController.value.clear(); passwordController.value.clear();
+    mailController.refresh(); passwordController.refresh();
     obscure.value=true;
   }
 
@@ -30,7 +27,7 @@ class LoginWithPasswordPageController extends GetxController {
   
   //判断是否可用登录按钮
   Function()? canLogin(){
-    return mailControllerText.value.isNotEmpty&&passwordControllerText.value.isNotEmpty?onTapLogin:null;
+    return mailController.value.text.isNotEmpty&&passwordController.value.text.isNotEmpty?onTapLogin:null;
   }
 
   void forgetPassword(){
@@ -53,27 +50,34 @@ class LoginWithPasswordPageController extends GetxController {
 
   void onTapLogin(){
     printInfo(info: "登录按钮触发");
-
-    UserNetService().loginWithPassword(mailControllerText.value,passwordControllerText.value).then((value) {
+    UserNetUtils.loginWithPassword(mailController,passwordController,(){
+      //TODO: 前往首页
+      Get.offAllNamed(RouteConfig.homePage);
+    });
+    UserNetService().loginWithPassword(mailController.value.text,passwordController.value.text).then((value) {
       switch (value.statusCode){
         case Status.mailFormatError:
           snackbar.error("登录失败", "请输入正确的邮箱", value.statusCode);
-          passwordController.text=passwordControllerText.value="";//密码框清空
+          passwordController.value.clear();//密码框清空
+          passwordController.refresh();
           break;
         
         case Status.netError:
           snackbar.error("登录失败", "请检查网络设置", value.statusCode);
-          passwordController.text=passwordControllerText.value="";//密码框清空
+          passwordController.value.clear();//密码框清空
+          passwordController.refresh();
           break;
 
         case Status.userNotExist:
           snackbar.error("登录失败", "账号不存在，请确保输入的邮箱正确", value.statusCode);
-          passwordController.text=passwordControllerText.value="";//密码框清空
+          passwordController.value.clear();//密码框清空
+          passwordController.refresh();
           break;
 
         case Status.passwordError:
           snackbar.error("登录失败", "请输入正确的密码", value.statusCode);
-          passwordController.text=passwordControllerText.value="";//密码框清空
+          passwordController.value.clear();//密码框清空
+          passwordController.refresh();
           break;
         
         case Status.success:

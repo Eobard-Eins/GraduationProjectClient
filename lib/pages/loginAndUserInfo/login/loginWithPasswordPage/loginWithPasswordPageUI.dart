@@ -49,17 +49,17 @@ class LoginWithPasswordPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
               child: Obx(()=>UserTextFieldWidget(
-                controller: _lwppc.mailController,
-                onChanged: (value){_lwppc.mailControllerText.value=_lwppc.mailController.text = InputFilter.FilterEmail(value);},
+                controller: _lwppc.mailController.value,
+                onChanged: (value){_lwppc.mailController.value.text = InputFilter.FilterEmail(value);},
                 readOnly: false,
                 keyboardType: TextInputType.emailAddress,
                 //textInputAction: TextInputAction.next,
                 hintText: "请输入邮箱",
-                suffixIcon: _lwppc.mailControllerText.value.isEmpty?null:IconButton(
+                suffixIcon: _lwppc.mailController.value.text.isEmpty?null:IconButton(
                         onPressed: () {
                           //清空输入框
-                          _lwppc.mailController.clear();
-                          _lwppc.passwordControllerText.value="";
+                          _lwppc.mailController.value.clear();
+                          _lwppc.mailController.refresh();
                         },
                         icon: const Icon(Icons.clear,color: Colors.grey,),
                       ),
@@ -69,8 +69,8 @@ class LoginWithPasswordPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 0),
               child: Obx(()=>UserTextFieldWidget(
-                controller: _lwppc.passwordController,
-                onChanged: (value){_lwppc.passwordControllerText.value=_lwppc.passwordController.text = InputFilter.FilterPassword(value);},
+                controller: _lwppc.passwordController.value,
+                onChanged: (value){_lwppc.passwordController.value.text = InputFilter.FilterPassword(value);},
                 readOnly: false,
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: _lwppc.obscure.value,
@@ -84,8 +84,8 @@ class LoginWithPasswordPage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                       IconButton(
-                        onPressed: _lwppc.mailControllerText.value.isEmpty?null:_lwppc.changeObscure,
-                        icon: Icon(_lwppc.obscure.value?Icons.visibility_off:Icons.visibility,color:_lwppc.passwordControllerText.value.isEmpty?Colors.transparent: Colors.grey,),
+                        onPressed: _lwppc.mailController.value.text.isEmpty?null:_lwppc.changeObscure,
+                        icon: Icon(_lwppc.obscure.value?Icons.visibility_off:Icons.visibility,color:_lwppc.passwordController.value.text.isEmpty?Colors.transparent: Colors.grey,),
                       ),
                     TextButtonWithNoSplash(onTap: _lwppc.forgetPassword,text: "忘记密码",fontSize: 16,color: Coloors.main,),
                 ],),

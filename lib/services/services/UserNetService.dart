@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:client_application/services/Dio.dart';
+import 'package:client_application/services/services/Dio.dart';
 import 'package:client_application/models/User.dart';
 import 'package:client_application/utils/input/discriminator.dart';
 import 'package:client_application/utils/localStorage.dart';

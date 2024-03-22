@@ -1,5 +1,5 @@
 
-import 'package:client_application/services/locationUtils.dart';
+import 'package:client_application/services/utils/locationUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';

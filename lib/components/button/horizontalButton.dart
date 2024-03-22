@@ -22,6 +22,7 @@ class HorizontalButton extends StatelessWidget{
     return Column(children: [
       InkWell(
         onTap: onTap,
+        splashColor: Colors.transparent,
         child: SizedBox(
           height: height,
           child: Row(

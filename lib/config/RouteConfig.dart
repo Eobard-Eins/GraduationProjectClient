@@ -1,5 +1,6 @@
 
 import 'package:client_application/pages/home/homePageUI.dart';
+import 'package:client_application/pages/home/me/options/about/aboutPage.dart';
 import 'package:client_application/pages/home/task/newTask/newTaskPageUI.dart';
 import 'package:client_application/pages/home/task/taskInfo/taskInfoPageUI.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/userInitProfile/setUserInitProfileUI.dart';
@@ -13,21 +14,22 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 
 class RouteConfig {
 
-  static const String loginWithCaptchaPage="/loginWithCaptchaPage";
-  static const String loginWithPasswordPage="/loginWithPasswordPage";
+  static const String loginWithCaptchaPage="/login/loginWithCaptchaPage";
+  static const String loginWithPasswordPage="/login/loginWithPasswordPage";
 
-  static const String agreementInfoPage="/agreementInfoPage";
-  static const String verifyEmailPage="/verifyEmailPage";
+  static const String agreementInfoPage="/login/agreementInfoPage";
+  static const String verifyEmailPage="/login/verifyEmailPage";
   
-  static const String setPasswordPage="/setPasswordPage";
-  static const String setNameAndAvatarPage="/setNameAndAvatarPage";
-  static const String setUserInitProfilePage="/setUserInitProfilePage";
+  static const String setPasswordPage="/set/setPasswordPage";
+  static const String setNameAndAvatarPage="/set/setNameAndAvatarPage";
+  static const String setUserInitProfilePage="/set/setUserInitProfilePage";
 
   static const String homePage="/homePage";
 
-  static const String taskInfoPage="/taskInfoPage";
-  static const String newTaskPage="/newTaskPage";
+  static const String taskInfoPage="/task/taskInfoPage";
+  static const String newTaskPage="/task/newTaskPage";
 
+  static const String aboutPage="/me/aboutPage";
   static List<GetPage<dynamic>>? getPages=[
     GetPage(
       name: loginWithCaptchaPage,
@@ -68,6 +70,10 @@ class RouteConfig {
     GetPage(
       name: newTaskPage, 
       page: ()=>NewTaskPage(),
+    ),
+    GetPage(
+      name:aboutPage,
+      page: ()=>AboutPage(),
     )
   ];
 

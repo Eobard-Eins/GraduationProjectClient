@@ -94,7 +94,7 @@ class MePage extends StatelessWidget{
               child:Column(children: [
                 HorizontalButton(text: "关于", icon: Icons.abc, onTap: (){}),
                 HorizontalButton(text: "设置", icon: Icons.abc, onTap: (){}),
-                HorizontalButton(text: "关于", icon: Icons.abc, onTap: (){},needDivider: false,),
+                HorizontalButton(text: "关于", icon: Icons.abc, onTap: _mpc.gotoAboutPage,needDivider: false,),
               ],)
             ))
           ],

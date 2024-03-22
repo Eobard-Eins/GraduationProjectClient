@@ -1,3 +1,4 @@
+import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/staticValue.dart';
 import 'package:client_application/utils/localStorage.dart';
 import 'package:get/get.dart';
@@ -17,4 +18,7 @@ class MePageController extends GetxController{
     point.value=0.0;
   }
 
+  void gotoAboutPage(){
+    Get.toNamed(RouteConfig.aboutPage);
+  }
 }
