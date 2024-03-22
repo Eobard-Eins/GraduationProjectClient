@@ -1,6 +1,6 @@
 
-import 'package:client_application/utils/res/result.dart';
-import 'package:client_application/utils/res/status.dart';
+import 'package:client_application/tool/res/result.dart';
+import 'package:client_application/tool/res/status.dart';
 import 'package:get/get.dart'as prefix;
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';

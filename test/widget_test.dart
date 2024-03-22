@@ -7,11 +7,11 @@
 
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/pages/loginAndUserInfo/login/loginPage/loginPageUI.dart';
-import 'package:client_application/services/services/UserNetService.dart';
+import 'package:client_application/services/connect/UserNetService.dart';
 import 'package:client_application/models/User.dart';
-import 'package:client_application/utils/localStorage.dart';
+import 'package:client_application/tool/localStorage.dart';
 import 'package:client_application/services/utils/locationUtils.dart';
-import 'package:client_application/utils/res/result.dart';
+import 'package:client_application/tool/res/result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;

@@ -1,5 +1,5 @@
 import 'package:client_application/res/staticValue.dart';
-import 'package:client_application/utils/timeUtils.dart';
+import 'package:client_application/tool/timeUtils.dart';
 import 'package:get/get.dart';
 
 class TaskInfoPageController extends GetxController {

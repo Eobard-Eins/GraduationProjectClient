@@ -6,7 +6,7 @@ import 'package:client_application/components/display/checkAgreement.dart';
 import 'package:client_application/components/button/loginButton.dart';
 import 'package:client_application/components/text/textField.dart';
 import 'package:client_application/res/color.dart';
-import 'package:client_application/utils/input/filter.dart';
+import 'package:client_application/tool/input/filter.dart';
 import 'package:flutter/material.dart';
 
 //登录页面，使用验证码登录
@@ -50,17 +50,17 @@ class LoginPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
               child: Obx(()=>UserTextFieldWidget(
-                controller: _lpc.mailController,
-                onChanged: (value){_lpc.mailControllerText.value = _lpc.mailController.text = InputFilter.FilterEmail(value);},
+                controller: _lpc.mailController.value,
+                onChanged: (value){_lpc.mailController.value.text = InputFilter.FilterEmail(value);},
                 readOnly: false,
                 keyboardType: TextInputType.emailAddress,
                 //textInputAction: TextInputAction.next,
                 hintText: "请输入邮箱",
-                suffixIcon: _lpc.mailControllerText.value.isEmpty?null:IconButton(
+                suffixIcon: _lpc.mailController.value.text.isEmpty?null:IconButton(
                         onPressed: () {
                           //清空输入框
-                          _lpc.mailController.clear();
-                          _lpc.mailControllerText.value="";
+                          _lpc.mailController.value.clear();
+                          _lpc.mailController.refresh();
                         },
                         icon: const Icon(Icons.clear,color: Colors.grey,),
                       ),
@@ -70,11 +70,11 @@ class LoginPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 0),
               child: Obx(()=>UserTextFieldWidget(
-                controller: _lpc.captchaController,
+                controller: _lpc.captchaController.value,
                 maxLength: 6,
                 textInputAction: TextInputAction.done,
                 hintText: "请输入验证码",
-                onChanged: (value){_lpc.captchaControllerText.value=_lpc.captchaController.text = InputFilter.FilterNum(value);},
+                onChanged: (value){_lpc.captchaController.value.text = InputFilter.FilterNum(value);},
                 //TODO: 键盘done操作
                 onEditingComplete: _lpc.canLogin(),
                 keyboardType: TextInputType.number,
@@ -83,12 +83,12 @@ class LoginPage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      onPressed: _lpc.captchaControllerText.value.isEmpty?null:() {
+                      onPressed: _lpc.captchaController.value.text.isEmpty?null:() {
                         //清空输入框
-                        _lpc.captchaController.clear();
-                        _lpc.captchaControllerText.value="";
+                        _lpc.captchaController.value.clear();
+                        _lpc.captchaController.refresh();
                       },
-                      icon: Icon(Icons.clear,color:_lpc.captchaControllerText.value.isEmpty?Colors.transparent: Colors.grey,),
+                      icon: Icon(Icons.clear,color:_lpc.captchaController.value.text.isEmpty?Colors.transparent: Colors.grey,),
                     ),
                     TextButtonWithNoSplash(
                       onTap: _lpc.hasGetCaptcha.value?null:_lpc.onTapCaptcha,

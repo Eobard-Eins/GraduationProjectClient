@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:amap_flutter_location/amap_flutter_location.dart';
 import 'package:amap_flutter_location/amap_location_option.dart';
 import 'package:client_application/pages/home/community/communityPageUI.dart';
-import 'package:client_application/utils/localStorage.dart';
+import 'package:client_application/tool/localStorage.dart';
 import 'package:client_application/res/staticValue.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';

@@ -4,7 +4,7 @@ import 'package:client_application/components/button/loginButton.dart';
 import 'package:client_application/components/text/textField.dart';
 import 'package:client_application/pages/loginAndUserInfo/login/loginWithPasswordPage/loginWithPasswordPageController.dart';
 import 'package:client_application/res/color.dart';
-import 'package:client_application/utils/input/filter.dart';
+import 'package:client_application/tool/input/filter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

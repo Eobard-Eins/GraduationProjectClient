@@ -2,13 +2,13 @@
 
 import 'dart:async';
 
-import 'package:client_application/services/services/Dio.dart';
+import 'package:client_application/services/connect/Dio.dart';
 import 'package:client_application/models/User.dart';
-import 'package:client_application/utils/input/discriminator.dart';
-import 'package:client_application/utils/localStorage.dart';
-import 'package:client_application/utils/res/result.dart';
+import 'package:client_application/tool/input/discriminator.dart';
+import 'package:client_application/tool/localStorage.dart';
+import 'package:client_application/tool/res/result.dart';
 import 'package:client_application/res/staticValue.dart';
-import 'package:client_application/utils/res/status.dart';
+import 'package:client_application/tool/res/status.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
