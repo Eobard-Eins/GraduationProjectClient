@@ -98,7 +98,7 @@ class VerifyEmailPage extends StatelessWidget {
             Obx(()=>CheckAgreement(
                 onChanged: _vpc.changeAgreement, 
                 init: _vpc.checkAgreement.value, 
-                onTapAgreeMent: _vpc.onTapAgreement
+                onTapAgreeMent: _vpc.gotoAgreement
               ),)
 
           ],

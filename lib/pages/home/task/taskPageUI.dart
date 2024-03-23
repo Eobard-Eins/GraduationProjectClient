@@ -39,7 +39,7 @@ class TaskPage extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 5,right: 10),
                     iconSize: 50,
                     highlightColor: Colors.transparent,
-                    onPressed: _tpc.addNewTask,
+                    onPressed: _tpc.gotoAddNewTask,
                     icon: const Icon(
                       Icons.add_circle_outlined,
                       color: Coloors.main,

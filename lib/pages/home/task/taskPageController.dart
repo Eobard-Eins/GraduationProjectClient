@@ -38,25 +38,8 @@ class TaskPageController extends GetxController {
 
     getLocation();
     loadData(10);
-    scrollController.addListener(_scrollListener);
-    
   }
   
-  void _scrollListener() {
-    if (scrollController.position.pixels == scrollController.position.maxScrollExtent && !isLoading.value) {
-      loadData(5);
-      printInfo(info:"to the down");
-    }
-  }
-  Future<void> load()async{
-    printInfo(info:"refreshh");
-    await loadData(10);
-    printInfo(info:"refreshh end");
-  }
-  Future<void> refreshLoad()async{
-    //tasks.clear();
-    await loadData(10);
-  }
   Future<int> loadData(int n,{bool refresh=false})async{
     isLoading.value=true;
     printInfo(info:"loadData");
@@ -86,9 +69,8 @@ class TaskPageController extends GetxController {
     printInfo(info:"moveToTop");
     scrollController.animateTo(0, duration: const Duration(milliseconds: 800), curve: Curves.easeInOut);
   }
-  void addNewTask() {
-    Get.toNamed(RouteConfig.newTaskPage);
-  }
+  void gotoAddNewTask()=> Get.toNamed(RouteConfig.newTaskPage);
+
   void search() {
     printInfo(info:"search");
   }

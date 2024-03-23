@@ -97,8 +97,8 @@ class LoginPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TextButtonWithNoSplash(onTap: _lpc.onTapLoginByPassword,text: "账号密码登录"),
-                  TextButtonWithNoSplash(onTap: _lpc.onTapRegister, text: "注册"),
+                  TextButtonWithNoSplash(onTap: _lpc.gotoLoginByPassword,text: "账号密码登录"),
+                  TextButtonWithNoSplash(onTap: _lpc.gotoRegister, text: "注册"),
                 ]
               ),
             ),
@@ -112,7 +112,7 @@ class LoginPage extends StatelessWidget {
         bottomNavigationBar: Obx(()=>CheckAgreement(
           onChanged: _lpc.changeAgreement,
           init: _lpc.checkAgreement.value, 
-          onTapAgreeMent: _lpc.onTapAgreement),
+          onTapAgreeMent: _lpc.gotoAgreement),
         )
     );
   }

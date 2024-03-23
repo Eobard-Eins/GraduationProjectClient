@@ -25,7 +25,8 @@ class HomePageController extends GetxController {
   switchBottomTabBar(int index) {
     //点击底部BottomNavigationBarItem切换PageView页面
     //pageController.animateToPage(index,duration: Duration(seconds: 1),curve: Curves.fastLinearToSlowEaseIn);
-    if(currentPage==0){
+    
+    if(currentPage==0&&index==0){
       Get.find<TaskPageController>().moveToTop();
     }
     pageController.jumpToPage(index);

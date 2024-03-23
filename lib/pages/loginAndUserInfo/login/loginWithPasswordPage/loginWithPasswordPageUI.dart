@@ -67,7 +67,6 @@ class LoginWithPasswordPage extends StatelessWidget {
                 obscureText: _lwppc.obscure.value,
                 maxLength: 16,
                 textInputAction: TextInputAction.done,
-                //TODO: 
                 onEditingComplete: _lwppc.canLogin(),
                 hintText: "请输入密码",
                 suffixIconConstraints: const BoxConstraints(minHeight: 22),
@@ -78,7 +77,7 @@ class LoginWithPasswordPage extends StatelessWidget {
                         onPressed: _lwppc.mailController.value.text.isEmpty?null:_lwppc.changeObscure,
                         icon: Icon(_lwppc.obscure.value?Icons.visibility_off:Icons.visibility,color:_lwppc.passwordController.value.text.isEmpty?Colors.transparent: Colors.grey,),
                       ),
-                    TextButtonWithNoSplash(onTap: _lwppc.forgetPassword,text: "忘记密码",fontSize: 16,color: Coloors.main,),
+                    TextButtonWithNoSplash(onTap: _lwppc.gotoForgetPassword,text: "忘记密码",fontSize: 16,color: Coloors.main,),
                 ],),
               ),)
             ),
@@ -89,8 +88,8 @@ class LoginWithPasswordPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TextButtonWithNoSplash(onTap: _lwppc.onTapLoginByCaptcha,text: "验证码登录"),
-                  TextButtonWithNoSplash(onTap: _lwppc.onTapRegister, text: "注册"),
+                  TextButtonWithNoSplash(onTap: _lwppc.gotoLoginByCaptcha,text: "验证码登录"),
+                  TextButtonWithNoSplash(onTap: _lwppc.gotoRegister, text: "注册"),
                 ]
               ),
             ),

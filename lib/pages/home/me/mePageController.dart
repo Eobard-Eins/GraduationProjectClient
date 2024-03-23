@@ -21,4 +21,7 @@ class MePageController extends GetxController{
   void gotoAboutPage(){
     Get.toNamed(RouteConfig.aboutPage);
   }
+  void gotoSettingPage(){
+    Get.toNamed(RouteConfig.settingPage);
+  }
 }

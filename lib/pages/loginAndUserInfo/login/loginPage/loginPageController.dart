@@ -40,14 +40,10 @@ class LoginPageController extends GetxController {
   }
 
   //改变协议框勾选状态
-  void changeAgreement(bool? value){
-    checkAgreement.value = !checkAgreement.value;
-  }
+  void changeAgreement(bool? value)=>checkAgreement.value = !checkAgreement.value;
 
   //判断是否可以使用登录按钮
-  Function()? canLogin(){
-    return checkAgreement.value&&mailController.value.text.isNotEmpty&&captchaController.value.text.length>=6?onTapLogin:null;
-  }
+  Function()? canLogin()=>checkAgreement.value&&mailController.value.text.isNotEmpty&&captchaController.value.text.length>=6?onTapLogin:null;
 
   //发送验证码
   void onTapCaptcha() {
@@ -62,35 +58,20 @@ class LoginPageController extends GetxController {
     UserLoginUtils.sendCaptcha(mailController:mailController, onSuccess: () => printInfo(info: "验证码发送成功"));
   }
 
-  void onTapLoginByPassword() {
-    printInfo(info: "跳转密码登录页");
-    Get.offNamed(RouteConfig.loginWithPasswordPage);
-    //Navigator.of(context).pushReplacementNamed(RouteConfig.loginWithPasswordPage);
-  }
+  void gotoLoginByPassword()=>Get.offNamed(RouteConfig.loginWithPasswordPage);
 
-  void onTapRegister() {
-    printInfo(info: "跳转注册的验证手机号页");
-    Get.toNamed(RouteConfig.verifyEmailPage);//,arguments: {'newUser':true});
-    //Navigator.of(context).pushNamed(RouteConfig.verifyPhonePage);
-  }
+  void gotoRegister()=>Get.toNamed(RouteConfig.verifyEmailPage);//,arguments: {'newUser':true});
 
   void onTapLogin() {
     printInfo(info: "登录事件按钮触发");
     UserLoginUtils.loginWithCaptcha(mailController:mailController, captchaController:captchaController, onSuccess:(){
-      printInfo(info: "登录成功");
-      //TODO: 前往首页
       Get.offAllNamed(RouteConfig.homePage);
     },onSuccessButUserNotExist:(){
-      printInfo(info: "跳转设置密码页");
-      //TODO: 跳转设置密码页
+      //跳转设置密码页
       Get.toNamed(RouteConfig.setPasswordPage,arguments:{'needSetInfo':true,'account':mailController.value.text});
     });
   }
 
-  void onTapAgreement() {
-    printInfo(info: "跳转协议页");
-    Get.toNamed(RouteConfig.agreementInfoPage);
-    //Navigator.of(context).pushNamed(RouteConfig.agreementInfoPage);
-  }
+  void gotoAgreement()=>Get.toNamed(RouteConfig.agreementInfoPage);
 
 }

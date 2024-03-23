@@ -22,12 +22,10 @@ class SetPasswordController extends GetxController{
     obscure.value=true;
   }
 
-  Function()? canNext(){
-    return (passwordController.value.text.isEmpty ||
+  Function()? canNext()=>(passwordController.value.text.isEmpty ||
                     passwordAgainController.value.text.isEmpty)
                 ? null
                 : onTapNext;
-  }
 
   void onTapNext() {
     printInfo(info:"点击下一步");

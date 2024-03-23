@@ -42,13 +42,9 @@ class VerifymailController extends GetxController{
   }
 
   //改变协议框勾选状态
-  void changeAgreement(bool? value){
-    checkAgreement.value = !checkAgreement.value;
-  }
+  void changeAgreement(bool? value)=>checkAgreement.value = !checkAgreement.value;
 
-  Function()? canNext(){
-    return checkAgreement.value&&mailController.value.text.isNotEmpty&&captchaController.value.text.isNotEmpty?onTapNext:null;
-  }
+  Function()? canNext()=>checkAgreement.value&&mailController.value.text.isNotEmpty&&captchaController.value.text.isNotEmpty?onTapNext:null;
 
   void onTapCaptcha() {
     printInfo(info: "验证码发送按钮触发");
@@ -70,20 +66,13 @@ class VerifymailController extends GetxController{
       mailController: mailController,
       captchaController: captchaController,
       onSuccess: () {
-        printInfo(info: "跳转设置密码页");
-        //TODO: 跳转设置密码页
         Get.offNamed(RouteConfig.setPasswordPage,arguments:{'needSetInfo':true,'account':mailController.value.text});
       },
       onSuccessButUserNotExist: () {
-        printInfo(info: "跳转设置密码页");
-        //TODO: 跳转设置密码页
         Get.offNamed(RouteConfig.setPasswordPage,arguments:{'needSetInfo':false,'account':mailController.value.text});
       },
     );
   }
 
-  void onTapAgreement() {
-    printInfo(info: "跳转协议页");
-    Get.toNamed(RouteConfig.agreementInfoPage);
-  }
+  void gotoAgreement()=>Get.toNamed(RouteConfig.agreementInfoPage);
 }
