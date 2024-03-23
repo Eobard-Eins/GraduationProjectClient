@@ -105,7 +105,7 @@ class MePage extends StatelessWidget{
               padding: const EdgeInsets.only(left: 20,right: 10,top: 20),
               child:Column(children: [
                 HorizontalButton(text: "历史记录", icon: Icons.history, onTap: (){}),
-                HorizontalButton(text: "设置", icon: Icons.settings_outlined, onTap: (){}),
+                HorizontalButton(text: "设置", icon: Icons.settings_outlined, onTap: _mpc.gotoSettingPage),
                 HorizontalButton(text: "关于", icon: Icons.info_outlined, onTap: _mpc.gotoAboutPage,needDivider: false,),
               ],)
             ))

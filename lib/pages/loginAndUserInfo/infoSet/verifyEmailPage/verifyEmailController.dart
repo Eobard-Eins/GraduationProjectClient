@@ -66,10 +66,10 @@ class VerifymailController extends GetxController{
       mailController: mailController,
       captchaController: captchaController,
       onSuccess: () {
-        Get.offNamed(RouteConfig.setPasswordPage,arguments:{'needSetInfo':true,'account':mailController.value.text});
+        Get.offNamed(RouteConfig.setPasswordPage,arguments:{'needSetInfo':false,'account':mailController.value.text});
       },
       onSuccessButUserNotExist: () {
-        Get.offNamed(RouteConfig.setPasswordPage,arguments:{'needSetInfo':false,'account':mailController.value.text});
+        Get.offNamed(RouteConfig.setPasswordPage,arguments:{'needSetInfo':true,'account':mailController.value.text});
       },
     );
   }

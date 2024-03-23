@@ -7,30 +7,34 @@ import 'package:image_picker/image_picker.dart';
 class ImgPacker{
   //设置图片挑选器
   final ImagePicker _picker = ImagePicker();
-  ImgPacker.single(Rx<XFile?> imgPath){
+  ImgPacker.single(Rx<XFile?> imgPath,{Function()? whenComplete,Function()? whenBottomSheetClose}){
     view((image){
       imgPath.value=image;
       imgPath.refresh();
+      whenComplete!=null?whenComplete():(){};
     },(image){
       imgPath.value=image;
       imgPath.refresh();
-    });
+      whenComplete!=null?whenComplete():(){};
+    },whenBottomSheetClose??(){});
   }
-  ImgPacker.all(RxList<XFile?> imgs){
+  ImgPacker.all(RxList<XFile?> imgs,{Function()? whenComplete,Function()? whenBottomSheetClose}){
     view((image){
       imgs.add(image);
       imgs.refresh();
+      whenComplete!=null?whenComplete():(){};
     },(image){
       imgs.add(image);
       imgs.refresh();
-    });
+      whenComplete!=null?whenComplete():(){};
+    },whenBottomSheetClose??(){});
   }
 
-  view(Function(XFile?) gallery,Function camera){
+  view(Function(XFile?) gallery,Function camera,Function() whenBottomSheetClose){
     Get.bottomSheet(
       Container(
-        padding: const EdgeInsets.only(top:10,left: 20,right: 20),
-        height: 150,
+        padding: const EdgeInsets.only(top:10,left: 20,right: 20,bottom: 30),
+        height: 160,
         child: Column(children: [
           const ShortHeadBar(),
           const Padding(padding: EdgeInsets.symmetric(vertical: 15)),
@@ -71,7 +75,6 @@ class ImgPacker{
                 if (image!=null){
                   camera(image);
                 }
-                
               },
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
@@ -90,12 +93,10 @@ class ImgPacker{
                 ]),
               ),)
             )
-          ],)
-            
-          ]
-        ),
+          ],),
+        ]),
       ),
       backgroundColor: Colors.white
-    );
+    ).whenComplete(whenBottomSheetClose);
   }
 }

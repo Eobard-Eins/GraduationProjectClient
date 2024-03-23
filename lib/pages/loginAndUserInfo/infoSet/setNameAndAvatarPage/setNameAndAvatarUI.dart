@@ -32,7 +32,7 @@ class SetNameAndAvatarPage extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
             child: Text(
-              "设置头像和用户名，用户名应在3~16个字符之间",
+              "设置头像和用户名，用户名应在3~8个字符之间",
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: 12,
@@ -59,7 +59,7 @@ class SetNameAndAvatarPage extends StatelessWidget {
                 _saac.usernameController.refresh();
               },
               readOnly: false,
-              maxLength: 16,
+              maxLength: 8,
               textInputAction: TextInputAction.done,
               //TODO:
               onEditingComplete:

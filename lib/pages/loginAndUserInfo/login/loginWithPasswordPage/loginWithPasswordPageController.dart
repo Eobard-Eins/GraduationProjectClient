@@ -24,7 +24,7 @@ class LoginWithPasswordPageController extends GetxController {
   //判断是否可用登录按钮
   Function()? canLogin()=>mailController.value.text.isNotEmpty&&passwordController.value.text.isNotEmpty?onTapLogin:null;
 
-  void gotoForgetPassword()=>Get.toNamed(RouteConfig.verifyEmailPage,arguments: {'newUser':false});
+  void gotoForgetPassword()=>Get.toNamed(RouteConfig.verifyEmailPage);//,arguments: {'newUser':false});
 
   void gotoLoginByCaptcha()=>Get.offNamed(RouteConfig.loginWithCaptchaPage);
   
