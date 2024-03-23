@@ -159,16 +159,15 @@ class TaskPage extends StatelessWidget {
                     
                   // ),
                 // ))
-                EasyRefresh.builder(
+                EasyRefresh(
                   onRefresh: _tpc.refreshLoad,
                   onLoad: _tpc.load,
-                  childBuilder: (context,physics){
-                    return Obx(() => MasonryGridView.builder(
+                  child: Obx(() => ListView.builder(
                       // 展示几列
-                      gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 1,
+                      // gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                      //   crossAxisCount: 1,
           
-                      ),
+                      // ),
                       // 元素总个数
                       itemCount: _tpc.tasks.length,
                       // 单个子元素
@@ -178,12 +177,10 @@ class TaskPage extends StatelessWidget {
                       // // 横向元素间距
                       // crossAxisSpacing: 10,
                       //本身不滚动，让外面的singlescrollview来滚动
-                      physics:physics, 
+                      //physics:physics, 
                       shrinkWrap: true, //收缩，让元素宽度自适应
                       controller: _tpc.scrollController,
-                      
-                    ));
-                  },
+                    ))
                 )
             ),
           ],
