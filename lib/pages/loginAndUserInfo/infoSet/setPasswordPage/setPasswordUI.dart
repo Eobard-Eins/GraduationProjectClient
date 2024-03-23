@@ -2,6 +2,7 @@
 import 'package:client_application/components/button/squareTextButton.dart';
 import 'package:client_application/components/text/textField.dart';
 import 'package:client_application/pages/loginAndUserInfo/infoSet/setPasswordPage/setPasswordController.dart';
+import 'package:client_application/res/color.dart';
 import 'package:client_application/tool/input/filter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,30 +11,44 @@ import 'package:get/get.dart';
 class SetPasswordPage extends StatelessWidget {
   final SetPasswordController _spc=Get.put<SetPasswordController>(SetPasswordController());
   final passwordMaxLength=16;
-  final bool needSetInfo=true;//Get.arguments["needSetInfo"] as bool;
+  final bool needSetInfo=Get.arguments["needSetInfo"] as bool;
+  
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
         appBar: AppBar(
+          //标题
+          title: const Text(
+            "设置密码",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              color: Coloors.main,
+            ),
+            textAlign: TextAlign.center,
+          ),
           centerTitle: true,
         ),
         body: Column(
           children: [
-            Container(
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.symmetric(horizontal: 30,),
-              child:const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(padding:EdgeInsets.only(bottom: 10),child:Text("设置密码",style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),),
-                  Padding(padding:EdgeInsets.only(bottom: 5),child:Text("密码长度应在4~16位，可使用字母、数字、符号组合",style: TextStyle(fontSize: 13),))
-                ],)
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 40, vertical: 0),
+              child:Text(
+                "密码长度应在4~16位，可使用字母、数字、符号组合",
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 12,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
-            
+            const SizedBox(
+              height: 20,
+            ),
             //密码第一次输入
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 0),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _spc.passwordController.value,
                 onChanged: (value) {
@@ -64,7 +79,7 @@ class SetPasswordPage extends StatelessWidget {
             ),
             //密码第二次输入
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 0),
+              padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 0),
               child: Obx(() => UserTextFieldWidget(
                 controller: _spc.passwordAgainController.value,
                 onChanged: (value) {
