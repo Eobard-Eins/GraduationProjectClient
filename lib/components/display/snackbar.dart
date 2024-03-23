@@ -10,4 +10,7 @@ class snackbar{
   snackbar.warnning(String title, String message,{bool exception=false}){
     Get.snackbar(title, message,icon: const Icon(Icons.warning_amber_rounded,color: Color.fromARGB(255, 255, 251, 0),),shouldIconPulse:false);
   }
+  snackbar.info(String title, String message,){
+    Get.snackbar(title, message,icon: const Icon(Icons.feedback_outlined,color: Coloors.greyDeep,),shouldIconPulse:false);
+  }
 }

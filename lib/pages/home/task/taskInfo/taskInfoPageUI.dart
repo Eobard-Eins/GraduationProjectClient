@@ -5,7 +5,6 @@ import 'package:client_application/pages/home/task/taskInfo/taskInfoPageControll
 import 'package:client_application/res/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:unicode/unicode.dart';
 
 class TaskInfoPage extends StatelessWidget{
   final TaskInfoPageController _tipc=Get.put<TaskInfoPageController>(TaskInfoPageController());

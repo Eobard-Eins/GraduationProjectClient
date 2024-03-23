@@ -1,5 +1,4 @@
 
-import 'package:client_application/components/button/textButtonWithNoSplash.dart';
 import 'package:client_application/components/text/searchBar.dart';
 import 'package:client_application/components/item/taskItem.dart';
 import 'package:client_application/pages/home/task/taskPageController.dart';
@@ -132,46 +131,47 @@ class TaskPage extends StatelessWidget {
             
             
             Expanded(
-              child: 
-                // Obx(() => RefreshIndicator(
-                //   onRefresh: _tpc.refreshLoad,
-                //   color: Coloors.main,
-                //   displacement: 30,
-                  
-                //   child: MasonryGridView.builder(
-                //     // 展示几列
-                //     gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                //       crossAxisCount: 1,
+              child: EasyRefresh(
+                  header: const ClassicHeader(
+                    hitOver: true,
+                    processedDuration: Duration(seconds: 1),
+                    showMessage: false,
         
-                //     ),
-                //     // 元素总个数
-                //     itemCount: _tpc.tasks.length+((_tpc.isLoading.value||_tpc.allLoaded.value)?1:0),
-                //     // 单个子元素
-                //     itemBuilder: (BuildContext context, int index) => TaskCard(context,index),
-                //     // // 纵向元素间距MasonryGridView
-                //     //mainAxisSpacing: 25,
-                //     // // 横向元素间距
-                //     // crossAxisSpacing: 10,
-                //     //本身不滚动，让外面的singlescrollview来滚动
-                //     //physics:const NeverScrollableScrollPhysics(), 
-                //     shrinkWrap: true, //收缩，让元素宽度自适应
-                //     controller: _tpc.scrollController,
-                    
-                //   ),
-                // ))
-                EasyRefresh.builder(
+                    processingText: "正在刷新...",
+                    readyText: "正在刷新...",
+                    armedText: "释放以刷新",
+                    dragText: "下拉刷新",
+                    processedText: "刷新成功",
+                    failedText: "刷新失败",
+                    noMoreText: "没有更多了",
+                  ),
+                  footer: const ClassicFooter(
+                    hitOver: true,
+                    processedDuration: Duration(seconds: 1),
+                    showMessage: false,
+                    //文本配置
+                    processingText: "正在刷新...",
+                    readyText: "正在刷新...",
+                    armedText: "释放以刷新",
+                    dragText: "下拉刷新",
+                    processedText: "刷新成功",
+                    failedText: "刷新失败",
+                    noMoreText: "没有更多了",            
+                  ),
+                  //canLoadAfterNoMore: true,
+                  canRefreshAfterNoMore: true,
+                  refreshOnStart: true,
+                  controller: _tpc.refreshController,
                   onRefresh: ()async{
-                    await _tpc.loadData(10,refresh:true);
+                    await _tpc.loadData(0,refresh:true);
                   },
                   onLoad: ()async{
                     await _tpc.loadData(0);
                   },
-                  childBuilder: (context,physics){
-                    return Obx(() => MasonryGridView.builder(
+                  child:Obx(() => MasonryGridView.builder(
                       // 展示几列
                       gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1,
-          
                       ),
                       // 元素总个数
                       itemCount: _tpc.tasks.length,
@@ -182,13 +182,12 @@ class TaskPage extends StatelessWidget {
                       // // 横向元素间距
                       // crossAxisSpacing: 10,
                       //本身不滚动，让外面的singlescrollview来滚动
-                      physics:physics, 
+                      //physics:physics, 
                       shrinkWrap: true, //收缩，让元素宽度自适应
                       controller: _tpc.scrollController,
                       
-                    ));
-                  },
-                )
+                    )
+                  ))
             ),
           ],
         )
@@ -208,50 +207,6 @@ class TaskPage extends StatelessWidget {
       labels: ti.labels,
       hotValue: ti.hotValue,
     );
-    // if (index==_tpc.tasks.length) {
-    //   if(_tpc.isLoading.value){
-    //     if(_tpc.pull.value){
-    //       return const Padding(padding: EdgeInsets.only(bottom: 20));
-    //     }
-    //     return Container(
-    //       padding: const EdgeInsets.only(bottom: 10,top:12),
-    //       alignment: Alignment.center,
-    //       child: const CircularProgressIndicator(
-    //         color: Coloors.main,
-    //       )
-    //     );
-    //   }
-    //   return Container(
-    //       width: 100,
-    //       alignment: Alignment.center,
-    //       padding: const EdgeInsets.only(bottom: 20,top:12),
-    //       child: TextButtonWithNoSplash(
-    //         onTap:_tpc.refreshLoad, 
-    //         text: "---到底了，点击刷新---",
-    //         textStyle: const TextStyle(
-    //           fontSize: 10,
-    //           color: Coloors.greyDeep,
-    //           fontFamily: 'SmileySans',
-    //           letterSpacing: 2
-    //         ),
-    //       )
-    //     );
-      
-      
-    // } else {
-    //   var ti=_tpc.tasks[index];
-    //   return TaskItem(
-    //     ontap: (){
-    //       _tpc.tapTask(ti.id);
-    //     },
-    //     title: ti.title,
-    //     point: ti.point,
-    //     time: ti.time,
-    //     location: ti.location,
-    //     labels: ti.labels,
-    //     hotValue: ti.hotValue,
-    //   );
-    // }
   }
 
   void dialog(){

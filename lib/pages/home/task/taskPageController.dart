@@ -5,6 +5,7 @@ import 'package:client_application/res/color.dart';
 import 'package:client_application/tool/localStorage.dart';
 import 'package:client_application/services/utils/locationUtils.dart';
 import 'package:client_application/tool/timeUtils.dart';
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +18,10 @@ class TaskPageController extends GetxController {
   Rx<bool> gettingLocation=false.obs;
   
   final ScrollController scrollController=ScrollController();
+  final EasyRefreshController refreshController=EasyRefreshController(
+    controlFinishRefresh: true,
+    controlFinishLoad: true,
+  );
   double distanceInSearch=10.0;
   @override
   void onInit() {
@@ -34,6 +39,7 @@ class TaskPageController extends GetxController {
     getLocation();
     loadData(10);
     scrollController.addListener(_scrollListener);
+    
   }
   
   void _scrollListener() {
@@ -51,7 +57,7 @@ class TaskPageController extends GetxController {
     //tasks.clear();
     await loadData(10);
   }
-  Future<List<TaskItemInfo>> loadData(int n,{bool refresh=false})async{
+  Future<int> loadData(int n,{bool refresh=false})async{
     isLoading.value=true;
     printInfo(info:"loadData");
     List<TaskItemInfo> newTasks=[];
@@ -63,15 +69,18 @@ class TaskPageController extends GetxController {
     }
 
     if (newTasks.isEmpty){
-      Get.snackbar("暂无更多", "暂时没有更多数据",icon: const Icon(Icons.feedback_outlined,color: Coloors.gold,),shouldIconPulse:false);
+      refreshController.finishRefresh(IndicatorResult.noMore);
+      refreshController.finishLoad(IndicatorResult.noMore);
     }else{
+      refreshController.finishRefresh();
+      refreshController.finishLoad();
       if (refresh){
         tasks.clear();
       }
       tasks.addAll(newTasks);
     }
     isLoading.value=false;
-    return newTasks;
+    return newTasks.length;
   }
   void moveToTop(){
     printInfo(info:"moveToTop");
