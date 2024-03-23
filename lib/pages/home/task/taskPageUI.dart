@@ -134,34 +134,38 @@ class TaskPage extends StatelessWidget {
             Expanded(
               child: 
                 // Obx(() => RefreshIndicator(
-                //   onRefresh: _tpc.refreshByPull,
+                //   onRefresh: _tpc.refreshLoad,
                 //   color: Coloors.main,
                 //   displacement: 30,
                   
-                  // child: MasonryGridView.builder(
-                  //   // 展示几列
-                  //   gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                  //     crossAxisCount: 1,
+                //   child: MasonryGridView.builder(
+                //     // 展示几列
+                //     gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                //       crossAxisCount: 1,
         
-                  //   ),
-                  //   // 元素总个数
-                  //   itemCount: _tpc.tasks.length+((_tpc.isLoading.value||_tpc.allLoaded.value)?1:0),
-                  //   // 单个子元素
-                  //   itemBuilder: (BuildContext context, int index) => TaskCard(context,index),
-                  //   // // 纵向元素间距MasonryGridView
-                  //   //mainAxisSpacing: 25,
-                  //   // // 横向元素间距
-                  //   // crossAxisSpacing: 10,
-                  //   //本身不滚动，让外面的singlescrollview来滚动
-                  //   //physics:const NeverScrollableScrollPhysics(), 
-                  //   shrinkWrap: true, //收缩，让元素宽度自适应
-                  //   controller: _tpc.scrollController,
+                //     ),
+                //     // 元素总个数
+                //     itemCount: _tpc.tasks.length+((_tpc.isLoading.value||_tpc.allLoaded.value)?1:0),
+                //     // 单个子元素
+                //     itemBuilder: (BuildContext context, int index) => TaskCard(context,index),
+                //     // // 纵向元素间距MasonryGridView
+                //     //mainAxisSpacing: 25,
+                //     // // 横向元素间距
+                //     // crossAxisSpacing: 10,
+                //     //本身不滚动，让外面的singlescrollview来滚动
+                //     //physics:const NeverScrollableScrollPhysics(), 
+                //     shrinkWrap: true, //收缩，让元素宽度自适应
+                //     controller: _tpc.scrollController,
                     
-                  // ),
+                //   ),
                 // ))
                 EasyRefresh.builder(
-                  onRefresh: _tpc.refreshLoad,
-                  onLoad: _tpc.load,
+                  onRefresh: ()async{
+                    await _tpc.loadData(10,refresh:true);
+                  },
+                  onLoad: ()async{
+                    await _tpc.loadData(0);
+                  },
                   childBuilder: (context,physics){
                     return Obx(() => MasonryGridView.builder(
                       // 展示几列

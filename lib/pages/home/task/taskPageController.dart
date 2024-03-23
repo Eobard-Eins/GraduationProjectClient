@@ -14,8 +14,6 @@ class TaskPageController extends GetxController {
   Rx<double> distance=10.0.obs;
   Rx<String> location="- - -".obs;
   Rx<bool> isLoading=false.obs;
-  Rx<bool> allLoaded=false.obs;
-  Rx<bool> pull=false.obs;
   Rx<bool> gettingLocation=false.obs;
   
   final ScrollController scrollController=ScrollController();
@@ -28,10 +26,8 @@ class TaskPageController extends GetxController {
     distance.value=SpUtils.getDouble('distance',defaultValue: 10.0);
     distanceInSearch=distance.value;
     location.value=" - - - ";
-    allLoaded.value=false;
     isLoading.value=false;
     gettingLocation.value=false;
-    pull.value=false;
     searchController.value.clear();
     searchController.refresh();
 
@@ -41,24 +37,21 @@ class TaskPageController extends GetxController {
   }
   
   void _scrollListener() {
-    if (scrollController.position.pixels == scrollController.position.maxScrollExtent && !isLoading.value && !allLoaded.value) {
+    if (scrollController.position.pixels == scrollController.position.maxScrollExtent && !isLoading.value) {
       loadData(5);
       printInfo(info:"to the down");
     }
   }
   Future<void> load()async{
     printInfo(info:"refreshh");
-    moveToTop();
-    tasks.clear();
     await loadData(10);
     printInfo(info:"refreshh end");
   }
   Future<void> refreshLoad()async{
-    pull.value=true;
-    await load();
-    pull.value=false;
+    //tasks.clear();
+    await loadData(10);
   }
-  Future<void> loadData(int n)async{
+  Future<List<TaskItemInfo>> loadData(int n,{bool refresh=false})async{
     isLoading.value=true;
     printInfo(info:"loadData");
     List<TaskItemInfo> newTasks=[];
@@ -70,17 +63,15 @@ class TaskPageController extends GetxController {
     }
 
     if (newTasks.isEmpty){
-      allLoaded.value=true;
       Get.snackbar("暂无更多", "暂时没有更多数据",icon: const Icon(Icons.feedback_outlined,color: Coloors.gold,),shouldIconPulse:false);
     }else{
-      tasks.addAll(newTasks);
-      if(tasks.length<3){
-        allLoaded.value=true;
-      }else{
-        allLoaded.value=false;
+      if (refresh){
+        tasks.clear();
       }
+      tasks.addAll(newTasks);
     }
     isLoading.value=false;
+    return newTasks;
   }
   void moveToTop(){
     printInfo(info:"moveToTop");
