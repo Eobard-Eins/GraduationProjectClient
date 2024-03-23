@@ -63,6 +63,7 @@ class MePage extends StatelessWidget{
                       const Spacer(),
                       TextButtonWithNoSplash(onTap: (){}, text: "所有 >",textStyle: const TextStyle(color: Coloors.greyDeep,fontSize: 14),)
                   ],),),
+                  
                   Padding(padding: const EdgeInsets.symmetric(horizontal: 10),child:Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
