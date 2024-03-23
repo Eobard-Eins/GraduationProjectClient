@@ -46,16 +46,16 @@ class TaskPageController extends GetxController {
       printInfo(info:"to the down");
     }
   }
-  Future<void> refreshh()async{
+  Future<void> load()async{
     printInfo(info:"refreshh");
     moveToTop();
     tasks.clear();
     await loadData(10);
     printInfo(info:"refreshh end");
   }
-  Future<void> refreshByPull()async{
+  Future<void> refreshLoad()async{
     pull.value=true;
-    await refreshh();
+    await load();
     pull.value=false;
   }
   Future<void> loadData(int n)async{
