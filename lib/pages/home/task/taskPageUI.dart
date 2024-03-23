@@ -7,7 +7,7 @@ import 'package:client_application/res/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-
+import 'package:easy_refresh/easy_refresh.dart';
 
 class TaskPage extends StatelessWidget {
   final TaskPageController _tpc = Get.put<TaskPageController>(TaskPageController());
@@ -134,7 +134,7 @@ class TaskPage extends StatelessWidget {
             Expanded(
               child: 
                 Obx(() => RefreshIndicator(
-                  onRefresh: _tpc.refreshByPull,
+                  onRefresh: _tpc.refreshLoad,
                   color: Coloors.main,
                   displacement: 30,
                   
@@ -157,36 +157,34 @@ class TaskPage extends StatelessWidget {
                     shrinkWrap: true, //收缩，让元素宽度自适应
                     controller: _tpc.scrollController,
                     
-<<<<<<< HEAD
-                  // ),
-                // ))
-                EasyRefresh(
-                  onRefresh: _tpc.refreshLoad,
-                  onLoad: _tpc.load,
-                  child: Obx(() => ListView.builder(
-                      // 展示几列
-                      // gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                      //   crossAxisCount: 1,
-          
-                      // ),
-                      // 元素总个数
-                      itemCount: _tpc.tasks.length,
-                      // 单个子元素
-                      itemBuilder: (BuildContext context, int index) => TaskCard(context,index),
-                      // // 纵向元素间距MasonryGridView
-                      //mainAxisSpacing: 25,
-                      // // 横向元素间距
-                      // crossAxisSpacing: 10,
-                      //本身不滚动，让外面的singlescrollview来滚动
-                      //physics:physics, 
-                      shrinkWrap: true, //收缩，让元素宽度自适应
-                      controller: _tpc.scrollController,
-                    ))
-                )
-=======
                   ),
                 ))
->>>>>>> parent of 31f3234 (commit)
+                // EasyRefresh.builder(
+                //   onRefresh: _tpc.refreshLoad,
+                //   onLoad: _tpc.load,
+                //   childBuilder: (context,physics){
+                //     return Obx(() => MasonryGridView.builder(
+                //       // 展示几列
+                //       gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                //         crossAxisCount: 1,
+          
+                //       ),
+                //       // 元素总个数
+                //       itemCount: _tpc.tasks.length,
+                //       // 单个子元素
+                //       itemBuilder: (BuildContext context, int index) => TaskCard(context,index),
+                //       // // 纵向元素间距MasonryGridView
+                //       //mainAxisSpacing: 25,
+                //       // // 横向元素间距
+                //       // crossAxisSpacing: 10,
+                //       //本身不滚动，让外面的singlescrollview来滚动
+                //       physics:physics, 
+                //       shrinkWrap: true, //收缩，让元素宽度自适应
+                //       controller: _tpc.scrollController,
+                      
+                //     ));
+                //   },
+                // )
             ),
           ],
         )
@@ -194,6 +192,18 @@ class TaskPage extends StatelessWidget {
   }
   Widget TaskCard(context,int index){
     //printInfo(info:"TaskItem $index Created");
+    // var ti=_tpc.tasks[index];
+    // return TaskItem(
+    //   ontap: (){
+    //     _tpc.tapTask(ti.id);
+    //   },
+    //   title: ti.title,
+    //   point: ti.point,
+    //   time: ti.time,
+    //   location: ti.location,
+    //   labels: ti.labels,
+    //   hotValue: ti.hotValue,
+    // );
     if (index==_tpc.tasks.length) {
       if(_tpc.isLoading.value){
         if(_tpc.pull.value){
@@ -212,7 +222,7 @@ class TaskPage extends StatelessWidget {
           alignment: Alignment.center,
           padding: const EdgeInsets.only(bottom: 20,top:12),
           child: TextButtonWithNoSplash(
-            onTap:_tpc.refreshh, 
+            onTap:_tpc.load, 
             text: "---到底了，点击刷新---",
             textStyle: const TextStyle(
               fontSize: 10,
