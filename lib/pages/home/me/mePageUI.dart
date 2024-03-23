@@ -1,6 +1,5 @@
 import 'package:client_application/components/button/horizontalButton.dart';
 import 'package:client_application/components/button/iconButtonWithText.dart';
-import 'package:client_application/components/button/textButtonWithNoSplash.dart';
 import 'package:client_application/components/img/imgFromNet.dart';
 import 'package:client_application/pages/home/me/mePageController.dart';
 import 'package:client_application/res/color.dart';
@@ -54,22 +53,16 @@ class MePage extends StatelessWidget{
               child:Container(
                 
                 padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
-                child: Column(children: [
-                  Padding(padding: const EdgeInsets.only(bottom: 20,left: 5,right: 5),child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("我发布的",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                      const Spacer(),
-                      TextButtonWithNoSplash(onTap: (){}, text: "所有 >",textStyle: const TextStyle(color: Coloors.greyDeep,fontSize: 14),)
-                  ],),),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start ,children: [
+                  const Padding(padding: EdgeInsets.only(bottom: 15),child: Text("我发布的",style: TextStyle(fontSize: 16,),),),
                   Padding(padding: const EdgeInsets.symmetric(horizontal: 10),child:Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButtonWithText(icon: Icons.ad_units, str: "待被接取",fontSize: 12,),
-                      IconButtonWithText(icon: Icons.ad_units, str: "已被接取",fontSize: 12,),//确认接取环节
-                      IconButtonWithText(icon: Icons.ad_units, str: "正被处理",fontSize: 12,),
-                      IconButtonWithText(icon: Icons.ad_units, str: "处理完成",fontSize: 12,),//确认完成和评价环节
+                      IconButtonWithText(icon: Icons.ad_units, str: "str"),
+                      IconButtonWithText(icon: Icons.ad_units, str: "str"),
+                      IconButtonWithText(icon: Icons.ad_units, str: "str"),
+                      IconButtonWithText(icon: Icons.ad_units, str: "str"),
+                      IconButtonWithText(icon: Icons.ad_units, str: "str"),
                     ],))
                 ],)
               ),
@@ -80,21 +73,16 @@ class MePage extends StatelessWidget{
               child:Container(
                 
                 padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
-                child: Column(children: [
-                  Padding(padding: const EdgeInsets.only(bottom: 20,left: 5,right: 5),child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("我接取的",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                      const Spacer(),
-                      TextButtonWithNoSplash(onTap: (){}, text: "所有 >",textStyle: const TextStyle(color: Coloors.greyDeep,fontSize: 14),)
-                  ],),),
-                  Padding(padding: const EdgeInsets.symmetric(horizontal: 20),child:Row(
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start ,children: [
+                  const Padding(padding: EdgeInsets.only(bottom: 15),child: Text("我接取的",style: TextStyle(fontSize: 16,),),),
+                  Padding(padding: const EdgeInsets.symmetric(horizontal: 10),child:Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButtonWithText(icon: Icons.ad_units, str: "申请接取",fontSize: 12,),
-                      IconButtonWithText(icon: Icons.ad_units, str: "正在处理",fontSize: 12,),//允许处理
-                      IconButtonWithText(icon: Icons.ad_units, str: "处理完成",fontSize: 12,),
+                      IconButtonWithText(icon: Icons.ad_units, str: "str"),
+                      IconButtonWithText(icon: Icons.ad_units, str: "str"),
+                      IconButtonWithText(icon: Icons.ad_units, str: "str"),
+                      IconButtonWithText(icon: Icons.ad_units, str: "str"),
+                      IconButtonWithText(icon: Icons.ad_units, str: "str"),
                     ],))
                 ],)
               ),
@@ -104,9 +92,9 @@ class MePage extends StatelessWidget{
               
               padding: const EdgeInsets.only(left: 20,right: 10,top: 20),
               child:Column(children: [
-                HorizontalButton(text: "历史记录", icon: Icons.history, onTap: (){}),
-                HorizontalButton(text: "设置", icon: Icons.settings_outlined, onTap: (){}),
-                HorizontalButton(text: "关于", icon: Icons.info_outlined, onTap: _mpc.gotoAboutPage,needDivider: false,),
+                HorizontalButton(text: "关于", icon: Icons.abc, onTap: (){}),
+                HorizontalButton(text: "设置", icon: Icons.abc, onTap: (){}),
+                HorizontalButton(text: "关于", icon: Icons.abc, onTap: _mpc.gotoAboutPage,needDivider: false,),
               ],)
             ))
           ],

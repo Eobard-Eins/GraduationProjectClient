@@ -51,7 +51,6 @@ dependencies:
   flutter_cupertino_datetime_picker: ^3.0.0
   photo_view: ^0.14.0
   unicode: ^0.3.0
-  easy_refresh: ^3.3.4
   
 dev_dependencies:
   flutter_test:

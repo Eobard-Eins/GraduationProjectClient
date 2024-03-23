@@ -16,7 +16,7 @@ class IconButtonWithText extends StatelessWidget{
     return InkWell(
       onTap: onTap,
       child:Column(children: [
-        Padding(padding: const EdgeInsets.only(bottom: 2),child: Icon(icon,size:iconSize),),
+        Icon(icon,size:iconSize),
         Text(str,style: TextStyle(fontSize: fontSize),)
       ],)
     );
