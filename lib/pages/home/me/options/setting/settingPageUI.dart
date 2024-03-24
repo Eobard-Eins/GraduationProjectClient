@@ -73,7 +73,7 @@ class SettingPage extends StatelessWidget {
             
           Row(children: [
             Padding(padding: const EdgeInsets.only(left: 5),child:TextButton(
-              onPressed: (){Get.back();},
+              onPressed: Get.back,
               style: ButtonStyle(
                 backgroundColor: const MaterialStatePropertyAll(Colors.transparent),
                 foregroundColor: const MaterialStatePropertyAll(Coloors.greyDeep),
@@ -83,7 +83,7 @@ class SettingPage extends StatelessWidget {
             )),
             const Spacer(),
             Padding(padding: const EdgeInsets.only(right: 5),child:TextButton(
-              onPressed: (){Get.back();_spc.setUsername();},
+              onPressed: _spc.setUsername,
               style: ButtonStyle(
                 backgroundColor: const MaterialStatePropertyAll(Colors.transparent),
                 foregroundColor: const MaterialStatePropertyAll(Coloors.main),
@@ -108,10 +108,7 @@ class SettingPage extends StatelessWidget {
           const Divider(height: 0.1)
         ],),
         confirm: InkWell(
-          onTap: (){
-            _spc.setAvatar();
-            Get.back();
-          },
+          onTap:_spc.setAvatar,
           highlightColor: Colors.transparent, // 透明色
           splashColor: Colors.transparent,
           child:Container(

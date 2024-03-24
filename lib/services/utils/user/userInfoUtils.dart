@@ -76,7 +76,9 @@ class UserInfoUtils extends GetConnect{
     required Function() onSuccess
   }){
     UserNetService().setAvatar(account,imgPath.value).then((value){
+      print("${value.statusCode}");
       switch(value.statusCode){
+        
         case Status.setAvatarError||Status.ossError:
           snackbar.error("头像设置失败", "请稍后重试", value.statusCode);
           imgPath.value=null;

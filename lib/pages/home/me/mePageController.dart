@@ -13,6 +13,10 @@ class MePageController extends GetxController{
     // username.value=SpUtils.getString("username");
     // avatarURL.value=SpUtils.getString("avatarURL");
     // point.value=SpUtils.getDouble("point");
+    loadData();
+  }
+  
+  void loadData(){
     username.value="username";
     avatarURL.value=staticValue.defaultAvatar;
     point.value=0.0;

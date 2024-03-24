@@ -13,4 +13,7 @@ class snackbar{
   snackbar.info(String title, String message,){
     Get.snackbar(title, message,icon: const Icon(Icons.feedback_outlined,color: Coloors.greyDeep,),shouldIconPulse:false);
   }
+  snackbar.success(String title, String message,){
+    Get.snackbar(title, message,icon: const Icon(Icons.check_circle_outline,color: Coloors.mainLight),shouldIconPulse:false);
+  }
 }

@@ -1,6 +1,7 @@
 
 import 'package:client_application/pages/home/homePageUI.dart';
 import 'package:client_application/pages/home/me/options/about/aboutPage.dart';
+import 'package:client_application/pages/home/me/options/myPublish/myPublishPageUI.dart';
 import 'package:client_application/pages/home/me/options/setting/settingPageUI.dart';
 import 'package:client_application/pages/home/task/newTask/newTaskPageUI.dart';
 import 'package:client_application/pages/home/task/taskInfo/taskInfoPageUI.dart';
@@ -30,6 +31,8 @@ class RouteConfig {
 
   static const String aboutPage="/me/aboutPage";
   static const String settingPage="/me/settingPage";
+  static const String myPublishPage="/me/myPublishPage";
+
   static List<GetPage<dynamic>>? getPages=[
     GetPage(
       name: loginWithCaptchaPage,
@@ -74,6 +77,10 @@ class RouteConfig {
     GetPage(
       name: settingPage, 
       page: ()=>SettingPage(),
+    ),
+    GetPage(
+      name: myPublishPage, 
+      page: ()=>MyPublishPage(),
     ),
   ];
 

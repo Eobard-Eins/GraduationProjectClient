@@ -38,6 +38,8 @@ class dioService{
     }).onError((error, stackTrace){
       printError(info:"网络异常且未知错误:${error.toString()}");
       return Result.error(statusCode: Status.netError);
+    }).timeout(const Duration(seconds: 3),onTimeout: (){
+      return Result.error(statusCode: Status.netError);
     });
     return response;
   }
