@@ -22,10 +22,7 @@ class MePageController extends GetxController{
     point.value=0.0;
   }
 
-  void gotoAboutPage(){
-    Get.toNamed(RouteConfig.aboutPage);
-  }
-  void gotoSettingPage(){
-    Get.toNamed(RouteConfig.settingPage);
-  }
+  void gotoAboutPage()=>Get.toNamed(RouteConfig.aboutPage);
+  void gotoSettingPage()=>Get.toNamed(RouteConfig.settingPage);
+  void gotoMyPublish(int num)=>Get.toNamed(RouteConfig.myPublishPage,arguments: {"initialIndex":num});
 }

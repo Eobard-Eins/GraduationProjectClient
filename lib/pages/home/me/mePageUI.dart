@@ -61,15 +61,15 @@ class MePage extends StatelessWidget{
                     children: [
                       const Text("我发布的",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                       const Spacer(),
-                      TextButtonWithNoSplash(onTap: (){}, text: "所有 >",textStyle: const TextStyle(color: Coloors.greyDeep,fontSize: 14),)
+                      TextButtonWithNoSplash(onTap: ()=>_mpc.gotoMyPublish(0), text: "所有 >",textStyle: const TextStyle(color: Coloors.greyDeep,fontSize: 14),)
                   ],),),
                   Padding(padding: const EdgeInsets.symmetric(horizontal: 10),child:Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButtonWithText(icon: Icons.ad_units, str: "待被接取",fontSize: 12,),
-                      IconButtonWithText(icon: Icons.ad_units, str: "已被接取",fontSize: 12,),//确认接取环节
-                      IconButtonWithText(icon: Icons.ad_units, str: "正被处理",fontSize: 12,),
-                      IconButtonWithText(icon: Icons.ad_units, str: "处理完成",fontSize: 12,),//确认完成和评价环节
+                      IconButtonWithText(icon: Icons.pending_outlined, str: "待被接取",fontSize: 12,onTap: ()=>_mpc.gotoMyPublish(1),),
+                      IconButtonWithText(icon: Icons.next_plan_outlined, str: "正被处理",fontSize: 12,onTap: ()=>_mpc.gotoMyPublish(2),),//确认接取环节
+                      IconButtonWithText(icon: Icons.task_alt_sharp, str: "处理完成",fontSize: 12,onTap: ()=>_mpc.gotoMyPublish(3),),//确认完成和评价环节
+                      IconButtonWithText(icon: Icons.access_time_outlined, str: " 已过期 ",fontSize: 12,onTap: ()=>_mpc.gotoMyPublish(4),),
                     ],))
                 ],)
               ),
@@ -89,12 +89,13 @@ class MePage extends StatelessWidget{
                       const Spacer(),
                       TextButtonWithNoSplash(onTap: (){}, text: "所有 >",textStyle: const TextStyle(color: Coloors.greyDeep,fontSize: 14),)
                   ],),),
-                  Padding(padding: const EdgeInsets.symmetric(horizontal: 20),child:Row(
+                  const Padding(padding: EdgeInsets.symmetric(horizontal: 10),child:Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButtonWithText(icon: Icons.ad_units, str: "申请接取",fontSize: 12,),
-                      IconButtonWithText(icon: Icons.ad_units, str: "正在处理",fontSize: 12,),//允许处理
-                      IconButtonWithText(icon: Icons.ad_units, str: "处理完成",fontSize: 12,),
+                      IconButtonWithText(icon: Icons.pending_outlined, str: "申请接取",fontSize: 12,),
+                      IconButtonWithText(icon: Icons.next_plan_outlined, str: "正在处理",fontSize: 12,),//允许处理
+                      IconButtonWithText(icon: Icons.task_alt_sharp, str: "处理完成",fontSize: 12,),
+                      IconButtonWithText(icon: Icons.access_time_outlined, str: "已逾期",fontSize: 12,),
                     ],))
                 ],)
               ),

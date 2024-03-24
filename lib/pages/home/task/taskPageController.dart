@@ -1,4 +1,5 @@
 
+import 'package:client_application/components/display/snackbar.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/models/Task.dart';
 import 'package:client_application/res/color.dart';
@@ -14,7 +15,7 @@ class TaskPageController extends GetxController {
   RxList<TaskItemInfo> tasks=RxList<TaskItemInfo>();
   Rx<double> distance=10.0.obs;
   Rx<String> location="- - -".obs;
-  Rx<bool> isLoading=false.obs;
+  //Rx<bool> isLoading=false.obs;
   Rx<bool> gettingLocation=false.obs;
   
   final ScrollController scrollController=ScrollController();
@@ -31,7 +32,7 @@ class TaskPageController extends GetxController {
     distance.value=SpUtils.getDouble('distance',defaultValue: 10.0);
     distanceInSearch=distance.value;
     location.value=" - - - ";
-    isLoading.value=false;
+    //isLoading.value=false;
     gettingLocation.value=false;
     searchController.value.clear();
     searchController.refresh();
@@ -41,7 +42,7 @@ class TaskPageController extends GetxController {
   }
   
   Future<int> loadData(int n,{bool refresh=false})async{
-    isLoading.value=true;
+    //isLoading.value=true;
     printInfo(info:"loadData");
     List<TaskItemInfo> newTasks=[];
 
@@ -62,7 +63,7 @@ class TaskPageController extends GetxController {
       }
       tasks.addAll(newTasks);
     }
-    isLoading.value=false;
+    //isLoading.value=false;
     return newTasks.length;
   }
   void moveToTop(){
@@ -108,7 +109,7 @@ class TaskPageController extends GetxController {
           printInfo(info:'已存储经纬度:${SpUtils.getDouble('latitude')},${SpUtils.getDouble('longitude')}');
         }
         location.value=result['district'].toString();
-        
+        snackbar.success("定位成功", "当前位置信息已更新");
         stopLocation();
       }
       if(count==5){

@@ -23,7 +23,7 @@ class LoginPage extends StatelessWidget {
             "使用验证码登录",
             style: TextStyle(
               fontWeight: FontWeight.normal,
-              fontSize: 30,
+              fontSize: 22,
               fontFamily: 'SmileySans',
               color: Coloors.main,
             ),

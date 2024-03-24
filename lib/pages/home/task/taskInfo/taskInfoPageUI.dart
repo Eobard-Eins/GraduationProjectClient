@@ -31,7 +31,6 @@ class TaskInfoPage extends StatelessWidget{
                       BorderSide(width: 1.0, color: Coloors.main), // 描边颜色和宽度
                     ),
                     borderRadius: BorderRadius.all(Radius.circular(30)),
-                    // 如果需要，可以设置背景色填充
                     // color: Colors.transparent,
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 4),
