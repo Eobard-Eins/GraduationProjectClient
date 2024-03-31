@@ -12,8 +12,6 @@ class User {
   late String avatar;
 
   //经纬度
-  late double? longitude;
-  late double? latitude;
 
   //积分
   late double point;
@@ -25,8 +23,6 @@ class User {
       required this.password,
       required this.gender,
       required this.avatar,
-      required this.longitude,
-      required this.latitude,
       required this.point});
   User.create(){
     mailAddress = "";
@@ -37,13 +33,11 @@ class User {
 
   User.fromJson(Map<String, dynamic> json) {
 
-    mailAddress = json['mailAddress'];
+    mailAddress = json['email'];
     username = json['username'];
     password = json['password'];
     gender = json['gender'];
     avatar = json['avatar'];
-    longitude = json['longitude'];
-    latitude = json['latitude'];
     point = json['point'];
   }
 }

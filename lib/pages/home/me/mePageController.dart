@@ -1,5 +1,6 @@
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/staticValue.dart';
+import 'package:client_application/services/utils/user/userInfoUtils.dart';
 import 'package:client_application/tool/localStorage.dart';
 import 'package:get/get.dart';
 class MePageController extends GetxController{
@@ -17,12 +18,15 @@ class MePageController extends GetxController{
   }
   
   void loadData(){
-    username.value="username";
-    avatarURL.value=staticValue.defaultAvatar;
-    point.value=0.0;
+    UserInfoUtils.getUserInfo(mail: SpUtils.getString("account"), onSuccess: (u){
+      username.value=u.username!;
+      avatarURL.value=u.avatar;
+      point.value=u.point;
+    });
   }
 
   void gotoAboutPage()=>Get.toNamed(RouteConfig.aboutPage);
   void gotoSettingPage()=>Get.toNamed(RouteConfig.settingPage);
   void gotoMyPublish(int num)=>Get.toNamed(RouteConfig.myPublishPage,arguments: {"initialIndex":num});
+  void gotoMyAccess(int num)=>Get.toNamed(RouteConfig.myAccessPage,arguments: {"initialIndex":num});
 }

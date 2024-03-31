@@ -37,11 +37,12 @@ class MePage extends StatelessWidget{
                     Padding(padding: const EdgeInsets.only(left: 15),child:Text(_mpc.username.value,style: const TextStyle(fontSize: 24),)),
                     const Spacer(),
                     Container(
+                      padding: const EdgeInsets.only(right: 20,top: 15),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("114514",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                          Text("积分",style: TextStyle(fontSize: 14),)
+                          Text(_mpc.point.value.toString(),style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                          const Text("积分",style: TextStyle(fontSize: 14),)
                         ],
                       ),
                     )
@@ -87,15 +88,15 @@ class MePage extends StatelessWidget{
                     children: [
                       const Text("我接取的",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                       const Spacer(),
-                      TextButtonWithNoSplash(onTap: (){}, text: "所有 >",textStyle: const TextStyle(color: Coloors.greyDeep,fontSize: 14),)
+                      TextButtonWithNoSplash(onTap: ()=>_mpc.gotoMyAccess(0), text: "所有 >",textStyle: const TextStyle(color: Coloors.greyDeep,fontSize: 14),)
                   ],),),
-                  const Padding(padding: EdgeInsets.symmetric(horizontal: 10),child:Row(
+                  Padding(padding: const EdgeInsets.symmetric(horizontal: 10),child:Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButtonWithText(icon: Icons.pending_outlined, str: "申请接取",fontSize: 12,),
-                      IconButtonWithText(icon: Icons.next_plan_outlined, str: "正在处理",fontSize: 12,),//允许处理
-                      IconButtonWithText(icon: Icons.task_alt_sharp, str: "处理完成",fontSize: 12,),
-                      IconButtonWithText(icon: Icons.access_time_outlined, str: "已逾期",fontSize: 12,),
+                      IconButtonWithText(icon: Icons.pending_outlined, str: "申请接取",fontSize: 12,onTap: () => _mpc.gotoMyAccess(1),),
+                      IconButtonWithText(icon: Icons.next_plan_outlined, str: "正在处理",fontSize: 12,onTap: () => _mpc.gotoMyAccess(2)),//允许处理
+                      IconButtonWithText(icon: Icons.task_alt_sharp, str: "处理完成",fontSize: 12,onTap: () => _mpc.gotoMyAccess(3)),
+                      IconButtonWithText(icon: Icons.access_time_outlined, str: "已逾期",fontSize: 12,onTap: () => _mpc.gotoMyAccess(4)),
                     ],))
                 ],)
               ),

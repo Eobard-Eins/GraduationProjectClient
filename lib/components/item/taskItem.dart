@@ -209,7 +209,7 @@ class TaskItem extends StatelessWidget {
                   ),
                   Container(
                     alignment: Alignment.center,
-                    padding: const EdgeInsets.only(top:10,right: 0),
+                    padding: const EdgeInsets.only(top:6,right: 0),
                     child: Column(
                       children: [
                       Row(
@@ -217,22 +217,22 @@ class TaskItem extends StatelessWidget {
                           const Padding(padding: EdgeInsets.only(left:10)),
                           const Icon(Icons.gps_fixed_outlined,color: Coloors.greyLight,size: 12,),
                           Padding(padding: const EdgeInsets.only(left:3),
-                            child:Text(location??"---",style: const TextStyle(fontFamily: 'SmileySans',color: Colors.white,fontSize: 10,letterSpacing: 1),),
+                            child:Text(location??"---",style: const TextStyle(fontFamily: 'SmileySans',color: Colors.white,fontSize: 10,letterSpacing: 0.6),),
                           )
                       ],),
                       const Padding(padding: EdgeInsets.symmetric(vertical:3)),
                       Row(
                         children: [
                           const Padding(padding: EdgeInsets.only(left:10)),
-                          const Padding(padding: EdgeInsets.only(bottom: 10),child: Icon(Icons.access_time,color: Coloors.greyLight,size: 12,),),
+                          const Padding(padding: EdgeInsets.only(bottom: 14),child: Icon(Icons.access_time,color: Coloors.greyLight,size: 12,),),
                           Padding(padding: const EdgeInsets.only(left:3),
                             child:Text(
                               time,
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 10,
-                                letterSpacing: 1,
-                                height: 1.1,
+                                letterSpacing: 00.6,
+                                height: 1.3,
                                 fontFamily: 'SmileySans'
                               ),
                               maxLines: 2,

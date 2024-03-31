@@ -31,6 +31,10 @@ class Status{
   static const int ossError=1301;//Oss服务器错误
   static const int infoMiss=1302;//传输信息缺失
   static const int mailServiceError=1303;//邮箱验证码服务错误
+  static const int pyServerError=1304;//Py服务器错误
+
+  static const int taskAddError=1400;
+  static const int taskGetError=1401;
 
   //不存在状态码
   static const int noStatusCode=0000;//其他

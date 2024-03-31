@@ -4,6 +4,7 @@ import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/services/utils/user/userLoginUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class LoginPageController extends GetxController {
   Rx<TextEditingController> mailController=TextEditingController().obs;
@@ -60,7 +61,7 @@ class LoginPageController extends GetxController {
 
   void gotoLoginByPassword()=>Get.offNamed(RouteConfig.loginWithPasswordPage);
 
-  void gotoRegister()=>Get.toNamed(RouteConfig.verifyEmailPage);//,arguments: {'newUser':true});
+  void gotoRegister()=>Get.toNamed(RouteConfig.verifyEmailPage,arguments: {'canGotoWhenUserExist':F,'canGotoWhenUserNotExist':T});
 
   void onTapLogin() {
     printInfo(info: "登录事件按钮触发");

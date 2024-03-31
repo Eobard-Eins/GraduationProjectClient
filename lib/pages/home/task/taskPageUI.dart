@@ -1,4 +1,5 @@
 
+import 'package:client_application/components/display/footerAndHeader.dart';
 import 'package:client_application/components/text/searchBar.dart';
 import 'package:client_application/components/item/taskItem.dart';
 import 'package:client_application/pages/home/task/taskPageController.dart';
@@ -132,32 +133,8 @@ class TaskPage extends StatelessWidget {
             
             Expanded(
               child: EasyRefresh(
-                  header: const ClassicHeader(
-                    hitOver: true,
-                    processedDuration: Duration(seconds: 1),
-                    showMessage: false,
-        
-                    processingText: "正在刷新...",
-                    readyText: "正在刷新...",
-                    armedText: "释放以刷新",
-                    dragText: "下拉刷新",
-                    processedText: "刷新成功",
-                    failedText: "刷新失败",
-                    noMoreText: "没有更多了",
-                  ),
-                  footer: const ClassicFooter(
-                    hitOver: true,
-                    processedDuration: Duration(seconds: 1),
-                    showMessage: false,
-                    //文本配置
-                    processingText: "正在刷新...",
-                    readyText: "正在刷新...",
-                    armedText: "释放以刷新",
-                    dragText: "下拉刷新",
-                    processedText: "刷新成功",
-                    failedText: "刷新失败",
-                    noMoreText: "没有更多了",            
-                  ),
+                  header: FootAndHeader.header,
+                  footer: FootAndHeader.footer,
                   //canLoadAfterNoMore: true,
                   canRefreshAfterNoMore: true,
                   refreshOnStart: true,

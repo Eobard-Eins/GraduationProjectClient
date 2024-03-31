@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 class Discriminator{
   static bool accountOk(String account){
+    if(account.length>=30) return false;
     // 定义电子邮件地址的正则表达式
     const String emailPattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
 
@@ -25,7 +26,7 @@ class Discriminator{
 
   static List<String> getLabels(String content){
     // 正则表达式
-    final pattern = RegExp(r'#[\u4e00-\u9fa5\w\d]+#');
+    final pattern = RegExp(r'#[\u4e00-\u9fa5\w\d]+');
     
     // 提取所有匹配项
     final matches = pattern.allMatches(content);

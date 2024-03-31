@@ -34,15 +34,16 @@ class LoginWithPasswordPage extends StatelessWidget {
         body: Column(
           children: [
             const SizedBox(
-              height: 60,
+              height: 40,
             ),
             //账号输入
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _lwppc.mailController.value,
-                onChanged: (value){_lwppc.mailController.value.text = InputFilter.FilterEmail(value);},
+                onChanged: (value){_lwppc.mailController.value.text = InputFilter.FilterEmail(value);_lwppc.mailController.refresh();},
                 readOnly: false,
+                maxLength: 30,
                 keyboardType: TextInputType.emailAddress,
                 //textInputAction: TextInputAction.next,
                 hintText: "请输入邮箱",
@@ -61,7 +62,7 @@ class LoginWithPasswordPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 0),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _lwppc.passwordController.value,
-                onChanged: (value){_lwppc.passwordController.value.text = InputFilter.FilterPassword(value);},
+                onChanged: (value){_lwppc.passwordController.value.text = InputFilter.FilterPassword(value);_lwppc.passwordController.refresh();},
                 readOnly: false,
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: _lwppc.obscure.value,

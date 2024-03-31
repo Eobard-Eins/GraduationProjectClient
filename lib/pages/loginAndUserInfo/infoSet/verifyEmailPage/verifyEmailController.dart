@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:client_application/components/display/snackbar.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/services/utils/user/userLoginUtils.dart';
 import 'package:flutter/material.dart';
@@ -61,15 +62,20 @@ class VerifymailController extends GetxController{
   void onTapNext() {
     printInfo(info: "跳转设置密码页");
     //print(Get.arguments);
-    //bool newUser=Get.arguments["newUser"] as bool;
+    bool e=Get.arguments["canGotoWhenUserExist"] as bool;
+    bool ne=Get.arguments["canGotoWhenUserNotExist"] as bool;
     UserLoginUtils.loginWithCaptcha(
       mailController: mailController,
       captchaController: captchaController,
       onSuccess: () {
-        Get.offNamed(RouteConfig.setPasswordPage,arguments:{'needSetInfo':false,'account':mailController.value.text});
+        e?
+          Get.offNamed(RouteConfig.setPasswordPage,arguments:{'needSetInfo':false,'account':mailController.value.text}):
+          snackbar.error("用户已存在", "当前输入的账户已存在",0);
       },
       onSuccessButUserNotExist: () {
-        Get.offNamed(RouteConfig.setPasswordPage,arguments:{'needSetInfo':true,'account':mailController.value.text});
+        ne?
+          Get.offNamed(RouteConfig.setPasswordPage,arguments:{'needSetInfo':true,'account':mailController.value.text}):
+          snackbar.error("用户不存在", "当前输入的账户不存在",0);
       },
     );
   }

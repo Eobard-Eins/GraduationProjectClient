@@ -103,6 +103,12 @@ class UserLoginUtils extends GetConnect{
           captchaController.value.clear();//验证码框清空
           captchaController.refresh();
           break;
+        
+        case Status.pyServerError:
+          snackbar.error("验证失败", "请稍后重试", value.statusCode);
+          captchaController.value.clear();//验证码框清空
+          captchaController.refresh();
+          break;
 
         case Status.successButUserNotExist:
           onSuccessButUserNotExist();

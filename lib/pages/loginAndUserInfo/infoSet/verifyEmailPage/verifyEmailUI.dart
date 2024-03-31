@@ -44,6 +44,7 @@ class VerifyEmailPage extends StatelessWidget {
                   _vpc.mailController.refresh();
                 },
                 readOnly: false,
+                maxLength: 30,
                 keyboardType: TextInputType.emailAddress,
                 //textInputAction: TextInputAction.next,
                 hintText: "请输入邮箱",
@@ -99,7 +100,8 @@ class VerifyEmailPage extends StatelessWidget {
                 onChanged: _vpc.changeAgreement, 
                 init: _vpc.checkAgreement.value, 
                 onTapAgreeMent: _vpc.gotoAgreement
-              ),)
+              ),),
+              
 
           ],
         ),

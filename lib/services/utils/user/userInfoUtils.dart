@@ -1,4 +1,5 @@
 
+import 'package:client_application/models/User.dart';
 import 'package:client_application/services/connect/UserNetService.dart';
 import 'package:client_application/tool/res/status.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,28 @@ import 'package:get/get.dart';
 import 'package:client_application/components/display/snackbar.dart';
 import 'package:image_picker/image_picker.dart';
 class UserInfoUtils extends GetConnect{
+
+  static getUserInfo({
+    required String mail,
+    required Function(User u) onSuccess,
+  }){
+    UserNetService().getUserInfo(mail).then((value){
+      switch(value.statusCode){
+        case Status.userNotExist:
+          snackbar.error("获取信息失败", "用户不存在", value.statusCode);
+          break;
+        case Status.netError:
+          snackbar.error("获取信息失败", "请检查网络设置", value.statusCode);
+          break;
+        case Status.success:
+          onSuccess(value.data);
+          break;
+        default:
+          snackbar.error("获取信息失败", "请检查网络设置", value.statusCode);
+          break;
+      }
+    });
+  }
 
   static setPassword({
     required Rx<TextEditingController> passwordController,

@@ -66,7 +66,7 @@ class NewTaskPage extends StatelessWidget{
 
           const Padding(padding: EdgeInsets.symmetric(vertical: 10),child:Divider(height:0.2,indent:0,endIndent: 0,color: Coloors.greyLight,),),
 
-          content(150, false, const EdgeInsets.only(bottom: 10)),
+          content(150, false, const EdgeInsets.only(bottom: 10),_ntpc.focusNodeOfNotFull),
           Row(children: [
             Padding(padding: const EdgeInsets.symmetric(),child:LittleButton(text: "标签", onTap: _ntpc.addTag, icon: Icons.tag,color: const Color.fromARGB(255, 245, 245, 245),),),
             const Spacer(),
@@ -136,7 +136,7 @@ class NewTaskPage extends StatelessWidget{
     return res;
   }
 
-  Widget content(double? height,bool autfocus,EdgeInsetsGeometry padding){
+  Widget content(double? height,bool autfocus,EdgeInsetsGeometry padding,FocusNode? focusNode){
     return Container(
       height: height,
       padding: padding,
@@ -146,11 +146,11 @@ class NewTaskPage extends StatelessWidget{
           controller: _ntpc.contentInputController.value,
           cursorColor: Coloors.main,
           autofocus: autfocus,
-          focusNode: _ntpc.focusNode,
-          // onChanged: (value) {
-          //   _ntpc.contentInputController.value.text = value;
-          //   _ntpc.contentInputController.refresh();
-          // },
+          focusNode: focusNode,
+          onChanged: (value) {
+            _ntpc.contentInputController.value.text = value;
+            _ntpc.contentInputController.refresh();
+          },
           style: const TextStyle(
             fontSize: 16,
             color: Coloors.greyDeep
@@ -175,6 +175,7 @@ class NewTaskPage extends StatelessWidget{
   }
 
   void BottomSheetOfFullInput(){
+    _ntpc.isFull.value=T;
     Get.bottomSheet(
       Container(
         height: MediaQuery.of(Get.context!).size.height * 0.53, // 设置高度为屏幕高度的0.53
@@ -183,12 +184,12 @@ class NewTaskPage extends StatelessWidget{
         child: Column(children: [
           const ShortHeadBar(),
           //const Padding(padding: EdgeInsets.symmetric(vertical: 5)),
-          Expanded(child: content(null, true, const EdgeInsets.symmetric(vertical: 10))),
+          Expanded(child: content(null, true, const EdgeInsets.symmetric(vertical: 10),_ntpc.focusNodeOfFull)),
 
           Row(children: [
             Padding(padding: const EdgeInsets.symmetric(),child:LittleButton(text: "标签", onTap: _ntpc.addTag, icon: Icons.tag, ),),
             const Spacer(),
-            Padding(padding: const EdgeInsets.symmetric(horizontal: 10),child:Text("${_ntpc.contentInputController.value.text.length}/300"),),
+            Obx(() => Padding(padding: const EdgeInsets.symmetric(horizontal: 10),child:Text("${_ntpc.contentInputController.value.text.length}/300"),),),
             Padding(padding: const EdgeInsets.symmetric(),child:LittleButton(text: "", onTap: (){Get.back();FocusScope.of(Get.context!).requestFocus(FocusNode());}, icon: Icons.fullscreen_exit, ),),
           ],),
           const Padding(padding: EdgeInsets.only(top: 20,bottom: 10),child:Divider(height:0.2,indent:0,endIndent: 0,color: Coloors.greyLight,),),
@@ -201,7 +202,9 @@ class NewTaskPage extends StatelessWidget{
       ),
       backgroundColor: Colors.white,
       isScrollControlled: true,
-    );
+    ).whenComplete(() {
+      _ntpc.isFull.value=F;
+    });
   }
   void BottomSheetOfTime(BuildContext context){
     var v=DateTime.now();

@@ -3,6 +3,7 @@ import 'package:client_application/components/display/snackbar.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/models/Task.dart';
 import 'package:client_application/res/color.dart';
+import 'package:client_application/services/utils/task/taskUtils.dart';
 import 'package:client_application/tool/localStorage.dart';
 import 'package:client_application/services/utils/locationUtils.dart';
 import 'package:client_application/tool/timeUtils.dart';
@@ -36,7 +37,8 @@ class TaskPageController extends GetxController {
     gettingLocation.value=false;
     searchController.value.clear();
     searchController.refresh();
-
+    
+    SpUtils.setDouble("double",distanceInSearch);
     getLocation();
     loadData(10);
   }
@@ -47,9 +49,20 @@ class TaskPageController extends GetxController {
     List<TaskItemInfo> newTasks=[];
 
     //TODO: 测试网络请求
+    TaskUtils.getTaskList(
+      account: SpUtils.getString("account"),
+      k: 5,
+      search: searchController.value.text, 
+      distance: SpUtils.getDouble("distance"), 
+      lat: SpUtils.getDouble("latitude"), 
+      lon: SpUtils.getDouble("longitude"), 
+      onSuccess: (items){
+        printInfo(info:"getTaskList ${items.toString()}");
+      }
+    );
     await TimeUtils.TimeTestModel(3);
     for(var i=0;i<n;i++){
-      newTasks.add(TaskItemInfo(id: i+1000, title: "title", point: 1025.5, time: "time", location: "location", labels: "labels", hotValue: 114514));
+      newTasks.add(TaskItemInfo(id: i+1000, title: "title", point: 1025.5, time: "2024-12-31\n12:45前", location: "3.5km内", labels: "label1/lebel2/label3/label4", hotValue: 114514));
     }
 
     if (newTasks.isEmpty){

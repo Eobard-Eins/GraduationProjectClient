@@ -35,7 +35,7 @@ class SettingPageController extends GetxController{
       snackbar.error("用户名设置失败", "用户名不能为空",null);
     }
   }
-  void gotoSetPassword()=>Get.toNamed(RouteConfig.verifyEmailPage);
+  void gotoSetPassword()=>Get.toNamed(RouteConfig.verifyEmailPage,arguments: {'canGotoWhenUserExist':T,'canGotoWhenUserNotExist':F});
 
   void setAvatar(){
     Get.back();

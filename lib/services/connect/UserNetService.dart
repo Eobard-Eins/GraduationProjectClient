@@ -24,6 +24,32 @@ class UserNetService extends GetConnect{
   void onInit(){
     super.onInit();
   }
+  Future<Result> getUserInfo(String account) async{
+
+    final Result res=await get("$_baseUrl/userInfo/getInfo",query:{"mailAddress":account}).then((value){
+      //value.printInfo();
+      //printError(info:value.body.toString());
+      if(!value.isOk){
+        printInfo(info:"网络异常，不能连接服务器");
+        return Result.error(statusCode: Status.netError);
+      }else{
+        printInfo(info:"网络正常,${value.body.toString()}");
+        if(value.body['statusCode']!=Status.success){
+          printInfo(info:"网络正常，服务器返回错误码：${value.body['statusCode']}");
+          return Result.error(statusCode:value.body['statusCode']);
+        }
+        
+        User u=User.fromJson(value.body['data']);
+        return Result.success(data: u);
+      }
+    }).onError((error, stackTrace){
+      printInfo(info:"网络异常且未知错误  ${error.toString()}");
+      return Result.error(statusCode: Status.netError);
+    }).timeout(const Duration(seconds: 3),onTimeout: (){
+      return Result.error(statusCode: Status.netError);
+    });
+    return res;
+  }
 
   Future<Result> loginWithPassword(String account, String password) async{
     if(!Discriminator.accountOk(account)){
@@ -56,7 +82,7 @@ class UserNetService extends GetConnect{
         return Result.success(data: u);
       }
     }).onError((error, stackTrace){
-      printInfo(info:"网络异常且未知错误");
+      printInfo(info:"网络异常且未知错误  ${error.toString()}");
       return Result.error(statusCode: Status.netError);
     }).timeout(const Duration(seconds: 3),onTimeout: (){
       return Result.error(statusCode: Status.netError);
@@ -112,7 +138,7 @@ class UserNetService extends GetConnect{
     
     final Result res=await get("$_baseUrl/userLogin/sendCaptcha",query:{"mailAddress":account}).then((value){
       if(!value.isOk){
-        printInfo(info:"网络异常，不能连接服务器");
+        printInfo(info:"网络异常，不能连接服务器:$_baseUrl/userLogin/sendCaptcha  ${value.statusCode}|${value.statusText}");
         return Result.error(statusCode: Status.netError);
       }else{
         printInfo(info:"网络正常,${value.body.toString()}");

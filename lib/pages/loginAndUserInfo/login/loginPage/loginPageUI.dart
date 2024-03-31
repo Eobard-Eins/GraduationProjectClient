@@ -35,15 +35,16 @@ class LoginPage extends StatelessWidget {
         body: Column(
           children: [
             const SizedBox(
-              height: 60,
+              height: 40,
             ),
             //账号输入
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
               child: Obx(()=>UserTextFieldWidget(
                 controller: _lpc.mailController.value,
-                onChanged: (value){_lpc.mailController.value.text = InputFilter.FilterEmail(value);},
+                onChanged: (value){_lpc.mailController.value.text = InputFilter.FilterEmail(value);_lpc.mailController.refresh();},
                 readOnly: false,
+                maxLength: 30,
                 keyboardType: TextInputType.emailAddress,
                 //textInputAction: TextInputAction.next,
                 hintText: "请输入邮箱",
@@ -65,7 +66,7 @@ class LoginPage extends StatelessWidget {
                 maxLength: 6,
                 textInputAction: TextInputAction.done,
                 hintText: "请输入验证码",
-                onChanged: (value){_lpc.captchaController.value.text = InputFilter.FilterNum(value);},
+                onChanged: (value){_lpc.captchaController.value.text = InputFilter.FilterNum(value);_lpc.captchaController.refresh();},
                 //TODO: 键盘done操作
                 onEditingComplete: _lpc.canLogin(),
                 keyboardType: TextInputType.number,

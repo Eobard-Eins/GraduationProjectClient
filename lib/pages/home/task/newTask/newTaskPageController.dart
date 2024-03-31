@@ -1,5 +1,6 @@
 
 import 'package:client_application/services/utils/locationUtils.dart';
+import 'package:client_application/tool/input/discriminator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,7 +18,9 @@ class NewTaskPageController extends GetxController {
   RxDouble latitude=0.0.obs;
   Rx<DateTime> time=DateTime.now().obs;
 
-  final FocusNode focusNode = FocusNode();
+  Rx<bool> isFull=false.obs;
+  final FocusNode focusNodeOfNotFull = FocusNode();
+  final FocusNode focusNodeOfFull = FocusNode();
   @override
   void onInit() {
     super.onInit();
@@ -36,6 +39,8 @@ class NewTaskPageController extends GetxController {
     titleInputController.refresh();
     contentInputController.value.clear();
     contentInputController.refresh();
+
+    isFull.value=false;
   }
 
   void searchAddress()async{
@@ -43,12 +48,21 @@ class NewTaskPageController extends GetxController {
     var t=await LocationUtils().search(addressInputController.value.text, cityInputController.value.text);
     POIS.addAll(t??[]);
   }
-  void upload(){}
+  void upload(){
+    List<String> ls=Discriminator.getLabels(contentInputController.value.text);
+    for(var s in ls){
+      printInfo(info: s);
+    }
+  }
 
   void addTag(){
-    contentInputController.value.text+=" ## ";
-    contentInputController.value.selection=TextSelection(baseOffset: contentInputController.value.text.length-2, extentOffset: contentInputController.value.text.length-2);
+    contentInputController.value.text+=" #";
     contentInputController.refresh();
-    FocusScope.of(Get.context!).requestFocus(focusNode);
+    if(isFull.value){
+      FocusScope.of(Get.context!).requestFocus(focusNodeOfFull);
+    }else{
+      FocusScope.of(Get.context!).requestFocus(focusNodeOfNotFull);
+    }
+    
   }
 }

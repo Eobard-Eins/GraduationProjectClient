@@ -1,7 +1,7 @@
 import 'package:client_application/components/display/footerAndHeader.dart';
 import 'package:client_application/components/item/taskItemBriefly.dart';
 import 'package:client_application/models/Task.dart';
-import 'package:client_application/pages/home/me/options/myPublish/myPublishPageController.dart';
+import 'package:client_application/pages/home/me/options/myAccess/myAccessPageController.dart';
 import 'package:client_application/res/color.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +9,8 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 
-class MyPublishPage extends StatelessWidget{
-  final MyPublishPageController _mppc=Get.put(MyPublishPageController());
+class MyAccessPage extends StatelessWidget{
+  final MyAccessPageController _mppc=Get.put(MyAccessPageController());
 
   
   @override
@@ -30,10 +30,10 @@ class MyPublishPage extends StatelessWidget{
             overlayColor: MaterialStateProperty.all(Colors.transparent),
             tabs: const [
               Tab(text: ' 所有 '),
-              Tab(text: '待被接取'),
-              Tab(text: '正被处理'),
+              Tab(text: '申请接取'),
+              Tab(text: '正在处理'),
               Tab(text: '处理完成'),
-              Tab(text: '已过期'),
+              Tab(text: '已逾期'),
             ],
           ),
         ),

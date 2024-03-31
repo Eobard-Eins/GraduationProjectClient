@@ -3,6 +3,7 @@ import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/services/utils/user/userLoginUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class LoginWithPasswordPageController extends GetxController {
   Rx<TextEditingController> mailController=TextEditingController().obs;
@@ -24,11 +25,11 @@ class LoginWithPasswordPageController extends GetxController {
   //判断是否可用登录按钮
   Function()? canLogin()=>mailController.value.text.isNotEmpty&&passwordController.value.text.isNotEmpty?onTapLogin:null;
 
-  void gotoForgetPassword()=>Get.toNamed(RouteConfig.verifyEmailPage);//,arguments: {'newUser':false});
+  void gotoForgetPassword()=>Get.toNamed(RouteConfig.verifyEmailPage,arguments: {'canGotoWhenUserExist':T,'canGotoWhenUserNotExist':F});
 
   void gotoLoginByCaptcha()=>Get.offNamed(RouteConfig.loginWithCaptchaPage);
   
-  void gotoRegister()=>Get.toNamed(RouteConfig.verifyEmailPage);//,arguments: {'newUser':true});
+  void gotoRegister()=>Get.toNamed(RouteConfig.verifyEmailPage,arguments: {'canGotoWhenUserExist':F,'canGotoWhenUserNotExist':T});
 
   void onTapLogin(){
     printInfo(info: "登录按钮触发");
