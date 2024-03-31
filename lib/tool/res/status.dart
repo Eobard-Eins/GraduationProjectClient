@@ -7,8 +7,8 @@ class Status{
   static const int success=1000;//成功
   static const int successButUserNotExist=1001;//成功登录但是用户不存在
   
-  //手机号、验证码、密码
-  static const int mailFormatError=1100;//手机号格式错误
+  //邮箱、验证码、密码
+  static const int mailFormatError=1100;//格式错误
   static const int passwordFormatError=1101;//密码格式错误
   static const int passwordError=1102;//密码错误
   static const int captchaError=1103;//验证码错误
@@ -25,6 +25,7 @@ class Status{
   static const int setRegisteredError=1204;//通信数据库设置注册状态时出现错误
   static const int setAvatarError=1205;//通信数据库设置头像时出现错误
   static const int avatarMissing=1206;//头像路径为空
+  static const int usernameFormatError=1207;
 
   //网络
   static const int netError=1300;//网络错误

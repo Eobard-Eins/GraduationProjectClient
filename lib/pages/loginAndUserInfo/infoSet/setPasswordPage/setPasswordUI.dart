@@ -27,7 +27,7 @@ class SetPasswordPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(padding:EdgeInsets.only(bottom: 10),child:Text("设置密码",style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),),
-                  Padding(padding:EdgeInsets.only(bottom: 5),child:Text("密码长度应在4~16位，可使用字母、数字、符号组合",style: TextStyle(fontSize: 13),))
+                  Padding(padding:EdgeInsets.only(bottom: 5),child:Text("密码长度应在6~16位，可使用字母、数字、符号组合",style: TextStyle(fontSize: 13),))
                 ],)
             ),
             

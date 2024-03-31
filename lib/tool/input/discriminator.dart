@@ -4,7 +4,7 @@ class Discriminator{
   static bool accountOk(String account){
     if(account.length>=30) return false;
     // 定义电子邮件地址的正则表达式
-    const String emailPattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+    const String emailPattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,30}$";
 
     // 创建一个正则表达式实例
     RegExp regex = RegExp(emailPattern);
@@ -20,8 +20,10 @@ class Discriminator{
   }
 
   static bool passwordOk(String password){
-    //TODO: 
-    return true;
+    if(password.length<6) return false;
+    //正则表达式匹配只包含字母、数字、符号的密码
+    final relaxedPasswordRegex = RegExp(r'^[A-Za-z\d!@#$%^&*.]{6,16}$');
+    return relaxedPasswordRegex.hasMatch(password);
   }
 
   static List<String> getLabels(String content){
@@ -35,5 +37,10 @@ class Discriminator{
     List<String> separators = matches.map((match) => match[0]!).toSet().toList();   
 
     return separators;
+  }
+
+  static bool usernameOk(String username) {
+    if(username.length<3||username.length>8) return false;
+    return true;
   }
 }

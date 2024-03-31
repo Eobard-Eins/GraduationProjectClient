@@ -152,6 +152,12 @@ class UserInfoUtils extends GetConnect{
           usernameController.value.clear();
           usernameController.refresh();
           break;
+          
+        case Status.usernameFormatError:
+          snackbar.error("用户名设置失败", "请检查用户名格式", value.statusCode);
+          usernameController.value.clear();
+          usernameController.refresh();
+          break;
 
         case Status.success:
           if(value.data==true){

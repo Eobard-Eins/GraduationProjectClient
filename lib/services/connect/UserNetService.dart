@@ -164,7 +164,7 @@ class UserNetService extends GetConnect{
       return Result.error(statusCode:Status.passwordInconsistent);
     }
     if(!Discriminator.passwordOk(password)){
-      return Result.error(statusCode:Status.mailFormatError);
+      return Result.error(statusCode:Status.passwordFormatError);
     }
     printInfo(info:'开始设置密码:{"mailAddress":"$account","password":"$password"}');
     final Result res=await put("$_baseUrl/userInfo/setPassword", '{"mailAddress":"$account","password":"$password"}').then((value){
@@ -199,6 +199,7 @@ class UserNetService extends GetConnect{
   }
 
   Future<Result> setUsername(String account,String username) async{
+    if(!Discriminator.usernameOk(username)) return Result.error(statusCode: Status.usernameFormatError);
     final Result res=await put("$_baseUrl/userInfo/setName", '{"mailAddress":"$account","username":"$username"}').then((value){
       if(value.isOk){
         printInfo(info:"网络正常,${value.body.toString()}");
