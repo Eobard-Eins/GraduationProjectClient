@@ -44,4 +44,59 @@ class dioService{
     return response;
   }
 
+  Future<Result> uploadTask(
+    String url,
+    String account,
+    String title,
+    String content,
+    List<String> tags,
+    String addressName,
+    String address, 
+    double lat, 
+    double lon,
+    DateTime time, 
+    List<XFile> imgs, 
+    bool online
+  ) async {
+    // 创建FormData对象以包含要上传的文件
+    List<MultipartFile> files = [];
+    for(var i in imgs){
+      files.add(await MultipartFile.fromFile(File(i.path).path));
+    }
+    final formData = FormData.fromMap({
+      "user":account,
+      "title":title,
+      "content":content,
+      "tags":tags,
+      "addressName":addressName,
+      "address":address,
+      "latitude":lat,
+      "longitude":lon,
+      "time":time.millisecondsSinceEpoch,
+      "images":files,
+      "onLine":online
+    });
+    // 发送POST请求到指定URL
+    final response = await dio.post(url, data: formData).then((value){
+      printInfo(info:value.toString());
+      if(value.statusCode == 200 || value.statusCode == 201){
+        printInfo(info:"网络正常,${value.data}");
+        if(value.data['statusCode']!=Status.success){
+          printInfo(info:"网络正常，服务器返回错误码：${value.data['statusCode']}");
+          return Result.error(statusCode:value.data['statusCode']);
+        }
+        return Result.success(data: true);
+      }else{
+        printError(info:"网络异常，不能连接服务器");
+        return Result.error(statusCode: Status.netError);
+      }
+    }).onError((error, stackTrace){
+      printError(info:"网络异常且未知错误:${error.toString()}");
+      return Result.error(statusCode: Status.netError);
+    }).timeout(const Duration(seconds: 3),onTimeout: (){
+      return Result.error(statusCode: Status.netError);
+    });
+    return response;
+  }
+
 }

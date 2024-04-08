@@ -117,13 +117,13 @@ class NewTaskPage extends StatelessWidget{
         surfaceTintColor: Colors.transparent,
         height: 70,
         child:Padding(padding: const EdgeInsets.symmetric(horizontal: 10),child:TextButton(
-          onPressed: _ntpc.upload,
+          onPressed: _ntpc.isUploading.value?null:_ntpc.upload,
           style: ButtonStyle(
-            backgroundColor: const MaterialStatePropertyAll(Coloors.main),
+            backgroundColor: MaterialStatePropertyAll(_ntpc.isUploading.value?Coloors.grey:Coloors.main),
             foregroundColor: const MaterialStatePropertyAll(Colors.white),
             shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
           ), 
-          child: const Text("发布",style: TextStyle(fontSize: 20),)
+          child: Text(_ntpc.isUploading.value?"发布中...":"发布",style: const TextStyle(fontSize: 20),)
         ),)
       )
     );
@@ -228,6 +228,7 @@ class NewTaskPage extends StatelessWidget{
             Padding(padding: const EdgeInsets.only(right: 0),child:TextButton(
               onPressed: (){
                 _ntpc.date.value="截止至${v.year}-${v.month}-${v.day} ${v.hour}:${v.minute}";
+                _ntpc.timeFinish=T;
                 Get.back();
               },
               style: ButtonStyle(
@@ -315,7 +316,7 @@ class NewTaskPage extends StatelessWidget{
               child: const Text("搜索")
             ))
           ],),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+          const Padding(padding: EdgeInsets.symmetric(vertical: 10),),
           Obx(() => Expanded(child: MasonryGridView.builder(
             // 展示几列
             gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
@@ -323,9 +324,46 @@ class NewTaskPage extends StatelessWidget{
 
             ),
             // 元素总个数
-            itemCount: _ntpc.POIS.length,
+            itemCount: _ntpc.POIS.length+1,
             // 单个子元素
             itemBuilder: (BuildContext context, int index){
+              if(index==0){
+                return InkWell(
+                  highlightColor: Colors.transparent, // 透明色
+                  splashColor: Colors.transparent,
+                  onTap:(){
+                    _ntpc.longitude.value=181;
+                    _ntpc.latitude.value=91;
+                    _ntpc.locationName.value="online";
+                    _ntpc.locationAddressName.value="online";
+                    _ntpc.addressFinish=T;
+                    Get.back();
+                  },
+                  child: Column(children: [
+                      const Padding(padding: EdgeInsets.only(bottom: 5)),
+                      const Row(
+                        children: [
+                        Padding(padding: EdgeInsets.only(right: 10),child: Icon(Icons.language_outlined,color: Coloors.mainLight,size:25),),
+                        Expanded(child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("线上",style: TextStyle(
+                            fontSize: 18,
+                
+                          ),),
+                          Text("发布线上委托",style: TextStyle(
+                            fontSize: 14,
+                            color: Coloors.grey,
+                          ),),
+                        ],)),
+                        Padding(padding: EdgeInsets.only(left: 5,right: 5),child: Icon(Icons.near_me_outlined,color: Coloors.grey,size:20),),
+                      ],
+                    ),
+                    index==_ntpc.POIS.length-1?const Padding(padding: EdgeInsets.only(top: 10)):
+                      const Padding(padding: EdgeInsets.only(top: 10),child:Divider(height:0.2,indent:15,endIndent: 15,color: Coloors.greyLight,),),
+                  ],),
+                );
+              }
               return InkWell(
                 highlightColor: Colors.transparent, // 透明色
                 splashColor: Colors.transparent,
@@ -333,7 +371,9 @@ class NewTaskPage extends StatelessWidget{
                   _ntpc.longitude.value=_ntpc.POIS[index]['longitude'];
                   _ntpc.latitude.value=_ntpc.POIS[index]['latitude'];
                   _ntpc.locationName.value=_ntpc.POIS[index]['name'];
+                  _ntpc.locationAddressName.value=_ntpc.POIS[index]['address'];
                   printInfo(info:"latitude:${_ntpc.latitude.value} longitude:${_ntpc.longitude.value}");
+                  _ntpc.addressFinish=T;
                   Get.back();
                 },
                 child: Column(children: [
