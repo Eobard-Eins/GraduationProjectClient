@@ -76,6 +76,7 @@ class NewTaskPage extends StatelessWidget{
           const Padding(padding: EdgeInsets.only(top: 20,bottom: 10),child:Divider(height:0.2,indent:0,endIndent: 0,color: Coloors.greyLight,),),
           HorizontalButton(text: _ntpc.locationName.value==""?"添加地点":_ntpc.locationName.value, icon: Icons.place_outlined, onTap: BottomSheetOfLocation),
           HorizontalButton(text: _ntpc.date.value==""?"添加截止时间":"${_ntpc.date.value}前", icon: Icons.schedule_outlined, onTap: ()=>BottomSheetOfTime(context)),
+          HorizontalButton(text: _ntpc.pointFinish.value?"当前积分：${_ntpc.point.value}":"添加积分", icon: Icons.monetization_on_outlined, onTap: ()=>BottomSheetOfPoint(context)),
           Padding(padding: const EdgeInsets.symmetric(vertical:10),
             child:SizedBox(
               height: 100,
@@ -422,4 +423,74 @@ class NewTaskPage extends StatelessWidget{
       _ntpc.addressInputController.refresh();
     });
   }
+  void BottomSheetOfPoint(BuildContext context){
+    Get.bottomSheet(
+      Container(
+        height: 300,
+        padding: const EdgeInsets.only(top:10,left: 20,right: 20),
+        child: Column(children: [
+          const ShortHeadBar(),
+          const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+          Row(children: [
+            Padding(padding: const EdgeInsets.only(left: 0),child:TextButton(
+              onPressed: (){Get.back();},
+              style: ButtonStyle(
+                backgroundColor: const MaterialStatePropertyAll(Coloors.greyLight),
+                foregroundColor: const MaterialStatePropertyAll(Colors.black),
+                shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+              ), 
+              child: const Text("取消")
+            )),
+            const Spacer(),
+            Padding(padding: const EdgeInsets.only(right: 0),child:TextButton(
+              onPressed: (){
+                _ntpc.pointFinish.value=T;
+                Get.back();
+              },
+              style: ButtonStyle(
+                backgroundColor: const MaterialStatePropertyAll(Coloors.main),
+                foregroundColor: const MaterialStatePropertyAll(Colors.white),
+                shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+              ), 
+              child: const Text("完成")
+            ))
+          ],),
+
+          Expanded(child: Padding(padding: const EdgeInsets.symmetric(horizontal: 15),
+            child:Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("\$0.0",style: TextStyle(fontFamily: 'SmileySans',fontSize: 16,letterSpacing: 1),),
+                Obx(()=>Slider(
+                  value: _ntpc.point.value,
+                  min: 0.0,
+                  max: 100.0,
+                  //平均分成的等分
+                  divisions: 100,
+                  //滚动时会回调
+                  onChanged: (double value) {
+                    _ntpc.point.value = value;
+                  },
+                  //滑块以及滑动左侧的滚动条颜色
+                  activeColor: Coloors.mainLight,
+                  thumbColor: Coloors.main,
+                  //滑块右侧的滚动条颜色
+                  inactiveColor: Coloors.grey,
+                  //气泡
+                  label: _ntpc.point.value.toStringAsFixed(2),
+                )),
+                const Text("\$100.0",style: TextStyle(fontFamily: 'SmileySans',fontSize: 16,letterSpacing: 1),),
+              ],
+            )
+          
+          ),)
+        ])
+      ),
+      backgroundColor: Colors.white,
+    ).whenComplete((){
+      printInfo(info:"point弹窗结束:${_ntpc.point.value.toString()}");
+    });
+  }
+ 
 }

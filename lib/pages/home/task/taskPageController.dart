@@ -10,6 +10,7 @@ import 'package:client_application/tool/timeUtils.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class TaskPageController extends GetxController {
   Rx<TextEditingController> searchController = TextEditingController().obs;
@@ -24,23 +25,20 @@ class TaskPageController extends GetxController {
     controlFinishRefresh: true,
     controlFinishLoad: true,
   );
-  double distanceInSearch=10.0;
   @override
   void onInit() {
     super.onInit();
 
     tasks.clear();
     distance.value=SpUtils.getDouble('distance',defaultValue: 10.0);
-    distanceInSearch=distance.value;
     location.value=" - - - ";
     //isLoading.value=false;
     gettingLocation.value=false;
     searchController.value.clear();
     searchController.refresh();
     
-    SpUtils.setDouble("double",distanceInSearch);
+    SpUtils.setDouble("distance",distance.value);
     getLocation();
-    loadData(10);
   }
   
   Future<int> loadData(int n,{bool refresh=false})async{
@@ -57,13 +55,28 @@ class TaskPageController extends GetxController {
       lat: SpUtils.getDouble("latitude"), 
       lon: SpUtils.getDouble("longitude"), 
       onSuccess: (items){
-        printInfo(info:"getTaskList ${items.toString()}");
+        for(var item in items){
+          double s=item['distance'];
+          String location="${s.toStringAsFixed(2)}km内";
+          String labels="";
+          bool flag=T;
+          for(String s in item["tags"]){
+            if(flag){
+              labels=labels+s.substring(1);
+              flag=F;
+            }else{
+              labels="$labels/${s.substring(1)}";
+            }
+          }
+          TaskItemInfo ti=TaskItemInfo(id: item['id'], title: item['title'], point: item['point'], time: "time", location: location, labels: labels, hotValue: item['hot'], avatar: item['avatar']);
+          newTasks.add(ti);
+        }
       }
     );
-    await TimeUtils.TimeTestModel(3);
-    for(var i=0;i<n;i++){
-      newTasks.add(TaskItemInfo(id: i+1000, title: "title", point: 1025.5, time: "2024-12-31\n12:45前", location: "3.5km内", labels: "label1/lebel2/label3/label4", hotValue: 114514));
-    }
+    // await TimeUtils.TimeTestModel(3);
+    // for(var i=0;i<n;i++){
+    //   newTasks.add(TaskItemInfo(id: i+1000, title: "title", point: 1025.5, time: "2024-12-31\n12:45前", location: "3.5km内", labels: "label1/lebel2/label3/label4", hotValue: 114514));
+    // }
 
     if (newTasks.isEmpty){
       refreshController.finishRefresh(IndicatorResult.noMore);
@@ -95,13 +108,12 @@ class TaskPageController extends GetxController {
   }
   void alterConfirm(){
     if(distance.value==50){
-      distanceInSearch=99999;
+      SpUtils.setDouble("distance",99999);
     } else if (distance.value==0){
-      distanceInSearch=0.1;
+      SpUtils.setDouble("distance",0.1);
     }else{
-      distanceInSearch=distance.value;
+      SpUtils.setDouble("distance",distance.value);
     }
-    SpUtils.setDouble("distance",distanceInSearch);
     printInfo(info:"distance change to ${SpUtils.getDouble('distance')}");
     Get.back();
   }

@@ -20,6 +20,7 @@ class NewTaskPageController extends GetxController {
   RxList<XFile?> imgs=RxList();
   RxDouble longitude=0.0.obs;
   RxDouble latitude=0.0.obs;
+  RxDouble point=0.0.obs;
   Rx<DateTime> time=DateTime.now().obs;
 
   
@@ -27,6 +28,7 @@ class NewTaskPageController extends GetxController {
   Rx<bool> isFull=false.obs;
   bool addressFinish=false;
   bool timeFinish=false;
+  Rx<bool> pointFinish=false.obs;
   final FocusNode focusNodeOfNotFull = FocusNode();
   final FocusNode focusNodeOfFull = FocusNode();
 
@@ -37,6 +39,7 @@ class NewTaskPageController extends GetxController {
     imgs=RxList();
     longitude.value=0.0;
     latitude.value=0.0;
+    point.value=0.0;
     time.value=DateTime.now();
     locationName.value="";
     locationAddressName.value="";
@@ -54,6 +57,7 @@ class NewTaskPageController extends GetxController {
     isUploading.value=false;
     addressFinish=false;
     timeFinish=false;
+    pointFinish.value=false;
   }
 
   void searchAddress()async{
@@ -63,7 +67,7 @@ class NewTaskPageController extends GetxController {
   }
   void upload(){
     isUploading.value=true;
-    if(titleInputController.value.text.isEmpty||contentInputController.value.text.isEmpty||(!addressFinish)||(!timeFinish)){
+    if(titleInputController.value.text.isEmpty||contentInputController.value.text.isEmpty||(!addressFinish)||(!timeFinish)||(!pointFinish.value)){
       snackbar.error("发布失败", "请完善信息",0);
     }else{
       List<String> tags=Discriminator.getLabels(contentInputController.value.text);
@@ -86,6 +90,7 @@ class NewTaskPageController extends GetxController {
           time: time.value, 
           imgs: ls, 
           online: latitude.value==91, 
+          point: point.value,
           onSuccess: (data){
             isUploading.value=false;
             Get.back();

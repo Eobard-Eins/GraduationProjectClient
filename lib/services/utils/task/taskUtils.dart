@@ -47,9 +47,10 @@ class TaskUtils extends GetConnect{
     required DateTime time,
     required List<XFile> imgs,
     required bool online,
+    required double point,
     required Function onSuccess,
   }){
-    TaskNetService().addNewTask(account, title, content, tags, addressName, address, lat, lon, time, imgs, online).then((value) {
+    TaskNetService().addNewTask(account, title, content, tags, addressName, address, lat, lon, time, imgs, online, point).then((value) {
       switch(value.statusCode){
         case Status.taskAddError:
           snackbar.error("发布失败", "请稍后重试", value.statusCode);

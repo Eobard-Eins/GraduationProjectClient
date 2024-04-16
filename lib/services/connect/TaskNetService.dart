@@ -57,9 +57,10 @@ class TaskNetService extends GetConnect{
     double lon,
     DateTime time, 
     List<XFile> imgs, 
-    bool online
+    bool online,
+    double point
   ) async{
-    final Result res=await dioService().uploadTask("$_baseUrl/task/addTask",account,title,content,tags,addressName,address,lat,lon,time,imgs,online);
+    final Result res=await dioService().uploadTask("$_baseUrl/task/addTask",account,title,content,tags,addressName,address,lat,lon,time,imgs,online,point);
     return res;
   }
 }

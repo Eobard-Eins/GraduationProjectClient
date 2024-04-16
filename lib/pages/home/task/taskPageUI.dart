@@ -183,6 +183,7 @@ class TaskPage extends StatelessWidget {
       location: ti.location,
       labels: ti.labels,
       hotValue: ti.hotValue,
+      avatarUrl: ti.avatar,
     );
   }
 
@@ -207,7 +208,6 @@ class TaskPage extends StatelessWidget {
               children: [
                 const Text("0Km",style: TextStyle(fontFamily: 'SmileySans',fontSize: 14,letterSpacing: 1),),
                 Obx(()=>Slider(
-                  //Slider的当前的值  0.0 ~ 1.0
                   value: _tpc.distance.value,
                   min: 0.0,
                   max: 50.0,

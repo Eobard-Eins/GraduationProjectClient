@@ -18,7 +18,6 @@ class MyPublishPageController extends GetxController{
     super.onInit();
     initStateNum=Get.arguments["initialIndex"] as int;
     for(var i=0;i<10;i++){
-      allTasks.add(TaskItemInfo(id: i+1000, title: "title", point: 1025.5, time: "2024-12-31 11:55", location: "location", labels: "labels", hotValue: 114514));
     }
   }
 
@@ -30,7 +29,6 @@ class MyPublishPageController extends GetxController{
     //TODO: 测试网络请求
     await TimeUtils.TimeTestModel(3);
     for(var i=0;i<5;i++){
-      newTasks.add(TaskItemInfo(id: i+1000, title: "title", point: 1025.5, time: "time", location: "location", labels: "labels", hotValue: 114514));
     }
 
     if (newTasks.isEmpty){

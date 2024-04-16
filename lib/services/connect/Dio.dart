@@ -56,7 +56,8 @@ class dioService{
     double lon,
     DateTime time, 
     List<XFile> imgs, 
-    bool online
+    bool online,
+    double point
   ) async {
     // 创建FormData对象以包含要上传的文件
     List<MultipartFile> files = [];
@@ -74,7 +75,8 @@ class dioService{
       "longitude":lon,
       "time":time.millisecondsSinceEpoch,
       "images":files,
-      "onLine":online
+      "onLine":online,
+      "point":point
     });
     // 发送POST请求到指定URL
     final response = await dio.post(url, data: formData).then((value){
