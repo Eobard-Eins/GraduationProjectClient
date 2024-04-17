@@ -71,7 +71,7 @@ class MyAccessPage extends StatelessWidget{
               itemCount: ls.length,
               // 单个子元素
               itemBuilder: (BuildContext context, int index)=>build(index),
-              shrinkWrap: true, //收缩，让元素宽度自适应
+              //shrinkWrap: true, //收缩，让元素宽度自适应
             ))
       );
   }

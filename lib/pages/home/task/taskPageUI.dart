@@ -98,7 +98,7 @@ class TaskPage extends StatelessWidget {
                     child: Obx(() => SearchInput(
                       controller: _tpc.searchController.value, 
                       height: 40, 
-                      hintText: " 搜索",
+                      hintText: "搜索",
                       onChanged: (value) {
                         _tpc.searchController.value.text=value;
                         _tpc.searchController.refresh();
@@ -110,6 +110,7 @@ class TaskPage extends StatelessWidget {
                               //清空输入框
                               _tpc.searchController.value.clear();
                               _tpc.searchController.refresh();
+                              _tpc.searchWord="";
                             },
                             icon: const Icon(
                               Icons.cancel,
@@ -140,10 +141,10 @@ class TaskPage extends StatelessWidget {
                   refreshOnStart: true,
                   controller: _tpc.refreshController,
                   onRefresh: ()async{
-                    await _tpc.loadData(0,refresh:true);
+                    await _tpc.loadData(6,refresh:true);
                   },
                   onLoad: ()async{
-                    await _tpc.loadData(0);
+                    await _tpc.loadData(6);
                   },
                   child:Obx(() => MasonryGridView.builder(
                       // 展示几列
@@ -160,7 +161,7 @@ class TaskPage extends StatelessWidget {
                       // crossAxisSpacing: 10,
                       //本身不滚动，让外面的singlescrollview来滚动
                       //physics:physics, 
-                      shrinkWrap: true, //收缩，让元素宽度自适应
+                      //shrinkWrap: true, //收缩，让元素宽度自适应
                       controller: _tpc.scrollController,
                       
                     )

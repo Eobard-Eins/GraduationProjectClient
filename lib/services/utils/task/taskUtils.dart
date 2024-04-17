@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:client_application/services/connect/TaskNetService.dart';
 import 'package:client_application/tool/res/status.dart';
 import 'package:get/get.dart';
@@ -13,14 +15,42 @@ class TaskUtils extends GetConnect{
     required double lat,
     required double lon,
     required Function(List<dynamic>) onSuccess,
+    required Function() onError,
   }){
     TaskNetService().getTasks(account,k,search,distance,lat,lon).then((value){
       switch(value.statusCode){
         case Status.taskGetError:
           snackbar.error("获取失败", "请稍后重试", value.statusCode);
+          onError();
           break;
         case Status.userNotExist:
           snackbar.error("获取失败", "当前用户不存在", value.statusCode);
+          onError();
+          break;
+        case Status.netError:
+          snackbar.error("获取失败", "请检查网络设置", value.statusCode);
+          onError();
+          break;
+        case Status.success:
+          onSuccess(value.data);
+          break;
+        default:
+          snackbar.error("获取失败", "请检查网络设置", value.statusCode);
+          onError();
+          break;
+      }
+    });
+  }
+
+  static getTask({
+    required int id,
+    required String account,
+    required Function(Map<String, dynamic>) onSuccess,
+  }){
+    TaskNetService().getTask(id,account).then((value){
+      switch(value.statusCode){
+        case Status.taskGetError:
+          snackbar.error("获取失败", "请稍后重试", value.statusCode);
           break;
         case Status.netError:
           snackbar.error("获取失败", "请检查网络设置", value.statusCode);
@@ -63,6 +93,46 @@ class TaskUtils extends GetConnect{
           break;
         default:
           snackbar.error("发布失败", "请检查网络设置", value.statusCode);
+          break;
+      }
+    });
+  }
+  static like({
+    required int id,
+    required String account,
+  }){
+    TaskNetService().like(id,account).then((value){
+      switch(value.statusCode){
+        case Status.likeError:
+          snackbar.error("点赞失败", "请稍后重试", value.statusCode);
+          break;
+        case Status.netError:
+          snackbar.error("点赞失败", "请检查网络设置", value.statusCode);
+          break;
+        case Status.success:
+          break;
+        default:
+          snackbar.error("点赞失败", "请检查网络设置", value.statusCode);
+          break;
+      }
+    });
+  }
+  static dislike({
+    required int id,
+    required String account,
+  }){
+    TaskNetService().dislike(id,account).then((value){
+      switch(value.statusCode){
+        case Status.dislikeError:
+          snackbar.error("点踩失败", "请稍后重试", value.statusCode);
+          break;
+        case Status.netError:
+          snackbar.error("点踩失败", "请检查网络设置", value.statusCode);
+          break;
+        case Status.success:
+          break;
+        default:
+          snackbar.error("点踩失败", "请检查网络设置", value.statusCode);
           break;
       }
     });

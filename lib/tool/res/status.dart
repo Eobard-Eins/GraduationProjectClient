@@ -37,6 +37,15 @@ class Status{
   static const int taskAddError=1400;
   static const int taskGetError=1401;
 
+  static const int click=1500;
+  static const int like=1501;
+  static const int chat=1502;
+  static const int access=1503;
+  static const int dislike=1504;
+  static const int accessError=1505;
+  static const int dislikeError=1506;
+  static const int likeError=1507;
+
   //不存在状态码
   static const int noStatusCode=0000;//其他
 }

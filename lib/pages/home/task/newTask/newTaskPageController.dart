@@ -67,17 +67,21 @@ class NewTaskPageController extends GetxController {
   }
   void upload(){
     isUploading.value=true;
+    
     if(titleInputController.value.text.isEmpty||contentInputController.value.text.isEmpty||(!addressFinish)||(!timeFinish)||(!pointFinish.value)){
       snackbar.error("发布失败", "请完善信息",0);
     }else{
       List<String> tags=Discriminator.getLabels(contentInputController.value.text);
       if(tags.length>10){
         snackbar.error("发布失败", "标签过多，请保持标签数量在10个以内",0);
+      }else if(tags.isEmpty){
+        snackbar.error("发布失败", "请输入标签",0);
       }else{
         List<XFile> ls=[];
         for(var i in imgs){
           if(i!=null) ls.add(i);
         }
+        printInfo(info: "发布任务,tag:${tags.toString()}");
         TaskUtils.addTask(
           account: SpUtils.getString("account"), 
           title: titleInputController.value.text, 

@@ -35,8 +35,11 @@ class Discriminator{
     
     // 将匹配到的分隔符存入一个集合，避免重复处理
     List<String> separators = matches.map((match) => match[0]!).toSet().toList();   
-
-    return separators;
+    List<String> res=[];
+    for(String s in separators){
+      res.add(s.substring(1));
+    }
+    return res;
   }
 
   static bool usernameOk(String username) {

@@ -67,10 +67,10 @@ class TaskInfoPage extends StatelessWidget{
               padding: const EdgeInsets.only(top: 15),
               child:Row(
                 children: [
-                  const Padding(padding: EdgeInsets.only(right: 10),child: Icon(Icons.schedule_outlined,color: Coloors.greyDeep,size:16),),
+                  const Padding(padding: EdgeInsets.only(right: 10),child: Icon(Icons.schedule_outlined,color: Coloors.greyDeep,size:18),),
                   Expanded(child: 
                     _tipc.date.value.toString()!=""?Text("截止至${_tipc.date.value.toString()}前",style: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 14,
                     ),):Padding(padding: const EdgeInsets.only(top: 2,right: 200,bottom: 2),child: Container(height: 10, padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),decoration: const BoxDecoration(color:Coloors.greyLight),),),
                       
                   ),
@@ -82,15 +82,15 @@ class TaskInfoPage extends StatelessWidget{
               child:Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(padding : EdgeInsets.only(top:3,right: 10),child: Icon(Icons.place_outlined,color: Coloors.greyDeep,size:16),),
+                  const Padding(padding : EdgeInsets.only(top:3,right: 10),child: Icon(Icons.place_outlined,color: Coloors.greyDeep,size:18),),
                   Expanded(child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: _tipc.loc.value!=""?[
                       Text(_tipc.loc.value,style: const TextStyle(
-                        fontSize: 12,
+                        fontSize: 14,
                       ),),
                       Text(_tipc.locDetail.value,style: const TextStyle(
-                        fontSize: 10,
+                        fontSize: 12,
                         color: Coloors.greyDeep,
                       ),
                       maxLines: 2,
@@ -147,7 +147,7 @@ class TaskInfoPage extends StatelessWidget{
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 width: 180,
                 child:TextButton(
-                  onPressed: ()=>_tipc.getInfo(1),
+                  onPressed: ()=>_tipc.access(),
                   style: ButtonStyle(
                     backgroundColor: const MaterialStatePropertyAll(Coloors.main),
                     foregroundColor: const MaterialStatePropertyAll(Colors.white),
@@ -175,16 +175,16 @@ class TaskInfoPage extends StatelessWidget{
       var index = input.indexOf(separator, start)-1;
       if (index != -1) {
         if (index > start) {
-          res.add(TextSpan(text:input.substring(start, index),style: const TextStyle(fontSize: 14)));
+          res.add(TextSpan(text:input.substring(start, index),style: const TextStyle(fontSize: 16)));
         }
-        res.add(TextSpan(text:"#$separator#",style: const TextStyle(fontSize:14,color: Colors.blue)));
+        res.add(TextSpan(text:"#$separator",style: const TextStyle(fontSize:15,color: Colors.blue)));
         start = index + separator.length+2;
       }
     }
     
     // 处理剩余部分（如果存在）
     if (start < input.length) {
-      res.add(TextSpan(text:input.substring(start),style: const TextStyle(fontSize: 14)));
+      res.add(TextSpan(text:input.substring(start),style: const TextStyle(fontSize: 16)));
     }
 
     return res;

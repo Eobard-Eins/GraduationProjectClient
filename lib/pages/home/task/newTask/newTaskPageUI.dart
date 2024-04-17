@@ -76,7 +76,7 @@ class NewTaskPage extends StatelessWidget{
           const Padding(padding: EdgeInsets.only(top: 20,bottom: 10),child:Divider(height:0.2,indent:0,endIndent: 0,color: Coloors.greyLight,),),
           HorizontalButton(text: _ntpc.locationName.value==""?"添加地点":_ntpc.locationName.value, icon: Icons.place_outlined, onTap: BottomSheetOfLocation),
           HorizontalButton(text: _ntpc.date.value==""?"添加截止时间":"${_ntpc.date.value}前", icon: Icons.schedule_outlined, onTap: ()=>BottomSheetOfTime(context)),
-          HorizontalButton(text: _ntpc.pointFinish.value?"当前积分：${_ntpc.point.value}":"添加积分", icon: Icons.monetization_on_outlined, onTap: ()=>BottomSheetOfPoint(context)),
+          HorizontalButton(text: _ntpc.pointFinish.value?"当前积分：${_ntpc.point.value.toStringAsFixed(2)}":"添加积分", icon: Icons.monetization_on_outlined, onTap: ()=>BottomSheetOfPoint(context)),
           Padding(padding: const EdgeInsets.symmetric(vertical:10),
             child:SizedBox(
               height: 100,
@@ -228,7 +228,7 @@ class NewTaskPage extends StatelessWidget{
             const Spacer(),
             Padding(padding: const EdgeInsets.only(right: 0),child:TextButton(
               onPressed: (){
-                _ntpc.date.value="截止至${v.year}-${v.month}-${v.day} ${v.hour}:${v.minute}";
+                _ntpc.date.value="截止至${v.year}-${v.month.toString().padLeft(2, '0')}-${v.day.toString().padLeft(2, '0')} ${v.hour.toString().padLeft(2, '0')}:${v.minute.toString().padLeft(2, '0')}";
                 _ntpc.timeFinish=T;
                 Get.back();
               },
@@ -335,8 +335,8 @@ class NewTaskPage extends StatelessWidget{
                   onTap:(){
                     _ntpc.longitude.value=181;
                     _ntpc.latitude.value=91;
-                    _ntpc.locationName.value="online";
-                    _ntpc.locationAddressName.value="online";
+                    _ntpc.locationName.value="线上";
+                    _ntpc.locationAddressName.value="线上";
                     _ntpc.addressFinish=T;
                     Get.back();
                   },

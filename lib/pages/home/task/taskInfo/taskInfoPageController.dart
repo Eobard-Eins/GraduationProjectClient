@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:client_application/res/staticValue.dart';
+import 'package:client_application/services/utils/task/taskUtils.dart';
+import 'package:client_application/tool/localStorage.dart';
 import 'package:client_application/tool/timeUtils.dart';
 import 'package:get/get.dart';
 
@@ -18,37 +22,49 @@ class TaskInfoPageController extends GetxController {
 
   Rx<bool> like=false.obs;
   Rx<bool> dislike=false.obs;
+  late int id;
   @override
   void onInit() {
     super.onInit();
-    int id = Get.arguments["id"] as int;
-    getInfo(id);
+    id = Get.arguments["id"] as int;
+    getInfo();
   }
 
-  void getInfo(int id) async{
-    await TimeUtils.TimeTestModel(3);
-    title.value="一个很长很长很长很长很长很长很长很长很长很长很长很长的实例标题";
-    description.value="一个很长很长很长很长很长很长#测试#，很长很长很长很长很长#标签1#很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的文本#标签2# #标签3#";
-    date.value="2024-12-31 23:46";
-    loc.value="湘潭大学";
-    locDetail.value="湖南省湘潭市湘潭大学北苑宿舍区";
-    distance.value=1115.12;
-    hotValue.value=114514;
-    avatar.value=staticValue.defaultAvatar;
-    username.value="username";
-    account.value="123456@qq.com";
-    labels=RxList.from(["测试","标签1","标签2","标签3"]);
-    imgs.addAll([staticValue.defaultAvatar]);
+  void getInfo() async{
+    TaskUtils.getTask(id: id,account: SpUtils.getString("account"), onSuccess: (data){
+      printError(info:data.toString());
+      title.value=data['title'];
+      description.value=data['content'];
+      loc.value=data['address_name'];
+      locDetail.value=bool.parse(data['onLine'])?"线上委托":data['address'];
+      avatar.value=data['avatar'];
+      username.value=data['username'];
+      account.value=data['account'];
+
+      String t=data['time'];
+      DateTime dt=DateTime.parse(t.substring(0,t.indexOf('.')));
+      date.value="截止至${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')} ${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}前";    
+
+      List<dynamic> tags=jsonDecode(data["tags"]);
+      List<dynamic> igs=jsonDecode(data["imgs"]);
+      
+      for (var element in tags) {labels.add(element);}
+      for (var element in igs) {imgs.add(element);}
+    });
   }
 
   void tapLike(){
     like.value=!like.value;
     if(like.value&&dislike.value) dislike.value=false;
+    TaskUtils.like(id: id, account: SpUtils.getString("account"));
   }
   void tapDislike(){
     dislike.value=!dislike.value;
     if(like.value&&dislike.value) like.value=false;
-    imgs.add(staticValue.defaultAvatar);
+    TaskUtils.dislike(id: id, account: SpUtils.getString("account"));
+    
   }
   void tapChat(){}
+
+  void access(){}
 }

@@ -76,7 +76,7 @@ class dioService{
       "time":time.millisecondsSinceEpoch,
       "images":files,
       "onLine":online,
-      "point":point
+      "point":point.toStringAsFixed(2)
     });
     // 发送POST请求到指定URL
     final response = await dio.post(url, data: formData).then((value){

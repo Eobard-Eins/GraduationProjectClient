@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:client_application/components/display/snackbar.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/models/Task.dart';
@@ -6,7 +8,6 @@ import 'package:client_application/res/color.dart';
 import 'package:client_application/services/utils/task/taskUtils.dart';
 import 'package:client_application/tool/localStorage.dart';
 import 'package:client_application/services/utils/locationUtils.dart';
-import 'package:client_application/tool/timeUtils.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,11 +26,14 @@ class TaskPageController extends GetxController {
     controlFinishRefresh: true,
     controlFinishLoad: true,
   );
+
+  String searchWord="";
   @override
   void onInit() {
     super.onInit();
 
     tasks.clear();
+    searchWord="";
     distance.value=SpUtils.getDouble('distance',defaultValue: 10.0);
     location.value=" - - - ";
     //isLoading.value=false;
@@ -41,56 +45,56 @@ class TaskPageController extends GetxController {
     getLocation();
   }
   
-  Future<int> loadData(int n,{bool refresh=false})async{
+  Future loadData(int n,{bool refresh=false})async{
     //isLoading.value=true;
     printInfo(info:"loadData");
     List<TaskItemInfo> newTasks=[];
 
-    //TODO: 测试网络请求
     TaskUtils.getTaskList(
       account: SpUtils.getString("account"),
-      k: 5,
-      search: searchController.value.text, 
+      k: n,
+      search: searchWord, 
       distance: SpUtils.getDouble("distance"), 
       lat: SpUtils.getDouble("latitude"), 
       lon: SpUtils.getDouble("longitude"), 
+      onError: () {
+        refreshController.finishRefresh(IndicatorResult.noMore);
+        refreshController.finishLoad(IndicatorResult.noMore);
+      },
       onSuccess: (items){
-        for(var item in items){
-          double s=item['distance'];
-          String location="${s.toStringAsFixed(2)}km内";
+        for(Map<String,dynamic> item in items){
+          double s=double.parse(item['distance']);
+          bool ol=bool.parse(item['online']);
+          String location=ol?"在线":"${s.toStringAsFixed(2)}km内";
           String labels="";
           bool flag=T;
-          for(String s in item["tags"]){
+          List<dynamic> ls=jsonDecode(item["tags"]);
+          String t=item['time'];
+          DateTime dt=DateTime.parse(t.substring(0,t.indexOf('.')));
+          for(String s in ls){
             if(flag){
-              labels=labels+s.substring(1);
+              labels=labels+s;
               flag=F;
             }else{
-              labels="$labels/${s.substring(1)}";
+              labels="$labels/$s";
             }
           }
-          TaskItemInfo ti=TaskItemInfo(id: item['id'], title: item['title'], point: item['point'], time: "time", location: location, labels: labels, hotValue: item['hot'], avatar: item['avatar']);
-          newTasks.add(ti);
+          newTasks.add(TaskItemInfo(id: int.parse(item['id']), title: item['title'], point: double.parse(item['point']), time: "${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}\n${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}前", location: location, labels: labels, hotValue: int.parse(item['hot']), avatar: item['avatar']));             
         }
+        if (newTasks.isEmpty){
+          refreshController.finishRefresh(IndicatorResult.noMore);
+          refreshController.finishLoad(IndicatorResult.noMore);
+        }else{
+          refreshController.finishRefresh();
+          refreshController.finishLoad();
+          if (refresh){
+            tasks.clear();
+          }
+          tasks.addAll(newTasks);
+        }
+        
       }
     );
-    // await TimeUtils.TimeTestModel(3);
-    // for(var i=0;i<n;i++){
-    //   newTasks.add(TaskItemInfo(id: i+1000, title: "title", point: 1025.5, time: "2024-12-31\n12:45前", location: "3.5km内", labels: "label1/lebel2/label3/label4", hotValue: 114514));
-    // }
-
-    if (newTasks.isEmpty){
-      refreshController.finishRefresh(IndicatorResult.noMore);
-      refreshController.finishLoad(IndicatorResult.noMore);
-    }else{
-      refreshController.finishRefresh();
-      refreshController.finishLoad();
-      if (refresh){
-        tasks.clear();
-      }
-      tasks.addAll(newTasks);
-    }
-    //isLoading.value=false;
-    return newTasks.length;
   }
   void moveToTop(){
     printInfo(info:"moveToTop");
@@ -98,8 +102,9 @@ class TaskPageController extends GetxController {
   }
   void gotoAddNewTask()=> Get.toNamed(RouteConfig.newTaskPage);
 
-  void search() {
-    printInfo(info:"search");
+  void search(){
+    searchWord=searchController.value.text;
+    loadData(6,refresh: T);
   }
   
   void tapTask(int id){
