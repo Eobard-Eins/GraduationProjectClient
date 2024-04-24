@@ -30,6 +30,11 @@ class User {
     avatar="";
     point=0.0;
   }
+  User.briefly({required this.username, required this.mailAddress, required this.avatar}){
+    password = "";
+    gender = "";
+    point = 0.0;
+  }
 
   User.fromJson(Map<String, dynamic> json) {
 

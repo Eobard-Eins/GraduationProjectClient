@@ -25,7 +25,9 @@ class Status{
   static const int setRegisteredError=1204;//通信数据库设置注册状态时出现错误
   static const int setAvatarError=1205;//通信数据库设置头像时出现错误
   static const int avatarMissing=1206;//头像路径为空
-  static const int usernameFormatError=1207;
+  static const int userGetError=1207;
+  static const int userPointNotEnough=1208;
+  static const int usernameFormatError=1209;
 
   //网络
   static const int netError=1300;//网络错误
@@ -36,6 +38,14 @@ class Status{
 
   static const int taskAddError=1400;
   static const int taskGetError=1401;
+  static const int taskPublic=1402;//待被接取
+  static const int taskRequestExist=1403;
+  static const int taskStatusChangeError=1404;
+  static const int taskBeAccessed=1404;//正被处理/正在处理
+  static const int historyGetError=1405;
+  static const int taskTimeout=1406;//超时
+  static const int taskDone=1407;//处理完成
+
 
   static const int click=1500;
   static const int like=1501;
@@ -45,7 +55,8 @@ class Status{
   static const int accessError=1505;
   static const int dislikeError=1506;
   static const int likeError=1507;
+  static const int getAll=1508;
 
   //不存在状态码
-  static const int noStatusCode=0000;//其他
+  static const int error=0000;//其他
 }

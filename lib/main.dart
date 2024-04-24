@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: const [Locale('zh', 'CN')], 
-        initialRoute: goHome()?RouteConfig.homePage:RouteConfig.loginWithCaptchaPage,
+        initialRoute: goHome()?RouteConfig.homePage:RouteConfig.homePage,
         getPages: RouteConfig.getPages,
         unknownRoute: GetPage(name: '/notfound', page: () => const Scaffold(body: Center(child: Text("No Page Route Provided"),))),
         

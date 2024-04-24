@@ -94,7 +94,6 @@ class UserNetService extends GetConnect{
     if(!Discriminator.accountOk(account)){
       return Result.error(statusCode:Status.mailFormatError);
     }
-    //TODO:
     final Result res=await get("$_baseUrl/userLogin/loginWithCaptcha",query:{"mailAddress":account,"captcha":captcha}).then((value){
       if(!value.isOk){
         printInfo(info:"网络异常，不能连接服务器");

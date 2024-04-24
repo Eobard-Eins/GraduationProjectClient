@@ -29,7 +29,7 @@ class CommunityPage extends StatelessWidget {
         ),
         body: Center(
           child: 
-            Padding(padding: const EdgeInsets.symmetric(horizontal: 20),child:TaskItemBriefly(title: "一个一个一个一个一个一个一个一个一个一个一个一个一个一个标题", distance: 3.06, time: "2024-12-31 11:54", point: 1024.5,actions: [
+            Padding(padding: const EdgeInsets.symmetric(horizontal: 20),child:TaskItemBriefly(title: "一个一个一个一个一个一个一个一个一个一个一个一个一个一个标题", addressName: "3.06", time: "2024-12-31 11:54", point: 1024.5,actions: [
               TaskItemBriefly.actionButtion("查看详情", () => null)
             ],))
           

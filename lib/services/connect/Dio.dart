@@ -33,13 +33,13 @@ class dioService{
         return Result.success(data: true);
       }else{
         printError(info:"网络异常，不能连接服务器");
-        return Result.error(statusCode: Status.netError);
+        return Result.error(message: "网络出现错误:Net error");
       }
     }).onError((error, stackTrace){
       printError(info:"网络异常且未知错误:${error.toString()}");
-      return Result.error(statusCode: Status.netError);
+      return Result.error(message: "网络出现错误:Net error");
     }).timeout(const Duration(seconds: 3),onTimeout: (){
-      return Result.error(statusCode: Status.netError);
+      return Result.error(message: "网络出现错误:Time out");
     });
     return response;
   }
@@ -85,18 +85,18 @@ class dioService{
         printInfo(info:"网络正常,${value.data}");
         if(value.data['statusCode']!=Status.success){
           printInfo(info:"网络正常，服务器返回错误码：${value.data['statusCode']}");
-          return Result.error(statusCode:value.data['statusCode']);
+          return Result.error(message:value.data['message']);
         }
         return Result.success(data: true);
       }else{
         printError(info:"网络异常，不能连接服务器");
-        return Result.error(statusCode: Status.netError);
+        return Result.error(message: "网络出现错误:Net error");
       }
     }).onError((error, stackTrace){
       printError(info:"网络异常且未知错误:${error.toString()}");
-      return Result.error(statusCode: Status.netError);
+      return Result.error(message: "网络出现错误:Net error");
     }).timeout(const Duration(seconds: 3),onTimeout: (){
-      return Result.error(statusCode: Status.netError);
+      return Result.error(message: "网络出现错误:Time out");
     });
     return response;
   }

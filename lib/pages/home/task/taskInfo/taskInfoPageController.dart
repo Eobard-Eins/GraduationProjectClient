@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:client_application/components/display/snackbar.dart';
 import 'package:client_application/res/staticValue.dart';
 import 'package:client_application/services/utils/task/taskUtils.dart';
 import 'package:client_application/tool/localStorage.dart';
@@ -22,11 +23,16 @@ class TaskInfoPageController extends GetxController {
 
   Rx<bool> like=false.obs;
   Rx<bool> dislike=false.obs;
+  Rx<bool> requested=false.obs;
   late int id;
+  late bool needHead;
+  late bool needFoot;
   @override
   void onInit() {
     super.onInit();
     id = Get.arguments["id"] as int;
+    needHead = Get.arguments["needHead"] as bool;
+    needFoot = Get.arguments["needFoot"] as bool;
     getInfo();
   }
 
@@ -40,6 +46,9 @@ class TaskInfoPageController extends GetxController {
       avatar.value=data['avatar'];
       username.value=data['username'];
       account.value=data['account'];
+      like.value=bool.parse(data["like"]);
+      dislike.value=bool.parse(data["dislike"]);
+      requested.value=bool.parse(data["request"]);
 
       String t=data['time'];
       DateTime dt=DateTime.parse(t.substring(0,t.indexOf('.')));
@@ -53,18 +62,25 @@ class TaskInfoPageController extends GetxController {
     });
   }
 
-  void tapLike(){
-    like.value=!like.value;
-    if(like.value&&dislike.value) dislike.value=false;
-    TaskUtils.like(id: id, account: SpUtils.getString("account"));
+  void tapLike(){   
+    TaskUtils.like(id: id, account: SpUtils.getString("account"),onSuccess: (){
+      like.value=!like.value;
+      if(like.value&&dislike.value) dislike.value=false;
+    });
   }
   void tapDislike(){
-    dislike.value=!dislike.value;
-    if(like.value&&dislike.value) like.value=false;
-    TaskUtils.dislike(id: id, account: SpUtils.getString("account"));
+    TaskUtils.dislike(id: id, account: SpUtils.getString("account"),onSuccess: (){
+      dislike.value=!dislike.value;
+      if(like.value&&dislike.value) like.value=false;
+    });
     
   }
   void tapChat(){}
 
-  void access(){}
+  void access(){
+    TaskUtils.requestTask(id: id, account: SpUtils.getString("account"), onSuccess: (){
+      requested.value=true;
+      snackbar.success("申请成功", "请等待发布者确认");
+    });
+  }
 }

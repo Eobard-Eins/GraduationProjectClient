@@ -1,8 +1,12 @@
 import 'package:client_application/components/display/footerAndHeader.dart';
+import 'package:client_application/components/display/shortHeadBar.dart';
+import 'package:client_application/components/img/imgFromNet.dart';
 import 'package:client_application/components/item/taskItemBriefly.dart';
 import 'package:client_application/models/Task.dart';
+import 'package:client_application/models/User.dart';
 import 'package:client_application/pages/home/me/options/myPublish/myPublishPageController.dart';
 import 'package:client_application/res/color.dart';
+import 'package:client_application/tool/res/status.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -39,18 +43,18 @@ class MyPublishPage extends StatelessWidget{
         ),
         body:TabBarView(
           children: [
-            ScrollableList(_mppc.allTasks,allTasks),
-            ScrollableList(_mppc.allTasks,allTasks),
-            ScrollableList(_mppc.allTasks,allTasks),
-            ScrollableList(_mppc.allTasks,allTasks),
-            ScrollableList(_mppc.allTasks,allTasks),
+            ScrollableList(_mppc.allTasks, Status.getAll,allTasks),
+            ScrollableList(_mppc.allTasksOfRequestButNotAccess, Status.taskPublic ,allTasksOfRequestButNotAccess),
+            ScrollableList(_mppc.allTasksOfDoing,Status.taskBeAccessed,allTasksOfDoing),
+            ScrollableList(_mppc.allTasksOfDone,Status.taskDone,allTasksOfDone),
+            ScrollableList(_mppc.allTasksOfTimeout,Status.taskTimeout,allTasksOfTimeout),
           ],
         ),
       ),
     );
   }
 
-  Widget ScrollableList(RxList ls,Function(int) build){
+  Widget ScrollableList(RxList ls,int status, Function(int) build){
     return EasyRefresh(
           header: FootAndHeader.header,
           footer: FootAndHeader.footer,
@@ -59,7 +63,7 @@ class MyPublishPage extends StatelessWidget{
           refreshOnStart: true,
           controller: _mppc.refreshController,
           onRefresh: ()async{
-            await _mppc.loadData(refresh: true);
+            await _mppc.loadData(ls ,status, refresh: true);
           },
           onLoad: ()async{
             _mppc.refreshController.finishLoad(IndicatorResult.noMore);
@@ -78,15 +82,113 @@ class MyPublishPage extends StatelessWidget{
 
   Widget allTasks(int index){
     TaskItemInfo item=_mppc.allTasks[index];
+    return baseTaskCard([
+        TaskItemBriefly.actionButtion("查看详情", () => _mppc.gotoTaskInfoPage(item.id))
+      ], item);
+  }
+  Widget allTasksOfRequestButNotAccess(int index){
+    TaskItemInfo item=_mppc.allTasksOfRequestButNotAccess[index];
+    return baseTaskCard([
+        TaskItemBriefly.actionButtion("查看所有申请", () => _getAllRequest(item.id))
+      ], item);
+  }
+  Widget allTasksOfDoing(int index){
+    TaskItemInfo item=_mppc.allTasks[index];
+    return baseTaskCard([
+        TaskItemBriefly.actionButtion("查看详情", () => _mppc.gotoTaskInfoPage(item.id))
+      ], item);
+  }
+  Widget allTasksOfDone(int index){
+    TaskItemInfo item=_mppc.allTasks[index];
+    return baseTaskCard([
+        TaskItemBriefly.actionButtion("查看详情", () => _mppc.gotoTaskInfoPage(item.id))
+      ], item);
+  }
+  Widget allTasksOfTimeout(int index){
+    TaskItemInfo item=_mppc.allTasks[index];
+    return baseTaskCard([
+        TaskItemBriefly.actionButtion("查看详情", () => _mppc.gotoTaskInfoPage(item.id))
+      ], item);
+  }
+
+  Widget baseTaskCard(List<Widget> children, TaskItemInfo item){
     return Padding(padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),child: TaskItemBriefly(
       title: item.title,
-      distance: 1.225,
+      addressName: item.addressName,
       time: item.time,
       point: item.point,
-      actions: [
-        TaskItemBriefly.actionButtion("查看详情", () => _mppc.gotoTaskInfoPage(item.id))
-      ],
+      actions:children,
       onTap: () => _mppc.gotoTaskInfoPage(item.id),
     ),);
+  }
+  void _getAllRequest(int id)async{
+    List<User> us=await _mppc.getAllRequestWithTask(id);
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.only(top:10,left: 20,right: 20),
+        child: Column(children: [
+          const ShortHeadBar(),
+          const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+          
+          Expanded(child: MasonryGridView.builder(
+            // 展示几列
+            gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 1,
+
+            ),
+            // 元素总个数
+            itemCount: us.length,
+            // 单个子元素
+            itemBuilder: (BuildContext context, int index){
+              return Column(children: [
+                    const Padding(padding: EdgeInsets.only(bottom: 8)),
+                    Row(
+                    children: [
+                      Padding(padding: const EdgeInsets.only(left: 7,right: 10),
+                        child: ImgFromNet(imageUrl: us[index].avatar,boxShape: BoxShape.circle,width: 40,height: 40,),
+                      ),
+                      Text(us[index].username!,style: const TextStyle(
+                            fontSize: 20,
+                          ),),
+                      const Spacer(),
+                      Padding(padding: const EdgeInsets.only(left: 5,right: 10),
+                        child: InkWell(
+                          onTap: ()async{await _mppc.accessTaskRequest(us[index].mailAddress,id,us[index].username!);},
+                          highlightColor: Colors.transparent, // 透明色
+                          splashColor: Colors.transparent,
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              border: Border.fromBorderSide(
+                                BorderSide(width: 1.0, color: Coloors.main), // 描边颜色和宽度
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                              // color: Colors.transparent,
+                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 4),
+                            child: const Text("接受申请", style: TextStyle(fontSize: 12,color: Coloors.main)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  index==us.length-1?const Padding(padding: EdgeInsets.only(top: 10)):
+                    const Padding(padding: EdgeInsets.only(top: 10),child:Divider(height:0.2,indent:15,endIndent: 15,color: Coloors.greyLight,),),
+                ],);
+            },
+            // // 纵向元素间距MasonryGridView
+            //mainAxisSpacing: 25,
+            // // 横向元素间距
+            // crossAxisSpacing: 10,
+            //本身不滚动，让外面的singlescrollview来滚动
+            //physics:const NeverScrollableScrollPhysics(), 
+            shrinkWrap: true, //收缩，让元素宽度自适应
+            
+          ),),
+        ]),
+      ),
+      backgroundColor: Colors.white,
+    ).whenComplete((){
+      printInfo(info:"弹窗结束");
+    });
   }
 }

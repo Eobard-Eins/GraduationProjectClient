@@ -93,10 +93,10 @@ class MePage extends StatelessWidget{
                   Padding(padding: const EdgeInsets.symmetric(horizontal: 10),child:Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButtonWithText(icon: Icons.pending_outlined, str: "申请接取",fontSize: 12,onTap: () => _mpc.gotoMyAccess(1),),
-                      IconButtonWithText(icon: Icons.next_plan_outlined, str: "正在处理",fontSize: 12,onTap: () => _mpc.gotoMyAccess(2)),//允许处理
-                      IconButtonWithText(icon: Icons.task_alt_sharp, str: "处理完成",fontSize: 12,onTap: () => _mpc.gotoMyAccess(3)),
-                      IconButtonWithText(icon: Icons.access_time_outlined, str: "已逾期",fontSize: 12,onTap: () => _mpc.gotoMyAccess(4)),
+                      //IconButtonWithText(icon: Icons.pending_outlined, str: "申请接取",fontSize: 12,onTap: () => _mpc.gotoMyAccess(1),),
+                      IconButtonWithText(icon: Icons.next_plan_outlined, str: "正在处理",fontSize: 12,onTap: () => _mpc.gotoMyAccess(1)),//允许处理
+                      IconButtonWithText(icon: Icons.task_alt_sharp, str: "处理完成",fontSize: 12,onTap: () => _mpc.gotoMyAccess(2)),
+                      IconButtonWithText(icon: Icons.access_time_outlined, str: "已逾期",fontSize: 12,onTap: () => _mpc.gotoMyAccess(3)),
                     ],))
                 ],)
               ),
@@ -106,7 +106,7 @@ class MePage extends StatelessWidget{
               
               padding: const EdgeInsets.only(left: 20,right: 10,top: 20),
               child:Column(children: [
-                HorizontalButton(text: "历史记录", icon: Icons.history, onTap: (){}),
+                HorizontalButton(text: "历史记录", icon: Icons.history, onTap: _mpc.gotoHistoryPage),
                 HorizontalButton(text: "设置", icon: Icons.settings_outlined, onTap: _mpc.gotoSettingPage),
                 HorizontalButton(text: "关于", icon: Icons.info_outlined, onTap: _mpc.gotoAboutPage,needDivider: false,),
               ],)

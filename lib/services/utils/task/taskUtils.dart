@@ -18,11 +18,12 @@ class TaskUtils extends GetConnect{
     required Function() onError,
   }){
     TaskNetService().getTasks(account,k,search,distance,lat,lon).then((value){
-      switch(value.statusCode){
-        case Status.taskGetError:
-          snackbar.error("获取失败", "请稍后重试", value.statusCode);
+      if(value.isError()){
+          snackbar.error("获取失败", value.message!, value.statusCode);
           onError();
-          break;
+      }else{
+        onSuccess(value.data);
+      }
         case Status.userNotExist:
           snackbar.error("获取失败", "当前用户不存在", value.statusCode);
           onError();
@@ -88,6 +89,9 @@ class TaskUtils extends GetConnect{
         case Status.netError:
           snackbar.error("发布失败", "请检查网络设置", value.statusCode);
           break;
+        case Status.userPointNotEnough:
+          snackbar.error("发布失败", "积分不足", value.statusCode);
+          break;
         case Status.success:
           onSuccess(value.data);
           break;
@@ -100,16 +104,18 @@ class TaskUtils extends GetConnect{
   static like({
     required int id,
     required String account,
+    required Function onSuccess,
   }){
     TaskNetService().like(id,account).then((value){
       switch(value.statusCode){
-        case Status.likeError:
+        case Status.likeError||Status.infoMiss:
           snackbar.error("点赞失败", "请稍后重试", value.statusCode);
           break;
         case Status.netError:
           snackbar.error("点赞失败", "请检查网络设置", value.statusCode);
           break;
         case Status.success:
+          onSuccess();
           break;
         default:
           snackbar.error("点赞失败", "请检查网络设置", value.statusCode);
@@ -120,19 +126,188 @@ class TaskUtils extends GetConnect{
   static dislike({
     required int id,
     required String account,
+    required Function onSuccess,
   }){
     TaskNetService().dislike(id,account).then((value){
       switch(value.statusCode){
-        case Status.dislikeError:
+        case Status.dislikeError||Status.infoMiss:
           snackbar.error("点踩失败", "请稍后重试", value.statusCode);
           break;
         case Status.netError:
           snackbar.error("点踩失败", "请检查网络设置", value.statusCode);
           break;
         case Status.success:
+          onSuccess();
           break;
         default:
           snackbar.error("点踩失败", "请检查网络设置", value.statusCode);
+          break;
+      }
+    });
+  }
+
+  static getHistory({
+    required int num,
+    required String account,
+    required Function(List<dynamic>) onSuccess,
+  }){
+    TaskNetService().getHistory(account,num).then((value){
+      switch(value.statusCode){
+        case Status.historyGetError:
+          snackbar.error("获取失败", "请稍后重试", value.statusCode);
+          break;
+        case Status.netError:
+          snackbar.error("获取失败", "请检查网络设置", value.statusCode);
+          break;
+        case Status.success:
+          onSuccess(value.data);
+          break;
+        default:
+          snackbar.error("获取失败", "请检查网络设置", value.statusCode);
+          break;
+      }
+    });
+  }
+
+  static requestTask({
+    required int id,
+    required String account,
+    required Function onSuccess,
+  }){
+    TaskNetService().requestTask(account,id).then((value){
+      switch(value.statusCode){
+        case Status.taskRequestExist:
+          snackbar.error("申请失败", "申请已存在", value.statusCode);
+          break;
+        case Status.infoMiss||Status.taskGetError:
+          snackbar.error("申请失败", "请稍后重试", value.statusCode);
+          break;
+        
+        case Status.netError:
+          snackbar.error("申请失败", "请检查网络设置", value.statusCode);
+          break;
+        case Status.success:
+          onSuccess();
+          break;
+        default:
+          snackbar.error("请求失败", "请检查网络设置", value.statusCode);
+          break;
+      }
+    });
+  }
+  static accessTask({
+    required int id,
+    required String account,
+    required Function onSuccess,
+  }){
+    TaskNetService().accessTask(id,account).then((value){
+      switch(value.statusCode){
+        case Status.taskStatusChangeError||Status.infoMiss:
+          snackbar.error("接受失败", "请稍后重试", value.statusCode);
+          break;
+        case Status.netError:
+          snackbar.error("接受失败", "请检查网络设置", value.statusCode);
+          break;
+        case Status.success:
+          onSuccess();
+          break;
+        default:
+          snackbar.error("接受失败", "请检查网络设置", value.statusCode);
+          break;
+      }
+    });
+  }
+  static getTasksByPublicUser({
+    required String account,
+    required int status,
+    required Function(List<dynamic>) onSuccess,
+    required Function() onError,
+  }){
+    TaskNetService().getTasksByPublicUser(account,status).then((value){
+      switch(value.statusCode){
+        case Status.taskGetError:
+          snackbar.error("获取失败", "请稍后重试", value.statusCode);
+          onError();
+          break;
+        case Status.netError:
+          snackbar.error("获取失败", "请检查网络设置", value.statusCode);
+          onError();
+          break;
+        case Status.success:
+          onSuccess(value.data);
+          break;
+        default:
+          snackbar.error("获取失败", "请检查网络设置", value.statusCode);
+          onError();
+          break;
+      }
+    });
+  }
+  static getTasksByAccessUser({
+    required String account,
+    required int status,
+    required Function(List<dynamic>) onSuccess,
+    required Function() onError,
+  }){
+    TaskNetService().getTasksByAccessUser(account,status).then((value){
+      switch(value.statusCode){
+        case Status.taskGetError:
+          snackbar.error("获取失败", "请稍后重试", value.statusCode);
+          onError();
+          break;
+        case Status.netError:
+          snackbar.error("获取失败", "请检查网络设置", value.statusCode);
+          onError();
+          break;
+        case Status.success:
+          onSuccess(value.data);
+          break;
+        default:
+          snackbar.error("获取失败", "请检查网络设置", value.statusCode);
+          onError();
+          break;
+      }
+    });
+  }
+  static getAllRequestWithTask({
+    required int id,
+    required Function(List<dynamic>) onSuccess,
+  }){
+    TaskNetService().getAllRequestWithTask(id).then((value){
+      switch(value.statusCode){
+        case Status.userGetError:
+          snackbar.error("获取失败", "请稍后重试", value.statusCode);
+          break;
+        case Status.netError:
+          snackbar.error("获取失败", "请检查网络设置", value.statusCode);
+          break;
+        case Status.success:
+          onSuccess(value.data);
+          break;
+        default:
+          snackbar.error("获取失败", "请检查网络设置", value.statusCode);
+          break;
+      }
+    });
+  }
+  static setStatus({
+    required int id,
+    required int status,
+    required Function onSuccess,
+  }){
+    TaskNetService().setStatus(id,status).then((value){
+      switch(value.statusCode){
+        case Status.taskStatusChangeError||Status.infoMiss:
+          snackbar.error("变更失败", "请稍后重试", value.statusCode);
+          break;
+        case Status.netError:
+          snackbar.error("变更失败", "请检查网络设置", value.statusCode);
+          break;
+        case Status.success:
+          onSuccess();
+          break;
+        default:
+          snackbar.error("变更失败", "请检查网络设置", value.statusCode);
           break;
       }
     });

@@ -1,5 +1,9 @@
+import 'package:client_application/components/display/snackbar.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/models/Task.dart';
+import 'package:client_application/services/utils/task/taskUtils.dart';
+import 'package:client_application/tool/localStorage.dart';
+import 'package:client_application/tool/res/status.dart';
 import 'package:client_application/tool/timeUtils.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +11,10 @@ import 'package:get/get.dart';
 
 class MyAccessPageController extends GetxController{
   RxList<TaskItemInfo> allTasks=RxList<TaskItemInfo>();
-
+  RxList<TaskItemInfo> allTasksOfDoing=RxList<TaskItemInfo>();
+  RxList<TaskItemInfo> allTasksOfDone=RxList<TaskItemInfo>();
+  RxList<TaskItemInfo> allTasksOfTimeout=RxList<TaskItemInfo>();
+  
   final refreshController=EasyRefreshController(
     controlFinishRefresh: true,
     controlFinishLoad: true,
@@ -21,29 +28,50 @@ class MyAccessPageController extends GetxController{
     }
   }
 
-  Future<int> loadData({bool refresh=false})async{
+  Future<RxList> loadData(RxList nt, int status, {bool refresh=false})async{
     //isLoading.value=true;
     printInfo(info:"loadData");
     List<TaskItemInfo> newTasks=[];
 
-    //TODO: 测试网络请求
-    await TimeUtils.TimeTestModel(3);
-    for(var i=0;i<5;i++){
-    }
+    TaskUtils.getTasksByAccessUser(
+      account: SpUtils.getString("account"),
+      status: status,
+      onError: () {
+        refreshController.finishRefresh(IndicatorResult.noMore);
+        refreshController.finishLoad(IndicatorResult.noMore);
+      },
+      onSuccess: (items){
+        for(Map<String,dynamic> item in items){
+          String t=item['time'];
+          DateTime dt=DateTime.parse(t.substring(0,t.indexOf('.')));
 
-    if (newTasks.isEmpty){
-      refreshController.finishRefresh(IndicatorResult.noMore);
-      refreshController.finishLoad(IndicatorResult.noMore);
-    }else{
-      refreshController.finishRefresh();
-      refreshController.finishLoad();
-      if (refresh){
-        allTasks.clear();
+          newTasks.add(TaskItemInfo.brief(
+            id: int.parse(item['id']), 
+            title: item['title'], 
+            point: double.parse(item['point']), 
+            time: "${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}\n${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}前", 
+            addressName: item["address_name"]
+          )); 
+        }
+        if (newTasks.isEmpty){
+          refreshController.finishRefresh(IndicatorResult.noMore);
+          refreshController.finishLoad(IndicatorResult.noMore);
+        }else{
+          refreshController.finishRefresh();
+          refreshController.finishLoad();
+          if (refresh){
+            nt.clear();
+          }
+          nt.addAll(newTasks);
+        }        
       }
-      allTasks.addAll(newTasks);
-    }
-    //isLoading.value=false;
-    return newTasks.length;
+    );
+    return nt;
   }
-  void gotoTaskInfoPage(int id)=>Get.toNamed(RouteConfig.taskInfoPage,arguments:{'id':id});
+  void finishTask(int id){
+    TaskUtils.setStatus(id: id, status: Status.taskDone, onSuccess: (){
+      snackbar.success("操作成功", "委托已完成");
+    });
+  }
+  void gotoTaskInfoPage(int id)=>Get.toNamed(RouteConfig.taskInfoPage,arguments:{'id':id,"needFoot":false,"needHeader":true});
 }

@@ -1,6 +1,7 @@
 
 import 'package:client_application/pages/home/homePageUI.dart';
 import 'package:client_application/pages/home/me/options/about/aboutPage.dart';
+import 'package:client_application/pages/home/me/options/history/historyPageUI.dart';
 import 'package:client_application/pages/home/me/options/myAccess/myAccessPageUI.dart';
 import 'package:client_application/pages/home/me/options/myPublish/myPublishPageUI.dart';
 import 'package:client_application/pages/home/me/options/setting/settingPageUI.dart';
@@ -34,6 +35,8 @@ class RouteConfig {
   static const String settingPage="/me/settingPage";
   static const String myPublishPage="/me/myPublishPage";
   static const String myAccessPage="/me/myAccessPage";
+  static const String taskHistoryPage="/me/taskHistoryPage";
+
   static List<GetPage<dynamic>>? getPages=[
     GetPage(
       name: loginWithCaptchaPage,
@@ -86,6 +89,10 @@ class RouteConfig {
     GetPage(
       name: myAccessPage, 
       page: ()=>MyAccessPage(),
+    ),
+    GetPage(
+      name: taskHistoryPage, 
+      page: ()=>HistoryPage(),
     ),
   ];
 

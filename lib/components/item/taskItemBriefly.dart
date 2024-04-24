@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class TaskItemBriefly extends StatelessWidget {
 
   final String title;
-  final double distance;
+  final String addressName;
   final String time;
   final double point;
   final double? height;
@@ -15,7 +15,7 @@ class TaskItemBriefly extends StatelessWidget {
   const TaskItemBriefly({
     super.key, 
     required this.title, 
-    required this.distance, 
+    required this.addressName, 
     required this.time, 
     required this.point,
     this.height,
@@ -76,7 +76,7 @@ class TaskItemBriefly extends StatelessWidget {
                               Row(children: [
                                 const Padding(padding: EdgeInsets.only(right: 3),child:Icon(Icons.gps_fixed_outlined,color: Coloors.greyDeep,size: 12,)),
                                 Text(
-                                  "${distance}KM以内",
+                                  addressName,
                                   style: const TextStyle(color: Coloors.greyDeep,fontSize: 10),
                                 )
                               ],),

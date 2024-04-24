@@ -11,7 +11,7 @@ class TaskInfoPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: _tipc.needHead?AppBar(
         shadowColor: Coloors.greyLight,
         backgroundColor: const Color.fromARGB(255, 255, 251, 254),
         surfaceTintColor: const Color.fromARGB(255, 255, 251, 254),
@@ -22,7 +22,7 @@ class TaskInfoPage extends StatelessWidget{
             Padding(
               padding: const EdgeInsets.only(right: 0),
               child: InkWell(
-                onTap: () {},
+                onTap: _tipc.tapChat,
                 highlightColor: Colors.transparent, // 透明色
                 splashColor: Colors.transparent,
                 child: Container(
@@ -40,7 +40,7 @@ class TaskInfoPage extends StatelessWidget{
             )
           ],
         ),)
-      ),
+      ):null,
       body: Obx(() => Container(
         //decoration: BoxDecoration(color: Colors.red),
         padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -129,7 +129,7 @@ class TaskInfoPage extends StatelessWidget{
           ],
         ),
       ),),
-      bottomNavigationBar: Container(
+      bottomNavigationBar:_tipc.needFoot?Container(
         color: Colors.transparent,
         padding: const EdgeInsets.only(),
         height: 60,
@@ -137,28 +137,28 @@ class TaskInfoPage extends StatelessWidget{
             const Padding(padding: EdgeInsets.only(bottom: 5),child:Divider(height:0.1,color: Coloors.greyLight,)),
             Obx(()=>Row(
             children: [
+              const Padding(padding: EdgeInsets.only(left: 20)),
               IconButton(onPressed: _tipc.tapLike, icon: Icon(_tipc.like.value?Icons.thumb_up:Icons.thumb_up_outlined,color:_tipc.like.value?Coloors.red:Coloors.greyDeep),iconSize: 26,),
               const Padding(padding: EdgeInsets.only(left: 2)),
               IconButton(onPressed: _tipc.tapDislike, icon: Icon(_tipc.dislike.value?Icons.thumb_down:Icons.thumb_down_outlined,color:_tipc.dislike.value?Coloors.main:Coloors.greyDeep),iconSize: 26),
-              const Padding(padding: EdgeInsets.only(left: 2)),
-              IconButton(onPressed: _tipc.tapChat, icon: const Icon(Icons.chat_outlined,color:Coloors.greyDeep),iconSize: 26),
+
               const Spacer(),
               Padding(padding: const EdgeInsets.symmetric(horizontal: 10),child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 width: 180,
                 child:TextButton(
-                  onPressed: ()=>_tipc.access(),
+                  onPressed: _tipc.requested.value?null:()=>_tipc.access(),
                   style: ButtonStyle(
-                    backgroundColor: const MaterialStatePropertyAll(Coloors.main),
+                    backgroundColor: MaterialStatePropertyAll(_tipc.requested.value?Coloors.grey:Coloors.main),
                     foregroundColor: const MaterialStatePropertyAll(Colors.white),
                     shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
                   ), 
-                  child: const Text("接取",style: TextStyle(fontSize: 20),)
+                  child: Text(_tipc.requested.value?"暂不能申请":"申请",style: const TextStyle(fontSize: 20),)
                 ),),)
             ],
           ))
         ],)
-      )
+      ):null
     );
   }
 
