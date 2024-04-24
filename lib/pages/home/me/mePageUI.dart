@@ -6,7 +6,6 @@ import 'package:client_application/pages/home/me/mePageController.dart';
 import 'package:client_application/res/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class MePage extends StatelessWidget{
   final MePageController _mpc=Get.put(MePageController());

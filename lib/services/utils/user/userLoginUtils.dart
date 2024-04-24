@@ -1,4 +1,6 @@
+import 'package:client_application/models/User.dart';
 import 'package:client_application/services/connect/UserNetService.dart';
+import 'package:client_application/tool/localStorage.dart';
 import 'package:client_application/tool/res/status.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,124 +9,68 @@ class UserLoginUtils extends GetConnect{
 
 
   static loginWithPassword({
-    required Rx<TextEditingController> mailController,
-    required Rx<TextEditingController> passwordController,
-    required Function() onSuccess
+    required String mail,
+    required String password,
+    required Function() onSuccess,
+    required Function() onError,
   }){
-    UserNetService().loginWithPassword(mailController.value.text,passwordController.value.text).then((value) {
-      switch (value.statusCode){
-        case Status.mailFormatError:
-          snackbar.error("登录失败", "请输入正确的邮箱", value.statusCode);
-          passwordController.value.clear();//密码框清空
-          passwordController.refresh();
-          break;
-        
-        case Status.netError:
-          snackbar.error("登录失败", "请检查网络设置", value.statusCode);
-          passwordController.value.clear();//密码框清空
-          passwordController.refresh();
-          break;
-
-        case Status.userNotExist:
-          snackbar.error("登录失败", "账号不存在，请确保输入的邮箱正确", value.statusCode);
-          passwordController.value.clear();//密码框清空
-          passwordController.refresh();
-          break;
-
-        case Status.passwordError:
-          snackbar.error("登录失败", "请输入正确的密码", value.statusCode);
-          passwordController.value.clear();//密码框清空
-          passwordController.refresh();
-          break;
-        
-        case Status.success:
-          onSuccess();
-          break;
-
-        default:
-          snackbar.error("登录失败", "请检查网络设置", value.statusCode, exception: true);
-          mailController.value.clear(); passwordController.value.clear();
-          mailController.refresh(); passwordController.refresh();
-          break;
+    UserNetService().loginWithPassword(mail,password).then((value) {
+      if(value.isError()){
+        snackbar.error("登录失败", value.message!, value.statusCode);
+        onError();
+      }else{
+        User u=User.fromJson(value.data);
+        /*本地缓存*/ 
+        SpUtils.setBool("isLogin", true);
+        SpUtils.setInt("lastLoginTime",DateTime.now().millisecondsSinceEpoch);
+        SpUtils.setString("account", u.mailAddress);
+        // SpUtils.setString("username", u.username??"用户${u.mailAddress.split('@')[0]}");
+        // SpUtils.setString("gender", u.gender??"未知");
+        // SpUtils.setString("avatar", u.avatar);//存头像的网络url
+        // SpUtils.setDouble("point", u.point);
+        onSuccess();
       }
     });    
   }
 
   static sendCaptcha({required Rx<TextEditingController> mailController,required Function() onSuccess}){
     UserNetService().sendCaptcha(mailController.value.text).then((value){
-      switch (value.statusCode){
-        case Status.mailFormatError:
-          snackbar.error("获取验证码失败", "请输入正确的邮箱", value.statusCode);
-          break;
-
-        case Status.netError||Status.mailServiceError:
-          snackbar.error("获取验证码失败", "请检查网络设置", value.statusCode);
-          break;
-
-        case Status.success:
-          onSuccess();
-          break;
-
-        default:
-          snackbar.error("获取验证码失败", "请检查网络设置", value.statusCode, exception: true);
-          break;
+      if(value.isError()){
+        snackbar.error("获取验证码失败", value.message!, value.statusCode);
+      }else{
+        onSuccess();
       }
     });
   }
 
   static loginWithCaptcha({
-    required Rx<TextEditingController> mailController,
-    required Rx<TextEditingController> captchaController,
+    required String mail,
+    required String captcha,
     required Function() onSuccess,
-    required Function() onSuccessButUserNotExist
+    required Function() onSuccessButUserNotExist,
+    required Function() onError,
   }){
-    UserNetService().loginWithCaptcha(mailController.value.text,captchaController.value.text).then((value){
-      switch (value.statusCode){
-        case Status.mailFormatError:
-          snackbar.error("验证失败", "请输入正确的邮箱", value.statusCode);
-          captchaController.value.clear();//验证码框清空
-          captchaController.refresh();
-          break;
-        
-        case Status.netError:
-          snackbar.error("验证失败", "请检查网络设置", value.statusCode);
-          captchaController.value.clear();//验证码框清空
-          captchaController.refresh();
-          break;
-        
-        case Status.captchaError:
-          snackbar.error("验证失败", "请输入正确的验证码", value.statusCode);
-          captchaController.value.clear();//验证码框清空
-          captchaController.refresh();
-          break;
-
-        case Status.captchaExpiration:
-          snackbar.error("验证码超时", "请重新发送验证码", value.statusCode);
-          captchaController.value.clear();//验证码框清空
-          captchaController.refresh();
-          break;
-        
-        case Status.pyServerError:
-          snackbar.error("验证失败", "请稍后重试", value.statusCode);
-          captchaController.value.clear();//验证码框清空
-          captchaController.refresh();
-          break;
-
-        case Status.successButUserNotExist:
+    UserNetService().loginWithCaptcha(mail,captcha).then((value){
+      if(value.isError()){
+        snackbar.error("验证失败", value.message!, value.statusCode);
+        onError();
+      }else{
+        if(value.statusCode==Status.successButUserNotExist){
+          SpUtils.setBool("isLogin", false);
           onSuccessButUserNotExist();
-          break;
-        
-        case Status.success:
+
+        }else if(value.statusCode==Status.success){
+          User u=User.fromJson(value.data);
+          /*本地缓存*/ 
+          SpUtils.setBool("isLogin", true);
+          SpUtils.setInt("lastLoginTime",DateTime.now().millisecondsSinceEpoch);
+          SpUtils.setString("account", u.mailAddress);
+          // SpUtils.setString("username", u.username??"用户${u.mailAddress.split('@')[0]}");
+          // SpUtils.setString("gender", u.gender??"未知");
+          // SpUtils.setString("avatar", u.avatar);//存头像的网络url
+          // SpUtils.setDouble("point", u.point);
           onSuccess();
-          break;
-        
-        default:
-          snackbar.error("验证失败", "请检查网络设置", value.statusCode, exception:true);
-          captchaController.value.clear();
-          captchaController.refresh();
-          mailController.value.clear();
-          mailController.refresh();
-          break;
+        }
       }
     });
   }

@@ -6,17 +6,14 @@ class Result<T> {
   int? statusCode;
   String? message;
   
-  Result.success({required T this.data}){
-    this.statusCode=Status.success;
-  }
   Result.error({required String this.message}){
     this.data=null;
     this.statusCode=Status.error;
   }
-  Result.successBut({required int this.statusCode, required T this.data});
+  Result.success({required int this.statusCode, required T this.data});
 
   bool isSuccess(){
-    return this.statusCode==Status.success;
+    return this.statusCode==Status.success||this.statusCode==Status.successButUserNotExist;
   }
   bool isError(){
     return this.statusCode==Status.error;

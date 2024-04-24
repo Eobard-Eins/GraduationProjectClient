@@ -34,9 +34,13 @@ class LoginWithPasswordPageController extends GetxController {
   void onTapLogin(){
     printInfo(info: "登录按钮触发");
     UserLoginUtils.loginWithPassword(
-      mailController:mailController,
-      passwordController:passwordController,
-      onSuccess:()=>Get.offAllNamed(RouteConfig.homePage)
+      mail:mailController.value.text,
+      password:passwordController.value.text,
+      onSuccess:()=>Get.offAllNamed(RouteConfig.homePage),
+      onError: () {
+        passwordController.value.clear();//密码框清空
+        passwordController.refresh();
+      },
     );
     
   }

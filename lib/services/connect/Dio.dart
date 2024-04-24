@@ -30,7 +30,7 @@ class dioService{
     final response = await dio.post(url, data: formData).then((value){
       if(value.statusCode == 200 || value.statusCode == 201){
         printInfo(info:"网络正常,${value.data}");
-        return Result.success(data: true);
+        return Result.success(data: true,statusCode: Status.success);
       }else{
         printError(info:"网络异常，不能连接服务器");
         return Result.error(message: "网络出现错误:Net error");
@@ -87,7 +87,7 @@ class dioService{
           printInfo(info:"网络正常，服务器返回错误码：${value.data['statusCode']}");
           return Result.error(message:value.data['message']);
         }
-        return Result.success(data: true);
+        return Result.success(data: true,statusCode: Status.success);
       }else{
         printError(info:"网络异常，不能连接服务器");
         return Result.error(message: "网络出现错误:Net error");

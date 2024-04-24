@@ -65,11 +65,14 @@ class LoginPageController extends GetxController {
 
   void onTapLogin() {
     printInfo(info: "登录事件按钮触发");
-    UserLoginUtils.loginWithCaptcha(mailController:mailController, captchaController:captchaController, onSuccess:(){
+    UserLoginUtils.loginWithCaptcha(mail:mailController.value.text, captcha:captchaController.value.text, onSuccess:(){
       Get.offAllNamed(RouteConfig.homePage);
     },onSuccessButUserNotExist:(){
       //跳转设置密码页
       Get.toNamed(RouteConfig.setPasswordPage,arguments:{'needSetInfo':true,'account':mailController.value.text});
+    },onError: (){
+      captchaController.value.clear();//验证码框清空
+      captchaController.refresh();
     });
   }
 

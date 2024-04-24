@@ -32,8 +32,8 @@ class SetPasswordController extends GetxController{
     bool needSetInfo=Get.arguments["needSetInfo"] as bool;
     String account=Get.arguments["account"] as String;
     UserInfoUtils.setPassword(
-      passwordController: passwordController,
-      passwordAgainController: passwordAgainController,
+      password: passwordController.value.text,
+      passwordAgain: passwordAgainController.value.text,
       account: account,
       onSuccess: () {
         SpUtils.setBool("isLogin", true);
@@ -43,6 +43,12 @@ class SetPasswordController extends GetxController{
           Get.offNamed(RouteConfig.setNameAndAvatarPage,arguments: {'needSetInfo':true,'account':account}):
           Get.back();
       },
+      onError: (){
+        passwordController.value.clear();
+        passwordAgainController.value.clear();
+        passwordController.refresh();
+        passwordAgainController.refresh();
+      }
     );
     
     //Navigator.of(context).pushReplacementNamed(RouteConfig.setNameAndAvatarPage);

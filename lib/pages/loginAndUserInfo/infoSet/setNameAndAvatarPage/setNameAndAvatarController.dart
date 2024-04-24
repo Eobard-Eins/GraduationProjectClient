@@ -1,9 +1,6 @@
 
-import 'package:client_application/components/display/snackbar.dart';
 import 'package:client_application/config/RouteConfig.dart';
-import 'package:client_application/services/connect/UserNetService.dart';
 import 'package:client_application/services/utils/user/userInfoUtils.dart';
-import 'package:client_application/tool/res/status.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,14 +27,21 @@ class SetNameAndAvatarController extends GetxController{
     String account=Get.arguments["account"] as String;
     UserInfoUtils.setAvatar(
       account: account,
-      imgPath: imgPath,
+      imgPath: imgPath.value,
       onSuccess: ()=>UserInfoUtils.setUsername(
-          usernameController: usernameController, 
+          username: usernameController.value.text, 
           account: account,
           onSuccess: ()=>needSetInfo?
               Get.offNamed(RouteConfig.homePage,arguments:{'needSetInfo':true,'account':account}):
-              Get.back()
-        )
+              Get.back(),
+          onError: () {
+            usernameController.value.clear();
+            usernameController.refresh();
+          },
+        ),
+      onError: () {
+        imgPath.value=null;
+      },
     );
   }
   

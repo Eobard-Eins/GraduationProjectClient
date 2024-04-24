@@ -65,8 +65,8 @@ class VerifymailController extends GetxController{
     bool e=Get.arguments["canGotoWhenUserExist"] as bool;
     bool ne=Get.arguments["canGotoWhenUserNotExist"] as bool;
     UserLoginUtils.loginWithCaptcha(
-      mailController: mailController,
-      captchaController: captchaController,
+      mail: mailController.value.text,
+      captcha: captchaController.value.text,
       onSuccess: () {
         e?
           Get.offNamed(RouteConfig.setPasswordPage,arguments:{'needSetInfo':false,'account':mailController.value.text}):
@@ -76,6 +76,10 @@ class VerifymailController extends GetxController{
         ne?
           Get.offNamed(RouteConfig.setPasswordPage,arguments:{'needSetInfo':true,'account':mailController.value.text}):
           snackbar.error("用户不存在", "当前输入的账户不存在",0);
+      },
+      onError: () {
+        captchaController.value.clear();//验证码框清空
+        captchaController.refresh();
       },
     );
   }

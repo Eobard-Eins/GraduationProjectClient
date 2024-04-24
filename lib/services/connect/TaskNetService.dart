@@ -1,15 +1,11 @@
-import 'dart:ffi';
+
 import 'dart:io';
 
-import 'package:client_application/models/User.dart';
 import 'package:client_application/res/color.dart';
-import 'package:client_application/services/connect/Dio.dart';
 import 'package:client_application/tool/res/result.dart';
-import 'package:client_application/tool/res/status.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:client_application/res/staticValue.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 
 class TaskNetService extends GetConnect{
@@ -186,19 +182,20 @@ class TaskNetService extends GetConnect{
     final Result res=await func().then((value){
       if(!value.isOk){
         printInfo(info:"网络异常，不能连接服务器");
-        return Result.error(message: "网络出现错误，请坚持网络设置:Net error");
+        return Result.error(message: "网络出现错误，请检查网络设置:Net error");
       }else{
-        if(value.body['statusCode']!=Status.success){
+        bool isSuccess=value.body['isSuccess'];
+        if(!isSuccess){
           printInfo(info:"网络正常，服务器返回错误：${value.body['message']}");
           return Result.error(message: value.body['message']);
         }      
-        return Result.success(data: value.body['data']);
+        return Result.success(data: value.body['data'],statusCode: value.body['statusCode']);
       }
     }).onError((error, stackTrace){
       printInfo(info:"网络异常且未知错误  ${error.toString()}");
-      return Result.error(message: "网络出现错误，请坚持网络设置:Net error");
+      return Result.error(message: "网络出现错误，请检查网络设置:Net error");
     }).timeout(const Duration(seconds: 3),onTimeout: (){
-      return Result.error(message: "网络超时，请坚持网络设置:Time out");
+      return Result.error(message: "网络超时，请检查网络设置:Time out");
     });
     return res;
   }
