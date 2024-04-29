@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: const [Locale('zh', 'CN')], 
-        initialRoute: goHome()?RouteConfig.homePage:RouteConfig.homePage,
+        initialRoute: goHome()?RouteConfig.homePage:RouteConfig.loginWithCaptchaPage,
         getPages: RouteConfig.getPages,
         unknownRoute: GetPage(name: '/notfound', page: () => const Scaffold(body: Center(child: Text("No Page Route Provided"),))),
         
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
       if((nt-lt).abs()<15*86400000){
         //两次登录天数小于15天
         SpUtils.setInt("lastLoginTime", nt);
-        print("[INFO] 登陆日期判断通过");
+        print("[INFO] 登陆日期判断通过 user:${SpUtils.getString("account")}");
         return true;
       }else{
         SpUtils.clear();

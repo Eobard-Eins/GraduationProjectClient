@@ -1,4 +1,5 @@
 
+import 'package:client_application/components/display/uploadingDialog.dart';
 import 'package:client_application/models/User.dart';
 import 'package:client_application/services/connect/UserNetService.dart';
 import 'package:get/get.dart';
@@ -27,16 +28,18 @@ class UserInfoUtils extends GetConnect{
     required Function() onSuccess,
     required Function() onError,
   }){
+    UploadingDialog.show();
     UserNetService().setPassword(account,password, passwordAgain).then((value){
+      UploadingDialog.hide();
       if(value.isError()){
-        snackbar.error("设置失败", value.message!, value.statusCode);
         onError();
+        snackbar.error("设置失败", value.message!, value.statusCode);
       }else{
         if(value.data==true){
             onSuccess();
           }else{
-            snackbar.error("设置失败", "请稍后重试", value.statusCode);
             onError();
+            snackbar.error("设置失败", "请稍后重试", value.statusCode);
           }
       }
     });
@@ -48,8 +51,11 @@ class UserInfoUtils extends GetConnect{
     required Function() onSuccess,
     required Function() onError
   }){
+    UploadingDialog.show();
     UserNetService().setAvatar(account,imgPath).then((value){
+      UploadingDialog.hide();
       if(value.isError()){
+        onError();
         snackbar.error("头像设置失败", value.message!, value.statusCode);
       }else{
         value.data?onSuccess():snackbar.error("设置失败", "请稍后重试", value.statusCode);
@@ -63,16 +69,18 @@ class UserInfoUtils extends GetConnect{
     required Function() onSuccess,
     required Function() onError,
   }){
+    UploadingDialog.show();
     UserNetService().setUsername(account, username).then((value){
+      UploadingDialog.hide();
       if(value.isError()){
-        snackbar.error("用户名设置失败", value.message!, value.statusCode);
         onError();
+        snackbar.error("用户名设置失败", value.message!, value.statusCode);
       }else{
         if(value.data==true){
             onSuccess();
           }else{
-            snackbar.error("用户名设置失败", "请稍后重试", value.statusCode);
             onError();
+            snackbar.error("用户名设置失败", "请稍后重试", value.statusCode);            
           }
       }
     });

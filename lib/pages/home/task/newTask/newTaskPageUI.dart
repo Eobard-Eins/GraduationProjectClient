@@ -113,7 +113,7 @@ class NewTaskPage extends StatelessWidget{
           Text("${_ntpc.imgs.length.toString()}/9",style: const TextStyle(fontSize: 14,color:Coloors.greyDeep),)
         ],)
       ),),
-      bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: Obx(() => BottomAppBar(
         color: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         height: 70,
@@ -126,7 +126,7 @@ class NewTaskPage extends StatelessWidget{
           ), 
           child: Text(_ntpc.isUploading.value?"发布中...":"发布",style: const TextStyle(fontSize: 20),)
         ),)
-      )
+      ))
     );
   }
   List<Widget> images(){
@@ -208,7 +208,6 @@ class NewTaskPage extends StatelessWidget{
     });
   }
   void BottomSheetOfTime(BuildContext context){
-    var v=DateTime.now();
     Get.bottomSheet(
       Container(
         padding: const EdgeInsets.only(top:10,left: 20,right: 20),
@@ -228,7 +227,7 @@ class NewTaskPage extends StatelessWidget{
             const Spacer(),
             Padding(padding: const EdgeInsets.only(right: 0),child:TextButton(
               onPressed: (){
-                _ntpc.date.value="截止至${v.year}-${v.month.toString().padLeft(2, '0')}-${v.day.toString().padLeft(2, '0')} ${v.hour.toString().padLeft(2, '0')}:${v.minute.toString().padLeft(2, '0')}";
+                _ntpc.date.value="截止至${_ntpc.time.value.year}-${_ntpc.time.value.month.toString().padLeft(2, '0')}-${_ntpc.time.value.day.toString().padLeft(2, '0')} ${_ntpc.time.value.hour.toString().padLeft(2, '0')}:${_ntpc.time.value.minute.toString().padLeft(2, '0')}";
                 _ntpc.timeFinish=T;
                 Get.back();
               },
@@ -242,11 +241,11 @@ class NewTaskPage extends StatelessWidget{
           ],),
 
           Expanded(child: CupertinoDatePicker(
-            initialDateTime: v,
-            onDateTimeChanged: (value) => v=value,
+            initialDateTime: DateTime.now(),
+            onDateTimeChanged: (value) => _ntpc.time.value=value,
             mode:CupertinoDatePickerMode.dateAndTime,
             use24hFormat: T,
-            minimumDate: v.add(const Duration(days: -1)),
+            minimumDate: _ntpc.time.value.add(const Duration(days: -1)),
             maximumDate: DateTime(2100,12,31,23,59,59),
           ))
         ])

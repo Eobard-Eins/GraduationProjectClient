@@ -30,7 +30,7 @@ class SettingPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 15),
           width: 180,
           child:TextButton(
-            onPressed: _spc.loginDown,
+            onPressed: _spc.logout,
             style: ButtonStyle(
               backgroundColor: const MaterialStatePropertyAll(Coloors.main),
               foregroundColor: const MaterialStatePropertyAll(Colors.white),

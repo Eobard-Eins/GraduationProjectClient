@@ -1,9 +1,7 @@
 
 import 'dart:io';
 
-import 'package:client_application/res/color.dart';
 import 'package:client_application/tool/res/result.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:client_application/res/staticValue.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,52 +20,10 @@ class TaskNetService extends GetConnect{
   }
   Future<Result> getTasks(String account,int k,String search,double distance, double lat, double lon) async{
     return await network(() => get("$_baseUrl/task/getList",query:{"user":account,"num":k.toString(),"search":search,"distance":distance.toString(),"lat":lat.toString(),"lon":lon.toString()}));
-    // final Result res=await get("$_baseUrl/task/getList",query:{"user":account,"num":k.toString(),"search":search,"distance":distance.toString(),"lat":lat.toString(),"lon":lon.toString()}).then((value){
-    //   //value.printInfo();
-    //   //printError(info:value.body.toString());
-    //   if(!value.isOk){
-    //     printInfo(info:"网络异常，不能连接服务器");
-    //     return Result.error(statusCode: Status.netError);
-    //   }else{
-    //     //printInfo(info:"网络正常,${value.body.toString()}");
-    //     if(value.body['statusCode']!=Status.success){
-    //       printInfo(info:"网络正常，服务器返回错误码：${value.body['statusCode']}");
-    //       return Result.error(statusCode:value.body['statusCode']);
-    //     }      
-    //     return Result.success(data: value.body['data']);
-    //   }
-    // }).onError((error, stackTrace){
-    //   printInfo(info:"网络异常且未知错误  ${error.toString()}");
-    //   return Result.error(statusCode: Status.netError);
-    // }).timeout(const Duration(seconds: 3),onTimeout: (){
-    //   return Result.error(statusCode: Status.netError);
-    // });
-    // return res;
   }
 
   Future<Result> getTask(int id,String account) async{
     return await network(() => get("$_baseUrl/task/get",query:{"id":id.toString(),"user":account}));
-    // final Result res=await get("$_baseUrl/task/get",query:{"id":id.toString(),"user":account}).then((value){
-    //   //value.printInfo();
-    //   //printError(info:value.body.toString());
-    //   if(!value.isOk){
-    //     printInfo(info:"网络异常，不能连接服务器");
-    //     return Result.error(statusCode: Status.netError);
-    //   }else{
-    //     //printInfo(info:"网络正常,${value.body.toString()}");
-    //     if(value.body['statusCode']!=Status.success){
-    //       printInfo(info:"网络正常，服务器返回错误码：${value.body['statusCode']}");
-    //       return Result.error(statusCode:value.body['statusCode']);
-    //     }      
-    //     return Result.success(data: value.body['data']);
-    //   }
-    // }).onError((error, stackTrace){
-    //   printInfo(info:"网络异常且未知错误  ${error.toString()}");
-    //   return Result.error(statusCode: Status.netError);
-    // }).timeout(const Duration(seconds: 3),onTimeout: (){
-    //   return Result.error(statusCode: Status.netError);
-    // });
-    // return res;
   }
 
   Future<Result> addNewTask(
@@ -86,7 +42,7 @@ class TaskNetService extends GetConnect{
   ) async{
     List<MultipartFile> files = [];
     for(var i in imgs){
-      files.add(MultipartFile(i, filename: File(i.path).path));
+      files.add(MultipartFile(File(i.path), filename: File(i.path).path));
     }
     final formData = FormData({
       "user":account,
@@ -103,64 +59,20 @@ class TaskNetService extends GetConnect{
       "point":point.toStringAsFixed(2)
     });
     return await network(() => post("$_baseUrl/task/addTask",formData));
-    // final Result res=await dioService().uploadTask("$_baseUrl/task/addTask",account,title,content,tags,addressName,address,lat,lon,time,imgs,online,point);
-    // return res;
   }
 
   Future<Result> like(int id,String account) async{
     return await network(() => put("$_baseUrl/task/like",'{"id":$id,"user":"$account"}'));
-    // final Result res=await put("$_baseUrl/task/like",{},query:{"id":id.toString(),"user":account}).then((value){
-    //   if(!value.isOk){
-    //     printInfo(info:"网络异常，不能连接服务器");
-    //     return Result.error(statusCode: Status.netError);
-    //   }else{
-    //     if(value.body['statusCode']!=Status.success){
-    //       printInfo(info:"网络正常，服务器返回错误码：${value.body['statusCode']}");
-    //       return Result.error(statusCode:value.body['statusCode']);
-    //     }      
-    //     return Result.success(data: value.body['data']);
-    //   }
-    // }).onError((error, stackTrace){
-    //   printInfo(info:"网络异常且未知错误  ${error.toString()}");
-    //   return Result.error(statusCode: Status.netError);
-    // }).timeout(const Duration(seconds: 3),onTimeout: (){
-    //   return Result.error(statusCode: Status.netError);
-    // });
-    // return res;
   }
   Future<Result> dislike(int id,String account) async{
     return await network(() => put("$_baseUrl/task/dislike",'{"id":$id,"user":"$account"}'));
-    // final Result res=await put("$_baseUrl/task/dislike",{},query:{"id":id.toString(),"user":account}).then((value){
-    //   if(!value.isOk){
-    //     printInfo(info:"网络异常，不能连接服务器");
-    //     return Result.error(statusCode: Status.netError);
-    //   }else{
-    //     if(value.body['statusCode']!=Status.success){
-    //       printInfo(info:"网络正常，服务器返回错误码：${value.body['statusCode']}");
-    //       return Result.error(statusCode:value.body['statusCode']);
-    //     }      
-    //     return Result.success(data: value.body['data']);
-    //   }
-    // }).onError((error, stackTrace){
-    //   printInfo(info:"网络异常且未知错误  ${error.toString()}");
-    //   return Result.error(statusCode: Status.netError);
-    // }).timeout(const Duration(seconds: 3),onTimeout: (){
-    //   return Result.error(statusCode: Status.netError);
-    // });
-    // return res;
   }
 
   Future<Result> getHistory(String account,int num) async{
     return await network(() => get("$_baseUrl/task/history",query:{"user":account,"num":num.toString()}));
   }
   Future<Result> requestTask(String account,int id) async{
-    return await network(() => post("$_baseUrl/task/requestTask",'{"id":$id,"user":"$account"}',uploadProgress: (percent) {
-      printInfo(info:"上传进度：${percent.toString()}");
-      Get.dialog(CircularProgressIndicator(
-        value: percent,
-        color: Coloors.main,
-      ));
-    },));
+    return await network(() => post("$_baseUrl/task/requestTask",'{"id":$id,"user":"$account"}'));
   }
   Future<Result> accessTask(int id,String account) async{
     return await network(() => put("$_baseUrl/task/access",'{"id":$id,"user":"$account"}'));
@@ -179,6 +91,7 @@ class TaskNetService extends GetConnect{
   }
 
   Future<Result> network(Future<Response> Function() func)async{
+
     final Result res=await func().then((value){
       if(!value.isOk){
         printInfo(info:"网络异常，不能连接服务器");
@@ -194,7 +107,7 @@ class TaskNetService extends GetConnect{
     }).onError((error, stackTrace){
       printInfo(info:"网络异常且未知错误  ${error.toString()}");
       return Result.error(message: "网络出现错误，请检查网络设置:Net error");
-    }).timeout(const Duration(seconds: 3),onTimeout: (){
+    }).timeout(const Duration(seconds: 15),onTimeout: (){
       return Result.error(message: "网络超时，请检查网络设置:Time out");
     });
     return res;

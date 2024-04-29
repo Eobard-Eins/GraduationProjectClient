@@ -1,4 +1,5 @@
 import 'package:client_application/components/display/snackbar.dart';
+import 'package:client_application/components/display/uploadingDialog.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/pages/home/me/mePageController.dart';
 import 'package:client_application/services/utils/user/userInfoUtils.dart';
@@ -47,7 +48,7 @@ class SettingPageController extends GetxController{
       imgPath.value=null;
     });
   }
-  void loginDown(){
+  void logout(){
     SpUtils.clear();
     Get.offAllNamed(RouteConfig.loginWithCaptchaPage);
   }

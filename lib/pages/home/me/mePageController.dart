@@ -18,6 +18,7 @@ class MePageController extends GetxController{
   }
   
   void loadData(){
+    printInfo(info:"load info of user ${SpUtils.getString("account")}");
     UserInfoUtils.getUserInfo(mail: SpUtils.getString("account"), onSuccess: (u){
       username.value=u.username!;
       avatarURL.value=u.avatar;

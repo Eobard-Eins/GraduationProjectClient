@@ -1,4 +1,5 @@
 
+import 'package:client_application/components/display/uploadingDialog.dart';
 import 'package:client_application/services/connect/TaskNetService.dart';
 import 'package:get/get.dart';
 import 'package:client_application/components/display/snackbar.dart';
@@ -17,8 +18,8 @@ class TaskUtils extends GetConnect{
   }){
     TaskNetService().getTasks(account,k,search,distance,lat,lon).then((value){
       if(value.isError()){
-          snackbar.error("获取失败", value.message!, value.statusCode);
-          onError();
+        onError();
+        snackbar.error("获取失败", value.message!, value.statusCode);
       }else{
         onSuccess(value.data);
       }
@@ -54,7 +55,9 @@ class TaskUtils extends GetConnect{
     required double point,
     required Function onSuccess,
   }){
+    UploadingDialog.show();
     TaskNetService().addNewTask(account, title, content, tags, addressName, address, lat, lon, time, imgs, online, point).then((value) {
+      UploadingDialog.hide();
       if(value.isError()){
         snackbar.error("发布失败", value.message!, value.statusCode);
       }else{
@@ -67,7 +70,9 @@ class TaskUtils extends GetConnect{
     required String account,
     required Function onSuccess,
   }){
+    UploadingDialog.show();
     TaskNetService().like(id,account).then((value){
+      UploadingDialog.hide();
       if(value.isError()){
         snackbar.error("点赞失败", value.message!, value.statusCode);
       }else{
@@ -80,7 +85,9 @@ class TaskUtils extends GetConnect{
     required String account,
     required Function onSuccess,
   }){
+    UploadingDialog.show();
     TaskNetService().dislike(id,account).then((value){
+      UploadingDialog.hide();
       if(value.isError()){
         snackbar.error("点踩失败", value.message!, value.statusCode);
       }else{
@@ -108,7 +115,9 @@ class TaskUtils extends GetConnect{
     required String account,
     required Function onSuccess,
   }){
+    UploadingDialog.show();
     TaskNetService().requestTask(account,id).then((value){
+      UploadingDialog.hide();
       if(value.isError()){
         snackbar.error("申请失败", value.message!, value.statusCode);
       }else{
@@ -121,7 +130,9 @@ class TaskUtils extends GetConnect{
     required String account,
     required Function onSuccess,
   }){
+    UploadingDialog.show();
     TaskNetService().accessTask(id,account).then((value){
+      UploadingDialog.hide();
       if(value.isError()){
         snackbar.error("接受失败", value.message!, value.statusCode);
       }else{
@@ -176,7 +187,9 @@ class TaskUtils extends GetConnect{
     required int status,
     required Function onSuccess,
   }){
+    UploadingDialog.show();
     TaskNetService().setStatus(id,status).then((value){
+      UploadingDialog.hide();
       if(value.isError()){
         snackbar.error("变更失败", value.message!, value.statusCode);
       }else{

@@ -18,6 +18,7 @@ class MePage extends StatelessWidget{
   ];
   @override
   Widget build(BuildContext context) {
+    _mpc.loadData();
     return Scaffold(
       body: Obx(() => Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),

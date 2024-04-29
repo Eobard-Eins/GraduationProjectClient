@@ -1,3 +1,4 @@
+import 'package:client_application/components/display/uploadingDialog.dart';
 import 'package:client_application/models/User.dart';
 import 'package:client_application/services/connect/UserNetService.dart';
 import 'package:client_application/tool/localStorage.dart';
@@ -14,10 +15,12 @@ class UserLoginUtils extends GetConnect{
     required Function() onSuccess,
     required Function() onError,
   }){
+    UploadingDialog.show();
     UserNetService().loginWithPassword(mail,password).then((value) {
+      UploadingDialog.hide();
       if(value.isError()){
-        snackbar.error("登录失败", value.message!, value.statusCode);
         onError();
+        snackbar.error("登录失败", value.message!, value.statusCode);
       }else{
         User u=User.fromJson(value.data);
         /*本地缓存*/ 
@@ -50,10 +53,12 @@ class UserLoginUtils extends GetConnect{
     required Function() onSuccessButUserNotExist,
     required Function() onError,
   }){
+    UploadingDialog.show();
     UserNetService().loginWithCaptcha(mail,captcha).then((value){
+      UploadingDialog.hide();
       if(value.isError()){
-        snackbar.error("验证失败", value.message!, value.statusCode);
         onError();
+        snackbar.error("验证失败", value.message!, value.statusCode);
       }else{
         if(value.statusCode==Status.successButUserNotExist){
           SpUtils.setBool("isLogin", false);

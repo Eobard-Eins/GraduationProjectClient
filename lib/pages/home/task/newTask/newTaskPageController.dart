@@ -67,15 +67,20 @@ class NewTaskPageController extends GetxController {
   }
   void upload(){
     isUploading.value=true;
-    
     if(titleInputController.value.text.isEmpty||contentInputController.value.text.isEmpty||(!addressFinish)||(!timeFinish)||(!pointFinish.value)){
       snackbar.error("发布失败", "请完善信息",0);
+      isUploading.value=false;
+    }else if(time.value.isBefore(DateTime.now())){
+      snackbar.error("发布失败", "请选择正确的时间",0);
+      isUploading.value=false;
     }else{
       List<String> tags=Discriminator.getLabels(contentInputController.value.text);
       if(tags.length>10){
         snackbar.error("发布失败", "标签过多，请保持标签数量在10个以内",0);
+        isUploading.value=false;
       }else if(tags.isEmpty){
         snackbar.error("发布失败", "请输入标签",0);
+        isUploading.value=false;
       }else{
         List<XFile> ls=[];
         for(var i in imgs){
