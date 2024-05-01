@@ -5,6 +5,7 @@ import 'package:client_application/models/User.dart';
 import 'package:client_application/res/staticValue.dart';
 import 'package:client_application/services/utils/task/taskUtils.dart';
 import 'package:client_application/tool/localStorage.dart';
+import 'package:client_application/tool/timeUtils.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:get/get.dart';
 
@@ -15,6 +16,8 @@ class MyPublishPageController extends GetxController{
   RxList<TaskItemInfo> allTasksOfDone=RxList<TaskItemInfo>();
   RxList<TaskItemInfo> allTasksOfTimeout=RxList<TaskItemInfo>();
 
+  RxList<User> us=RxList<User>();
+
   final refreshController=EasyRefreshController(
     controlFinishRefresh: true,
     controlFinishLoad: true,
@@ -24,8 +27,7 @@ class MyPublishPageController extends GetxController{
   void onInit(){
     super.onInit();
     initStateNum=Get.arguments["initialIndex"] as int;
-    for(var i=0;i<10;i++){
-    }
+
   }
 
   Future<RxList> loadData(RxList nt, int status, {bool refresh=false})async{
@@ -70,24 +72,28 @@ class MyPublishPageController extends GetxController{
   }
 
   Future<List<User>> getAllRequestWithTask(int id) async{
-    List<User> nt=[];
+    us.clear();
     TaskUtils.getAllRequestWithTask(id: id, onSuccess: (data){
-      for(Map<String, String> item in data){
+      for(Map<String, dynamic> item in data){
         String username=item["username"]??"Username";
-        String mailAddress=item["mailAddress"]??"";
+        String mailAddress=item["uid"]??"";
         String avatar=item["avatar"]??staticValue.defaultAvatar;
-        nt.add(User.briefly(username: username, mailAddress: mailAddress, avatar: avatar));
+        User u=User.briefly(username: username, mailAddress: mailAddress, avatar: avatar);
+        us.add(u);
       }
     });
-    return nt;
+    return us;
   }
 
   Future accessTaskRequest(String user,int id,String username){
+    printInfo(info: "user:$user access task id:$id");
     return TaskUtils.accessTask(id: id, account: user, onSuccess: (){
       Get.back();
+      allTasksOfRequestButNotAccess.clear();
+      refreshController.callRefresh();
       snackbar.success("接受成功", "已成功接受来自用户$username的申请");
     });
   }
 
-  void gotoTaskInfoPage(int id)=>Get.toNamed(RouteConfig.taskInfoPage,arguments:{'id':id,"needFoot":false,"needHeader":false});
+  void gotoTaskInfoPage(int id)=>Get.toNamed(RouteConfig.taskInfoPage,arguments:{'id':id});
 }

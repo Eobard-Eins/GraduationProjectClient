@@ -68,8 +68,10 @@ class MyAccessPageController extends GetxController{
   }
   void finishTask(int id){
     TaskUtils.setStatus(id: id, status: Status.taskDone, onSuccess: (){
+      allTasksOfDoing.clear();
+      refreshController.callRefresh();
       snackbar.success("操作成功", "委托已完成");
     });
   }
-  void gotoTaskInfoPage(int id)=>Get.toNamed(RouteConfig.taskInfoPage,arguments:{'id':id,"needFoot":false,"needHeader":true});
+  void gotoTaskInfoPage(int id)=>Get.toNamed(RouteConfig.taskInfoPage,arguments:{'id':id});
 }

@@ -12,7 +12,6 @@ void main() async{
   //runApp(MyApp());
   WidgetsFlutterBinding.ensureInitialized();
   await SpUtils.getInstance();//初始化本地持续化存储器
-
   
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -64,6 +63,7 @@ class MyApp extends StatelessWidget {
         //两次登录天数小于15天
         SpUtils.setInt("lastLoginTime", nt);
         print("[INFO] 登陆日期判断通过 user:${SpUtils.getString("account")}");
+        //SocketUtils().connect(SpUtils.getString("account"));
         return true;
       }else{
         SpUtils.clear();

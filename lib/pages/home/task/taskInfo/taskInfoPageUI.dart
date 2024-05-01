@@ -11,7 +11,7 @@ class TaskInfoPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _tipc.needHead?AppBar(
+      appBar: AppBar(
         shadowColor: Coloors.greyLight,
         backgroundColor: const Color.fromARGB(255, 255, 251, 254),
         surfaceTintColor: const Color.fromARGB(255, 255, 251, 254),
@@ -19,10 +19,10 @@ class TaskInfoPage extends StatelessWidget{
             ImgFromNet(imageUrl: _tipc.avatar.value, height: 40, width: 40, boxShape: BoxShape.circle,color: Coloors.greyLight,),
             Padding(padding: const EdgeInsets.only(left:10,top:5),child:Text(_tipc.username.value==""?"加载中...":_tipc.username.value,style: const TextStyle(fontSize: 18),)),
             const Spacer(),
-            Padding(
+            _tipc.needHead.value?Padding(
               padding: const EdgeInsets.only(right: 0),
               child: InkWell(
-                onTap: _tipc.tapChat,
+                onTap: tapChat,
                 highlightColor: Colors.transparent, // 透明色
                 splashColor: Colors.transparent,
                 child: Container(
@@ -34,13 +34,13 @@ class TaskInfoPage extends StatelessWidget{
                     // color: Colors.transparent,
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 4),
-                  child: const Text("私信", style: TextStyle(fontSize: 14,color: Coloors.main)),
+                  child: const Text("联系方式", style: TextStyle(fontSize: 14,color: Coloors.main)),
                 ),
               ),
-            )
+            ):const Spacer()
           ],
         ),)
-      ):null,
+      ),
       body: Obx(() => Container(
         //decoration: BoxDecoration(color: Colors.red),
         padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -129,7 +129,7 @@ class TaskInfoPage extends StatelessWidget{
           ],
         ),
       ),),
-      bottomNavigationBar:_tipc.needFoot?Container(
+      bottomNavigationBar: Obx(() => _tipc.needFoot.value?Container(
         color: Colors.transparent,
         padding: const EdgeInsets.only(),
         height: 60,
@@ -158,7 +158,7 @@ class TaskInfoPage extends StatelessWidget{
             ],
           ))
         ],)
-      ):null
+      ):const Padding(padding: EdgeInsets.only(bottom: 0)))
     );
   }
 
@@ -188,5 +188,26 @@ class TaskInfoPage extends StatelessWidget{
     }
 
     return res;
+  }
+  void tapChat(){
+    Get.defaultDialog(
+      title: "发布者邮箱",
+      content: Column(children:[
+        Padding(padding: const EdgeInsets.symmetric(vertical: 15),child: Text(_tipc.account.value,),),
+        const Divider(height: 0.1)
+      ]),
+      confirm: InkWell(
+        onTap: Get.back,
+        highlightColor: Colors.transparent, // 透明色
+        splashColor: Colors.transparent,
+        child:Container(
+          width: 130,
+          height: 30,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: const Text("关 闭",style: TextStyle(fontSize: 18,letterSpacing: 1),),
+        ),
+      ),
+    );
   }
 }

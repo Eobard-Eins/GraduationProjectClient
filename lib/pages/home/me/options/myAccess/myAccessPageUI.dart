@@ -84,19 +84,19 @@ class MyAccessPage extends StatelessWidget{
       ], item);
   }
   Widget allTasksOfDoing(int index){
-    TaskItemInfo item=_mppc.allTasks[index];
+    TaskItemInfo item=_mppc.allTasksOfDoing[index];
     return baseTaskCard([
         TaskItemBriefly.actionButtion("完成", () => _mppc.finishTask(item.id))
       ], item);
   }
   Widget allTasksOfDone(int index){
-    TaskItemInfo item=_mppc.allTasks[index];
+    TaskItemInfo item=_mppc.allTasksOfDone[index];
     return baseTaskCard([
         TaskItemBriefly.actionButtion("查看详情", () => _mppc.gotoTaskInfoPage(item.id))
       ], item);
   }
   Widget allTasksOfTimeout(int index){
-    TaskItemInfo item=_mppc.allTasks[index];
+    TaskItemInfo item=_mppc.allTasksOfTimeout[index];
     return baseTaskCard([
         TaskItemBriefly.actionButtion("查看详情", () => _mppc.gotoTaskInfoPage(item.id))
       ], item);

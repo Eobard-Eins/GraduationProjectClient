@@ -109,7 +109,7 @@ class TaskPageController extends GetxController {
   
   void tapTask(int id){
     printInfo(info:"tapTask${id}");
-    Get.toNamed(RouteConfig.taskInfoPage,arguments:{'id':id,"needFoot":true,"needHeader":true});
+    Get.toNamed(RouteConfig.taskInfoPage,arguments:{'id':id});
   }
   void alterConfirm(){
     if(distance.value==50){

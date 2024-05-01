@@ -6,6 +6,6 @@ class staticValue{
   static const String GaoDeKeyOfIos="";
   static const String GaoDeKeyOfWeb="a8aa6ffd13d9447b649807da1cb031bc";
   static const String defaultAvatar="eins-graduatin-oss.oss-cn-shenzhen.aliyuncs.com/default.jpg";
-
+  static const String socketUrl="ws://172.17.142.58:8080/api/imserver";
   
 }

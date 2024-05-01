@@ -93,19 +93,19 @@ class MyPublishPage extends StatelessWidget{
       ], item);
   }
   Widget allTasksOfDoing(int index){
-    TaskItemInfo item=_mppc.allTasks[index];
+    TaskItemInfo item=_mppc.allTasksOfDoing[index];
     return baseTaskCard([
         TaskItemBriefly.actionButtion("查看详情", () => _mppc.gotoTaskInfoPage(item.id))
       ], item);
   }
   Widget allTasksOfDone(int index){
-    TaskItemInfo item=_mppc.allTasks[index];
+    TaskItemInfo item=_mppc.allTasksOfDone[index];
     return baseTaskCard([
         TaskItemBriefly.actionButtion("查看详情", () => _mppc.gotoTaskInfoPage(item.id))
       ], item);
   }
   Widget allTasksOfTimeout(int index){
-    TaskItemInfo item=_mppc.allTasks[index];
+    TaskItemInfo item=_mppc.allTasksOfTimeout[index];
     return baseTaskCard([
         TaskItemBriefly.actionButtion("查看详情", () => _mppc.gotoTaskInfoPage(item.id))
       ], item);
@@ -122,38 +122,41 @@ class MyPublishPage extends StatelessWidget{
     ),);
   }
   void _getAllRequest(int id)async{
-    List<User> us=await _mppc.getAllRequestWithTask(id);
+    await _mppc.getAllRequestWithTask(id);
     Get.bottomSheet(
-      Container(
+      Obx(() => Container(
         padding: const EdgeInsets.only(top:10,left: 20,right: 20),
         child: Column(children: [
           const ShortHeadBar(),
           const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
           
-          Expanded(child: MasonryGridView.builder(
+          Expanded(child: _mppc.us.isEmpty? const Center(child: Text("没有申请"),): MasonryGridView.builder(
             // 展示几列
             gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 1,
 
             ),
             // 元素总个数
-            itemCount: us.length,
+            itemCount: _mppc.us.length,
             // 单个子元素
             itemBuilder: (BuildContext context, int index){
+              String mail=_mppc.us[index].mailAddress;
+              String username=_mppc.us[index].username!;
+              String avatar=_mppc.us[index].avatar;
               return Column(children: [
                     const Padding(padding: EdgeInsets.only(bottom: 8)),
                     Row(
                     children: [
                       Padding(padding: const EdgeInsets.only(left: 7,right: 10),
-                        child: ImgFromNet(imageUrl: us[index].avatar,boxShape: BoxShape.circle,width: 40,height: 40,),
+                        child: ImgFromNet(imageUrl: avatar,boxShape: BoxShape.circle,width: 40,height: 40,),
                       ),
-                      Text(us[index].username!,style: const TextStyle(
+                      Text(username,style: const TextStyle(
                             fontSize: 20,
                           ),),
                       const Spacer(),
                       Padding(padding: const EdgeInsets.only(left: 5,right: 10),
                         child: InkWell(
-                          onTap: ()async{await _mppc.accessTaskRequest(us[index].mailAddress,id,us[index].username!);},
+                          onTap: ()async{await _mppc.accessTaskRequest(mail,id,username);},
                           highlightColor: Colors.transparent, // 透明色
                           splashColor: Colors.transparent,
                           child: Container(
@@ -171,7 +174,7 @@ class MyPublishPage extends StatelessWidget{
                       ),
                     ],
                   ),
-                  index==us.length-1?const Padding(padding: EdgeInsets.only(top: 10)):
+                  index==_mppc.us.length-1?const Padding(padding: EdgeInsets.only(top: 10)):
                     const Padding(padding: EdgeInsets.only(top: 10),child:Divider(height:0.2,indent:15,endIndent: 15,color: Coloors.greyLight,),),
                 ],);
             },
@@ -185,7 +188,7 @@ class MyPublishPage extends StatelessWidget{
             
           ),),
         ]),
-      ),
+      ),),
       backgroundColor: Colors.white,
     ).whenComplete((){
       printInfo(info:"弹窗结束");

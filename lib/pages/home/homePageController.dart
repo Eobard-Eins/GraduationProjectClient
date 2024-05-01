@@ -1,5 +1,4 @@
 import 'package:client_application/pages/home/chat/chatPageUI.dart';
-import 'package:client_application/pages/home/community/communityPageUI.dart';
 import 'package:client_application/pages/home/me/mePageUI.dart';
 import 'package:client_application/pages/home/task/taskPageController.dart';
 import 'package:client_application/pages/home/task/taskPageUI.dart';
@@ -52,14 +51,6 @@ class HomePageController extends GetxController {
           label: '首页'
         ),
 
-      BottomNavigationBarItem(
-          icon: Icon(
-            Icons.forum_outlined,
-            size: 25,
-          ),
-          activeIcon: Icon(Icons.forum_outlined, size: 25),
-          label: '论坛'
-        ),
 
       BottomNavigationBarItem(
           icon: Icon(
@@ -80,7 +71,7 @@ class HomePageController extends GetxController {
         ),
     ];
 
-    tabPageBodies = <Widget>[TaskPage(), CommunityPage(), ChatPage(), MePage()];
+    tabPageBodies = <Widget>[TaskPage(), ChatPage(), MePage()];
   }
 
   Future<bool> popScope() async {

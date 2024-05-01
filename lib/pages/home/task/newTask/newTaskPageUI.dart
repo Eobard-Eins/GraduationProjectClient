@@ -469,7 +469,7 @@ class NewTaskPage extends StatelessWidget{
                   divisions: 100,
                   //滚动时会回调
                   onChanged: (double value) {
-                    _ntpc.point.value = value;
+                    _ntpc.point.value = double.parse(value.toStringAsFixed(2));
                   },
                   //滑块以及滑动左侧的滚动条颜色
                   activeColor: Coloors.mainLight,

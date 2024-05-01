@@ -78,16 +78,16 @@ class TaskNetService extends GetConnect{
     return await network(() => put("$_baseUrl/task/access",'{"id":$id,"user":"$account"}'));
   }
   Future<Result> getTasksByPublicUser(String account,int status) async{
-    return await network(() => get("$_baseUrl/task/getTasksByPublicUser",query:{"user":account,"status":status}));
+    return await network(() => get("$_baseUrl/task/getTasksByPublicUser",query:{"user":account,"status":status.toString()}));
   }
   Future<Result> getTasksByAccessUser(String account,int status) async{
-    return await network(() => get("$_baseUrl/task/getTasksByAccessUser",query:{"user":account,"status":status}));
+    return await network(() => get("$_baseUrl/task/getTasksByAccessUser",query:{"user":account,"status":status.toString()}));
   }
   Future<Result> getAllRequestWithTask(int id) async{
-    return await network(() => get("$_baseUrl/task/getRequestsWithTask",query:{"id":id}));
+    return await network(() => get("$_baseUrl/task/getRequestsWithTask",query:{"id":id.toString()}));
   }
   Future<Result> setStatus(int id,int status) async{
-    return await network(() => put("$_baseUrl/task/setStatus",'{"id":$id,"user":$status}'));
+    return await network(() => put("$_baseUrl/task/setStatus",'{"id":$id,"status":$status}'));
   }
 
   Future<Result> network(Future<Response> Function() func)async{
@@ -97,6 +97,7 @@ class TaskNetService extends GetConnect{
         printInfo(info:"网络异常，不能连接服务器");
         return Result.error(message: "网络出现错误，请检查网络设置:Net error");
       }else{
+        printInfo(info:"网络正常 ${value.body.toString()}");
         bool isSuccess=value.body['isSuccess'];
         if(!isSuccess){
           printInfo(info:"网络正常，服务器返回错误：${value.body['message']}");

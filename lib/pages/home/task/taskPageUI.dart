@@ -98,7 +98,7 @@ class TaskPage extends StatelessWidget {
                     child: Obx(() => SearchInput(
                       controller: _tpc.searchController.value, 
                       height: 40, 
-                      hintText: "搜索",
+                      hintText: "关键词筛选",
                       onChanged: (value) {
                         _tpc.searchController.value.text=value;
                         _tpc.searchController.refresh();
