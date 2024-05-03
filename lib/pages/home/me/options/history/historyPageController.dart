@@ -18,10 +18,10 @@ class HistoryPageController extends GetxController{
   void onInit() {
     super.onInit();
   }
-  Future getHistory(int n,{bool refresh=false})async{
+  Future getHistory({bool refresh=false})async{
     List<TaskItemInfo> newTasks=[];
 
-    TaskUtils.getHistory(num: n, account: SpUtils.getString("account"), onSuccess: (data){
+    TaskUtils.getHistory(account: SpUtils.getString("account"), onSuccess: (data){
       for(Map<String,dynamic> item in data){
         String t=item['time'];
         DateTime dt=DateTime.parse(t.substring(0,t.indexOf('.')));

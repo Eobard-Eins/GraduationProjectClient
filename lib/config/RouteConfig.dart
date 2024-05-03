@@ -1,4 +1,5 @@
 
+import 'package:client_application/pages/home/chat/chatDetailPageUI.dart';
 import 'package:client_application/pages/home/homePageUI.dart';
 import 'package:client_application/pages/home/me/options/about/aboutPage.dart';
 import 'package:client_application/pages/home/me/options/history/historyPageUI.dart';
@@ -36,6 +37,8 @@ class RouteConfig {
   static const String myPublishPage="/me/myPublishPage";
   static const String myAccessPage="/me/myAccessPage";
   static const String taskHistoryPage="/me/taskHistoryPage";
+
+  static const String chatDetailPage="/chat/chatDetailPage";
 
   static List<GetPage<dynamic>>? getPages=[
     GetPage(
@@ -93,6 +96,10 @@ class RouteConfig {
     GetPage(
       name: taskHistoryPage, 
       page: ()=>HistoryPage(),
+    ),
+    GetPage(
+      name: chatDetailPage, 
+      page: ()=>ChatDetailPage(),
     ),
   ];
 

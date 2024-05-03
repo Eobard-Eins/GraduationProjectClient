@@ -4,9 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 class ChatMessage {
   String messageContent;
-  String avatar;
-  String username;
-  String messageType;
+  int messageType;
 
-  ChatMessage({required this.messageContent, required this.messageType, required this.avatar, required this.username});
+  ChatMessage({required this.messageContent, required this.messageType});
 }

@@ -68,8 +68,8 @@ class TaskNetService extends GetConnect{
     return await network(() => put("$_baseUrl/task/dislike",'{"id":$id,"user":"$account"}'));
   }
 
-  Future<Result> getHistory(String account,int num) async{
-    return await network(() => get("$_baseUrl/task/history",query:{"user":account,"num":num.toString()}));
+  Future<Result> getHistory(String account) async{
+    return await network(() => get("$_baseUrl/task/history",query:{"user":account}));
   }
   Future<Result> requestTask(String account,int id) async{
     return await network(() => post("$_baseUrl/task/requestTask",'{"id":$id,"user":"$account"}'));

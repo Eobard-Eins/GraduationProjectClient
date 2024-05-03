@@ -28,10 +28,10 @@ class HistoryPage extends StatelessWidget {
           refreshOnStart: true,
           controller: _hpc.refreshController,
           onRefresh: ()async{
-            await _hpc.getHistory(6,refresh:true);
+            await _hpc.getHistory(refresh:true);
           },
           onLoad: ()async{
-            await _hpc.getHistory(6);
+            await _hpc.getHistory();
           },
           child:Obx(() => MasonryGridView.builder(
               gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(

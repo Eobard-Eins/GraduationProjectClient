@@ -3,6 +3,8 @@ import 'package:client_application/pages/home/me/mePageUI.dart';
 import 'package:client_application/pages/home/task/taskPageController.dart';
 import 'package:client_application/pages/home/task/taskPageUI.dart';
 import 'package:client_application/res/color.dart';
+import 'package:client_application/services/utils/socketUtils.dart';
+import 'package:client_application/tool/localStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
@@ -40,6 +42,7 @@ class HomePageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    SocketUtils().connect(SpUtils.getString("account"));
     pageController = PageController(initialPage: currentPage);
     bottomTabs = const <BottomNavigationBarItem>[
       BottomNavigationBarItem(
@@ -74,6 +77,12 @@ class HomePageController extends GetxController {
     tabPageBodies = <Widget>[TaskPage(), ChatPage(), MePage()];
   }
 
+  @override
+  void onClose() {
+    super.onClose();
+    SocketUtils().closeSocket();
+  }
+  
   Future<bool> popScope() async {
     printInfo(info:"进入返回拦截");
     

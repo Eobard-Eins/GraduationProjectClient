@@ -97,11 +97,10 @@ class TaskUtils extends GetConnect{
   }
 
   static getHistory({
-    required int num,
     required String account,
     required Function(List<dynamic>) onSuccess,
   }){
-    TaskNetService().getHistory(account,num).then((value){
+    TaskNetService().getHistory(account).then((value){
       if(value.isError()){
         snackbar.error("获取失败", value.message!, value.statusCode);
       }else{

@@ -57,6 +57,14 @@ class Status{
   static const int likeError=1507;
   static const int getAll=1508;
 
+  static const int send=1600;
+  static const int receive=1601;
+  static const int read=1602;
+  static const int notRead=1603;
+  static const int newMessage=1604;
+  static const int unSend=1605;
+  static const int notServed=1606;
+
   //不存在状态码
   static const int error=0000;//其他
 }

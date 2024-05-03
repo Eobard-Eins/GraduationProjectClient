@@ -1,24 +1,24 @@
 // ignore_for_file: file_names
 
 import 'package:client_application/components/img/imgFromNet.dart';
-import 'package:client_application/pages/home/chat/chatDetailPage.dart';
+import 'package:client_application/pages/home/chat/chatDetailPageUI.dart';
 import 'package:flutter/material.dart';
 
 class ConversationList extends StatelessWidget {
   final String name;
   final String email;
   final String imageUrl;
+  final String messageText;
+  final String time;
+  final bool isMessageRead;
+  final Function()? onTap;
 
-  const ConversationList({super.key, required this.name, required this.email, required this.imageUrl});
+  const ConversationList({super.key, required this.name, required this.email, required this.imageUrl, required this.time, required this.messageText, required this.isMessageRead, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context){
-          return ChatDetailPage(name:name,userImageUrl:imageUrl,email:email);
-        }));
-      },
+      onTap: onTap,
       child: Container(
         padding: const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
         child: Row(
