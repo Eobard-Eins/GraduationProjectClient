@@ -1,12 +1,10 @@
 import 'package:client_application/components/display/footerAndHeader.dart';
-import 'package:client_application/components/img/imgFromNet.dart';
 import 'package:client_application/components/item/conversationList.dart';
 import 'package:client_application/pages/home/chat/chatPageController.dart';
 import 'package:client_application/res/color.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class ChatPage extends StatelessWidget{
   final ChatPageController _cpc=Get.put(ChatPageController());

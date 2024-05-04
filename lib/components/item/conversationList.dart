@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:client_application/components/img/imgFromNet.dart';
-import 'package:client_application/pages/home/chat/chatDetailPageUI.dart';
 import 'package:flutter/material.dart';
 
 class ConversationList extends StatelessWidget {

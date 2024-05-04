@@ -1,18 +1,12 @@
-import 'dart:io';
 
 import 'package:client_application/components/display/footerAndHeader.dart';
 import 'package:client_application/components/img/imgFromNet.dart';
-import 'package:client_application/models/chatMessageModel.dart';
 import 'package:client_application/pages/home/chat/chatDetailPageController.dart';
 import 'package:client_application/res/color.dart';
-import 'package:client_application/res/staticValue.dart';
-import 'package:client_application/tool/localStorage.dart';
-import 'package:client_application/services/utils/socketUtils.dart';
 import 'package:client_application/tool/res/status.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'dart:convert' as convert;
 
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
@@ -64,7 +58,7 @@ class ChatDetailPage extends StatelessWidget {
               // crossAxisSpacing: 10,
               //shrinkWrap: true, //收缩，让元素宽度自适应
               controller: _cdpc.scrollController,
-              physics: AlwaysScrollableScrollPhysics(),
+              //physics: AlwaysScrollableScrollPhysics(),
             )
           ))
         ),

@@ -77,7 +77,7 @@ class SocketUtils extends GetConnect{
           "receiver":receiver,
           "status":Status.newMessage,
           "msg":msg,
-          "id":id,
+          "id":id,//消息id
           "time":dt.millisecondsSinceEpoch
         };
         printInfo(info:"send message: ${convert.jsonEncode(mp)}");
@@ -91,7 +91,7 @@ class SocketUtils extends GetConnect{
     String sender=mp["sender"];
     String receiver=mp["receiver"];
     int status=mp["status"] as int;
-    int id=mp["id"] as int;
+    //int id=mp["id"] as int;
     String msg=mp["msg"];
     String t=mp['time'];
     DateTime dt=DateTime.parse(t);
@@ -111,7 +111,7 @@ class SocketUtils extends GetConnect{
       }else if(sender==u && receiver==me){//由对方发送，我接收
         _ctrl!.messages.add(ChatMessage(messageContent: msg, messageType: Status.receiver));
         _ctrl!.scrollController.animateTo(_ctrl!.scrollController.position.maxScrollExtent+80, duration: const Duration(milliseconds: 800), curve: Curves.easeInOut);
-        //TODO: 标为已读
+        // 标为已读
         ChatUtils.read(me:me,him:u,onSuccess: ()=>isread=true);
       }else{//其余情况
         snackbar.error("未知错误", "消息发送方或接收方uid出错", 0);

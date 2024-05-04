@@ -1,11 +1,9 @@
 import 'package:client_application/components/display/uploadingDialog.dart';
 import 'package:client_application/models/chatMessageModel.dart';
-import 'package:client_application/res/staticValue.dart';
 import 'package:client_application/services/utils/chat/chatUtils.dart';
 import 'package:client_application/services/utils/socketUtils.dart';
 import 'package:client_application/tool/localStorage.dart';
 import 'package:client_application/tool/res/status.dart';
-import 'package:client_application/tool/timeUtils.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

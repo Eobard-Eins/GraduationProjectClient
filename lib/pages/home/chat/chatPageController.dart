@@ -1,20 +1,12 @@
-import 'dart:io';
 
 import 'package:client_application/config/RouteConfig.dart';
-import 'package:client_application/models/chatMessageModel.dart';
 import 'package:client_application/models/chatUsersModel.dart';
-import 'package:client_application/res/staticValue.dart';
 import 'package:client_application/services/utils/chat/chatUtils.dart';
 import 'package:client_application/services/utils/socketUtils.dart';
-import 'package:client_application/services/utils/user/userInfoUtils.dart';
 import 'package:client_application/tool/localStorage.dart';
-import 'package:client_application/tool/res/status.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'dart:convert' as convert;
-
-import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class ChatPageController extends GetxController{
   RxList<ChatUsers> chatUsers=RxList();
@@ -27,7 +19,7 @@ class ChatPageController extends GetxController{
   bool allGet=false;
   int nowIndex=0;
 
-  
+
   Future load({bool refresh=false})async{
     List<ChatUsers> ls=[];
     if(refresh){

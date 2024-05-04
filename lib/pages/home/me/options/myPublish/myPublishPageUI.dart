@@ -3,7 +3,6 @@ import 'package:client_application/components/display/shortHeadBar.dart';
 import 'package:client_application/components/img/imgFromNet.dart';
 import 'package:client_application/components/item/taskItemBriefly.dart';
 import 'package:client_application/models/Task.dart';
-import 'package:client_application/models/User.dart';
 import 'package:client_application/pages/home/me/options/myPublish/myPublishPageController.dart';
 import 'package:client_application/res/color.dart';
 import 'package:client_application/tool/res/status.dart';
