@@ -464,7 +464,7 @@ class NewTaskPage extends StatelessWidget{
                 Obx(()=>Slider(
                   value: _ntpc.point.value,
                   min: 0.0,
-                  max: 100.0,
+                  max: _ntpc.maxPoint,
                   //平均分成的等分
                   divisions: 100,
                   //滚动时会回调

@@ -2,6 +2,7 @@
 import 'package:client_application/components/display/snackbar.dart';
 import 'package:client_application/services/utils/locationUtils.dart';
 import 'package:client_application/services/utils/task/taskUtils.dart';
+import 'package:client_application/services/utils/user/userInfoUtils.dart';
 import 'package:client_application/tool/input/discriminator.dart';
 import 'package:client_application/tool/localStorage.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class NewTaskPageController extends GetxController {
   RxDouble latitude=0.0.obs;
   RxDouble point=0.0.obs;
   Rx<DateTime> time=DateTime.now().obs;
+  double maxPoint=5.0;
 
   
   Rx<bool> isUploading=false.obs;
@@ -58,6 +60,7 @@ class NewTaskPageController extends GetxController {
     addressFinish=false;
     timeFinish=false;
     pointFinish.value=false;
+    UserInfoUtils.getUserInfo(mail: SpUtils.getString("account"), onSuccess: (u)=>maxPoint=u.point);
   }
 
   void searchAddress()async{
