@@ -2,6 +2,7 @@ import 'package:client_application/components/display/snackbar.dart';
 import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/models/Task.dart';
 import 'package:client_application/services/utils/task/taskUtils.dart';
+import 'package:client_application/services/utils/user/userInfoUtils.dart';
 import 'package:client_application/tool/localStorage.dart';
 import 'package:client_application/tool/res/status.dart';
 import 'package:easy_refresh/easy_refresh.dart';
@@ -98,4 +99,10 @@ class MyAccessPageController extends GetxController{
     });
   }
   void gotoTaskInfoPage(int id)=>Get.toNamed(RouteConfig.taskInfoPage,arguments:{'id':id});
+
+  tapChat(int id) {
+    UserInfoUtils.getUserInfoByTaskId(tid: id, onSuccess: (u){
+      Get.toNamed(RouteConfig.chatDetailPage,arguments:{'name':u.username,'avatar':u.avatar,'email':u.mailAddress});
+    });
+  }
 }

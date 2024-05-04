@@ -95,12 +95,14 @@ class MyPublishPage extends StatelessWidget{
   Widget allTasksOfDoing(int index){
     TaskItemInfo item=_mppc.allTasksOfDoing[index];
     return baseTaskCard([
+        TaskItemBriefly.actionButtion("联系", () => _mppc.tapChat(item.id)),
         TaskItemBriefly.actionButtion("查看详情", () => _mppc.gotoTaskInfoPage(item.id))
       ], item);
   }
   Widget allTasksOfDone(int index){
     TaskItemInfo item=_mppc.allTasksOfDone[index];
     return baseTaskCard([
+        TaskItemBriefly.actionButtion("联系", () => _mppc.tapChat(item.id)),
         TaskItemBriefly.actionButtion("查看详情", () => _mppc.gotoTaskInfoPage(item.id))
       ], item);
   }

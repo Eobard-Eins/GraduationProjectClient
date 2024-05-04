@@ -87,6 +87,7 @@ class MyAccessPage extends StatelessWidget{
   Widget allTasksOfDoing(int index){
     TaskItemInfo item=_mppc.allTasksOfDoing[index];
     return baseTaskCard([
+        TaskItemBriefly.actionButtion("联系", () => _mppc.tapChat(item.id)),
         TaskItemBriefly.actionButtion("完成", () => _mppc.finishTask(item.id))
       ], item);
   }
