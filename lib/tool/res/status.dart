@@ -65,6 +65,9 @@ class Status{
   static const int unSend=1605;
   static const int notServed=1606;
 
+  static const int sender=1700;
+  static const int receiver=1701;
+
   //不存在状态码
   static const int error=0000;//其他
 }

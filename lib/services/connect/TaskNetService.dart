@@ -68,8 +68,8 @@ class TaskNetService extends GetConnect{
     return await network(() => put("$_baseUrl/task/dislike",'{"id":$id,"user":"$account"}'));
   }
 
-  Future<Result> getHistory(String account) async{
-    return await network(() => get("$_baseUrl/task/history",query:{"user":account}));
+  Future<Result> getHistory(String account,int page,int size) async{
+    return await network(() => get("$_baseUrl/task/history",query:{"user":account,"page":page.toString(),"size":size.toString()}));
   }
   Future<Result> requestTask(String account,int id) async{
     return await network(() => post("$_baseUrl/task/requestTask",'{"id":$id,"user":"$account"}'));
@@ -77,11 +77,11 @@ class TaskNetService extends GetConnect{
   Future<Result> accessTask(int id,String account) async{
     return await network(() => put("$_baseUrl/task/access",'{"id":$id,"user":"$account"}'));
   }
-  Future<Result> getTasksByPublicUser(String account,int status) async{
-    return await network(() => get("$_baseUrl/task/getTasksByPublicUser",query:{"user":account,"status":status.toString()}));
+  Future<Result> getTasksByPublicUser(String account,int status,int page,int size) async{
+    return await network(() => get("$_baseUrl/task/getTasksByPublicUser",query:{"user":account,"status":status.toString(),"page":page.toString(),"size":size.toString()}));
   }
-  Future<Result> getTasksByAccessUser(String account,int status) async{
-    return await network(() => get("$_baseUrl/task/getTasksByAccessUser",query:{"user":account,"status":status.toString()}));
+  Future<Result> getTasksByAccessUser(String account,int status,int page,int size) async{
+    return await network(() => get("$_baseUrl/task/getTasksByAccessUser",query:{"user":account,"status":status.toString(),"page":page.toString(),"size":size.toString()}));
   }
   Future<Result> getAllRequestWithTask(int id) async{
     return await network(() => get("$_baseUrl/task/getRequestsWithTask",query:{"id":id.toString()}));

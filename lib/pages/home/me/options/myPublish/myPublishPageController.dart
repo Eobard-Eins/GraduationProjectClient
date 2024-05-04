@@ -23,6 +23,8 @@ class MyPublishPageController extends GetxController{
     controlFinishLoad: true,
   );
   int initStateNum=0;
+  bool allGet=false;
+  int nowIndex=0;
   @override
   void onInit(){
     super.onInit();
@@ -30,20 +32,42 @@ class MyPublishPageController extends GetxController{
 
   }
 
-  Future<RxList> loadData(RxList nt, int status, {bool refresh=false})async{
+  Future loadData(RxList nt, int status, {bool refresh=false})async{
     //isLoading.value=true;
     printInfo(info:"loadData");
     List<TaskItemInfo> newTasks=[];
+    if(refresh){
+      nowIndex=0;
+      allGet=false;
+    }
 
-    TaskUtils.getTasksByPublicUser(
+    if(allGet){
+      refreshController.finishRefresh(IndicatorResult.noMore);
+      refreshController.finishLoad(IndicatorResult.noMore);
+      return ;
+    }
+
+    TaskUtils.getTasksByAccessUser(
       account: SpUtils.getString("account"),
-      status: status,
+      status: status, 
+      page: nowIndex, 
+      size:10,
       onError: () {
         refreshController.finishRefresh(IndicatorResult.noMore);
         refreshController.finishLoad(IndicatorResult.noMore);
       },
-      onSuccess: (items){
-        for(Map<String,dynamic> item in items){
+      onSuccess: (data){
+        nowIndex++;
+        List<dynamic> content=data["content"];
+        int pageNumber=data["pageable"]["pageNumber"];
+        int totalPages=data["totalPages"];
+
+        //printInfo(info: content.toString());
+        printInfo(info: "access task, page ${pageNumber+1}/$totalPages");
+        if(totalPages==pageNumber+1) {
+          allGet=true;//此批数据为最后一页
+        }
+        for(Map<String,dynamic> item in content){
           String t=item['time'];
           DateTime dt=DateTime.parse(t.substring(0,t.indexOf('.')));
 

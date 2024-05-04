@@ -20,6 +20,19 @@ class UserInfoUtils extends GetConnect{
       }
     });
   }
+  static getUserInfoByTaskId({
+    required int tid,
+    required Function(User u) onSuccess,
+  }){
+    UserNetService().getUserInfoByTaskId(tid).then((value){
+      if(value.isError()){
+        snackbar.error("对象错误", value.message!, value.statusCode);
+      }else{
+        User u=User.fromJson(value.data);
+        onSuccess(u);
+      }
+    });
+  }
 
   static setPassword({
     required String password,

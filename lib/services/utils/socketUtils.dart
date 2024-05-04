@@ -58,7 +58,7 @@ class SocketUtils extends GetConnect{
 
   // 向服务器发送消息
   void sendMessage(String sender, String receiver, int status, String msg) {
-    ChatUtils.save(
+    ChatUtils.save(//现存入数据库，避免数据丢失，再发送
       sender: sender,
       receiver: receiver,
       msg: msg,
@@ -67,7 +67,6 @@ class SocketUtils extends GetConnect{
         //Map<String, dynamic> mp = convert.jsonDecode(data);
         String sender=data["sender"];
         String receiver=data["receiver"];
-        int status=data["status"] as int;
         int id=data["id"] as int;
         String msg=data["msg"];
         String t=data['time'];
@@ -76,7 +75,7 @@ class SocketUtils extends GetConnect{
         Map mp={
           "sender":sender,
           "receiver":receiver,
-          "status":status,
+          "status":Status.newMessage,
           "msg":msg,
           "id":id,
           "time":dt.millisecondsSinceEpoch
@@ -86,7 +85,7 @@ class SocketUtils extends GetConnect{
     });
   }
 
-  void onData(dynamic content){
+  void onData(dynamic content){//此时发出去的消息已经送出，接到回信
     Map<String, dynamic> mp = convert.jsonDecode(content);
     printInfo(info: "receive message: $mp");
     String sender=mp["sender"];
@@ -99,31 +98,34 @@ class SocketUtils extends GetConnect{
     
     String me=SpUtils.getString("account");
 
+    bool isread=(status==Status.read);
+    if(sender==me) isread=true;
+
     //处理聊天房间
     if(inRoom){//在房间中时
       String u=_ctrl!.email.value;
       if(sender==me && receiver==u){//由我发送，对方接收
-        _ctrl!.messages.add(ChatMessage(messageContent: msg, messageType: Status.send));
-        _ctrl!.scrollController.animateTo(_ctrl!.scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 800), curve: Curves.easeInOut);
-        _ctrl!.controller.clear();
+        _ctrl!.messages.add(ChatMessage(messageContent: msg, messageType: Status.sender));
+        _ctrl!.scrollController.animateTo(_ctrl!.scrollController.position.maxScrollExtent+80, duration: const Duration(milliseconds: 800), curve: Curves.easeInOut);
+        _ctrl!.controller.clear();//若在此处存数据库，可能双方都收到消息但数据库中没有
       }else if(sender==u && receiver==me){//由对方发送，我接收
-        _ctrl!.messages.add(ChatMessage(messageContent: msg, messageType: Status.receive));
-        _ctrl!.scrollController.animateTo(_ctrl!.scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 800), curve: Curves.easeInOut);
+        _ctrl!.messages.add(ChatMessage(messageContent: msg, messageType: Status.receiver));
+        _ctrl!.scrollController.animateTo(_ctrl!.scrollController.position.maxScrollExtent+80, duration: const Duration(milliseconds: 800), curve: Curves.easeInOut);
         //TODO: 标为已读
-        ChatUtils.read(id:id);
+        ChatUtils.read(me:me,him:u,onSuccess: ()=>isread=true);
       }else{//其余情况
         snackbar.error("未知错误", "消息发送方或接收方uid出错", 0);
       }
     }
 
     //处理消息列表
-    if(sender==me || receiver==me){//接受新消息且未查看
+    if(sender==me || receiver==me){
       String him=(sender==me)?receiver:sender;
-      updateMsgConv(him, dt, msg);
+      updateMsgConv(him, dt, msg,isread);
     }
   }
 
-  void updateMsgConv(String him,DateTime dt,String msg){
+  void updateMsgConv(String him,DateTime dt,String msg,bool isRead){
     if(_cpc==null) return ;
     UserInfoUtils.getUserInfo(mail: him, onSuccess: (u){
       int i=0;
@@ -138,6 +140,7 @@ class SocketUtils extends GetConnect{
         name: u.username!, 
         messageText: msg, 
         imageURL: u.avatar, 
+        isRead: isRead,
         email: him, 
         time: "${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')} ${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}"
       ));

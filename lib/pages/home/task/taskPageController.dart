@@ -79,7 +79,16 @@ class TaskPageController extends GetxController {
               labels="$labels/$s";
             }
           }
-          newTasks.add(TaskItemInfo(id: int.parse(item['id']), title: item['title'], point: double.parse(item['point']), time: "${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}\n${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}前", location: location, labels: labels, hotValue: int.parse(item['hot']), avatar: item['avatar']));             
+          newTasks.add(TaskItemInfo(
+            id: int.parse(item['id']), 
+            title: item['title'], 
+            point: double.parse(item['point']), 
+            time: "${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}\n${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}前", 
+            location: location, 
+            labels: labels, 
+            hotValue: int.parse(item['hot']), 
+            avatar: item['avatar']
+          ));             
         }
         if (newTasks.isEmpty){
           refreshController.finishRefresh(IndicatorResult.noMore);

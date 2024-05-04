@@ -98,9 +98,11 @@ class TaskUtils extends GetConnect{
 
   static getHistory({
     required String account,
-    required Function(List<dynamic>) onSuccess,
+    required int page,
+    required int size,
+    required Function(dynamic) onSuccess,
   }){
-    TaskNetService().getHistory(account).then((value){
+    TaskNetService().getHistory(account,page,size).then((value){
       if(value.isError()){
         snackbar.error("获取失败", value.message!, value.statusCode);
       }else{
@@ -142,10 +144,12 @@ class TaskUtils extends GetConnect{
   static getTasksByPublicUser({
     required String account,
     required int status,
-    required Function(List<dynamic>) onSuccess,
+    required int page,
+    required int size,
+    required Function(dynamic) onSuccess,
     required Function() onError,
   }){
-    TaskNetService().getTasksByPublicUser(account,status).then((value){
+    TaskNetService().getTasksByPublicUser(account,status,page,size).then((value){
       if(value.isError()){
         snackbar.error("获取失败", value.message!, value.statusCode);
         onError();
@@ -157,10 +161,12 @@ class TaskUtils extends GetConnect{
   static getTasksByAccessUser({
     required String account,
     required int status,
-    required Function(List<dynamic>) onSuccess,
+    required int page,
+    required int size,
+    required Function(dynamic) onSuccess,
     required Function() onError,
   }){
-    TaskNetService().getTasksByAccessUser(account,status).then((value){
+    TaskNetService().getTasksByAccessUser(account,status,page,size).then((value){
       if(value.isError()){
         snackbar.error("获取失败", value.message!, value.statusCode);
         onError();

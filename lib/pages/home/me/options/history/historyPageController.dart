@@ -14,15 +14,38 @@ class HistoryPageController extends GetxController{
     controlFinishRefresh: true,
     controlFinishLoad: true,
   );
+  bool allGet=false;
+  int nowIndex=0;
   @override
   void onInit() {
     super.onInit();
   }
   Future getHistory({bool refresh=false})async{
     List<TaskItemInfo> newTasks=[];
+    if(refresh){
+      nowIndex=0;
+      allGet=false;
+    }
+    
+    if(allGet){
+      refreshController.finishRefresh(IndicatorResult.noMore);
+      refreshController.finishLoad(IndicatorResult.noMore);
+      return ;
+    }
+    
+    TaskUtils.getHistory(account: SpUtils.getString("account"), page: nowIndex, size:10, onSuccess: (data){
+      nowIndex++;
+      List<dynamic> content=data["content"];
+      int pageNumber=data["pageable"]["pageNumber"];
+      int totalPages=data["totalPages"];
 
-    TaskUtils.getHistory(account: SpUtils.getString("account"), onSuccess: (data){
-      for(Map<String,dynamic> item in data){
+      //printInfo(info: content.toString());
+      printInfo(info: "task history, page ${pageNumber+1}/$totalPages");
+      if(totalPages==pageNumber+1) {
+        allGet=true;//此批数据为最后一页
+      }
+
+      for(Map<String,dynamic> item in content){
         String t=item['time'];
         DateTime dt=DateTime.parse(t.substring(0,t.indexOf('.')));
 

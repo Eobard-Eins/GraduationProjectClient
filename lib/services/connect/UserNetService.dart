@@ -24,6 +24,9 @@ class UserNetService extends GetConnect{
   Future<Result> getUserInfo(String account) async{
     return await network(() => get("$_baseUrl/userInfo/getInfo",query:{"mailAddress":account}));
   }
+  Future<Result> getUserInfoByTaskId(int tid) async{
+    return await network(() => get("$_baseUrl/userInfo/getInfoByTaskId",query:{"taskId":tid.toString()}));
+  }
 
   Future<Result> loginWithPassword(String account, String password) async{
     if(!Discriminator.accountOk(account)){

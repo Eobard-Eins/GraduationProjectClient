@@ -37,37 +37,34 @@ class ChatDetailPage extends StatelessWidget {
       body: Column(children: [
         Expanded(
         child: EasyRefresh(
-          header: const ClassicHeader(
+          header: FootAndHeader.header,
+          footer: const ClassicFooter(
             hitOver: true,
             showText: F,
             processedDuration: Duration(seconds: 1),
           ),
-          footer: FootAndHeader.footer,
-          ///canLoadAfterNoMore: true,
-          canRefreshAfterNoMore: true,
-          refreshOnStart: true,
+          canLoadAfterNoMore: true,
+          //canRefreshAfterNoMore: true,
           controller: _cdpc.refreshController,
-          onRefresh: ()async{
-            await _cdpc.getHistory(6,7);
+          onLoad: ()async{
+            await _cdpc.getHistory(10);
           },
           child:Obx(() => MasonryGridView.builder(
               gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 1,
               ),
               // 元素总个数
-              itemCount: _cdpc.messages.length,
-              reverse: false,
+              itemCount: _cdpc.messages.length>10?_cdpc.messages.length:10,
+              reverse: T,
               // 单个子元素
               itemBuilder: (BuildContext context, int index) => message(context,index),
               // // 纵向元素间距MasonryGridView
               //mainAxisSpacing: 25,
               // // 横向元素间距
               // crossAxisSpacing: 10,
-              //本身不滚动，让外面的singlescrollview来滚动
-              //physics:physics, 
               //shrinkWrap: true, //收缩，让元素宽度自适应
               controller: _cdpc.scrollController,
-              
+              physics: AlwaysScrollableScrollPhysics(),
             )
           ))
         ),
@@ -111,18 +108,25 @@ class ChatDetailPage extends StatelessWidget {
   }
 
   message(context, index) {
+    int len=_cdpc.messages.length;
+    if(index<10-len){//填充空白
+      return const SizedBox(
+        height: 65,
+      );
+    }
+    if(len<10) index=index-10+len;
     return Container(
       padding: const EdgeInsets.only(
           left: 14, right: 14, top: 10, bottom: 10),
       child: Align(
           alignment:
-              (_cdpc.messages[index].messageType == Status.receive
+              (_cdpc.messages[index].messageType == Status.receiver
                   ? Alignment.topLeft
                   : Alignment.topRight),
           child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: (_cdpc.messages[index].messageType == Status.receive
+                color: (_cdpc.messages[index].messageType == Status.receiver
                     ? Colors.grey.shade200
                     : Coloors.mainLight.withAlpha(140)),
               ),

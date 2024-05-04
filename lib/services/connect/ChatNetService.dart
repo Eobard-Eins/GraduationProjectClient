@@ -19,6 +19,15 @@ class ChatNetService extends GetConnect{
   ) async{
     return await network(() => post("$_baseUrl/chat/saveChat",'{"sender":"$sender","receiver":"$receiver","msg":"$msg","time":${time.millisecondsSinceEpoch},"status":$status}'));
   }
+  Future<Result> read({required String him, required String me}) async{
+    return await network(() => put("$_baseUrl/chat/setRead",{},query: {"u1":him,"u2":me}));
+  }
+  Future<Result> history({required String him, required String me, required int page, int size=10}) async{
+    return await network(() => get("$_baseUrl/chat/getHistory",query: {"u1":him,"u2":me,"page":page.toString(),"size":size.toString()}));
+  }
+  Future<Result> getConvs({required String u,required int page,required int size}) async{
+    return await network(() => get("$_baseUrl/chat/getChatUser",query: {"u":u,"page":page.toString(),"size":size.toString()}));
+  }
 
   Future<Result> network(Future<Response> Function() func)async{
 

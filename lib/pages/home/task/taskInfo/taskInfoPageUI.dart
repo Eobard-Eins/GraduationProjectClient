@@ -22,7 +22,7 @@ class TaskInfoPage extends StatelessWidget{
             _tipc.needHead.value?Padding(
               padding: const EdgeInsets.only(right: 0),
               child: InkWell(
-                onTap: tapChat,
+                onTap: ()=>_tipc.onTapChat(_tipc.id),
                 highlightColor: Colors.transparent, // 透明色
                 splashColor: Colors.transparent,
                 child: Container(
@@ -34,7 +34,7 @@ class TaskInfoPage extends StatelessWidget{
                     // color: Colors.transparent,
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 4),
-                  child: const Text("联系方式", style: TextStyle(fontSize: 14,color: Coloors.main)),
+                  child: const Text("私信", style: TextStyle(fontSize: 14,color: Coloors.main)),
                 ),
               ),
             ):const Spacer()
@@ -189,25 +189,5 @@ class TaskInfoPage extends StatelessWidget{
 
     return res;
   }
-  void tapChat(){
-    Get.defaultDialog(
-      title: "发布者邮箱",
-      content: Column(children:[
-        Padding(padding: const EdgeInsets.symmetric(vertical: 15),child: Text(_tipc.account.value,),),
-        const Divider(height: 0.1)
-      ]),
-      confirm: InkWell(
-        onTap: Get.back,
-        highlightColor: Colors.transparent, // 透明色
-        splashColor: Colors.transparent,
-        child:Container(
-          width: 130,
-          height: 30,
-          alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: const Text("关 闭",style: TextStyle(fontSize: 18,letterSpacing: 1),),
-        ),
-      ),
-    );
-  }
+  
 }

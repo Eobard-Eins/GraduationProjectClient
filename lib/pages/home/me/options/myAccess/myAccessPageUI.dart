@@ -63,7 +63,8 @@ class MyAccessPage extends StatelessWidget{
             await _mppc.loadData(ls ,status,refresh: true);
           },
           onLoad: ()async{
-            _mppc.refreshController.finishLoad(IndicatorResult.noMore);
+            //_mppc.refreshController.finishLoad(IndicatorResult.noMore);
+            await _mppc.loadData(ls ,status);
           },
           child:Obx(() => MasonryGridView.builder(
               // 展示几列

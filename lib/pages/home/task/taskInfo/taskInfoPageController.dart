@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:client_application/components/display/snackbar.dart';
+import 'package:client_application/config/RouteConfig.dart';
 import 'package:client_application/res/staticValue.dart';
 import 'package:client_application/services/utils/task/taskUtils.dart';
+import 'package:client_application/services/utils/user/userInfoUtils.dart';
 import 'package:client_application/tool/localStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -77,7 +79,11 @@ class TaskInfoPageController extends GetxController {
     });
     
   }
-  
+  void onTapChat(int tid){
+    UserInfoUtils.getUserInfoByTaskId(tid: tid, onSuccess: (u){
+      Get.toNamed(RouteConfig.chatDetailPage,arguments:{'name':u.username,'avatar':u.avatar,'email':u.mailAddress});
+    });
+  }
 
   void access(){
     TaskUtils.requestTask(id: id, account: SpUtils.getString("account"), onSuccess: (){

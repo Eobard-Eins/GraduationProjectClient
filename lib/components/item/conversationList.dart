@@ -20,7 +20,7 @@ class ConversationList extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
+        padding: const EdgeInsets.only(left: 16, right: 16, top: 15, bottom: 15),
         child: Row(
           children: <Widget>[
             Expanded(
@@ -38,17 +38,43 @@ class ConversationList extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             name,
-                            style: const TextStyle(fontSize: 16),
+                            style: const TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 6,
+                          ),
+                          Text(
+                            messageText,
+                            maxLines: 1,
+                            textAlign: TextAlign.start,
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.grey.shade600),
                           ),
                         ],
                       ),
                     ),
                   ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(time,style: const TextStyle(fontSize: 12,),),
+                      Padding(padding: const EdgeInsets.only(top: 3),child: Container(
+                          width: 10,
+                          height: 10,
+                          decoration: BoxDecoration(
+                            color: isMessageRead?Colors.transparent:Colors.red,
+                            borderRadius: const BorderRadius.all(Radius.circular(10)),
+                          ),
+                        ),)
+                    ],
+                  )
+                  
                 ],
               ),
             ),
-            const Icon(Icons.arrow_forward_ios,size: 15,),
-            const SizedBox(width: 10,)
           ],
         ),
       ),
