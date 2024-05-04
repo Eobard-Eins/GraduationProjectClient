@@ -47,7 +47,7 @@ class MyPublishPageController extends GetxController{
       return ;
     }
 
-    TaskUtils.getTasksByAccessUser(
+    TaskUtils.getTasksByPublicUser(
       account: SpUtils.getString("account"),
       status: status, 
       page: nowIndex, 
@@ -75,7 +75,7 @@ class MyPublishPageController extends GetxController{
             id: int.parse(item['id']), 
             title: item['title'], 
             point: double.parse(item['point']), 
-            time: "${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}\n${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}前", 
+            time: "${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')} ${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}前", 
             addressName: item["address_name"]
           )); 
         }

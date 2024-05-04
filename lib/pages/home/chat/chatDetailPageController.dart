@@ -106,6 +106,9 @@ class ChatDetailPageController extends GetxController{
 
         messages.addAll(ls);
       }
+    },onSuccessBut: (){
+      refreshController.finishRefresh(IndicatorResult.noMore);
+      refreshController.finishLoad(IndicatorResult.noMore);
     });
   }
 }

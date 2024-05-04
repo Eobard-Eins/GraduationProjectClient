@@ -30,6 +30,8 @@ class TaskInfoPageController extends GetxController {
   late int id;
   Rx<bool> needHead=F.obs;
   Rx<bool> needFoot=F.obs;
+
+  bool canChat=false;
   @override
   void onInit() {
     super.onInit();
@@ -39,7 +41,7 @@ class TaskInfoPageController extends GetxController {
 
   void getInfo(){
     TaskUtils.getTask(id: id,account: SpUtils.getString("account"), onSuccess: (data){
-      printInfo(info:data.toString());
+      //printInfo(info:data.toString());
       title.value=data['title'];
       description.value=data['content'];
       loc.value=data['address_name'];
@@ -63,6 +65,8 @@ class TaskInfoPageController extends GetxController {
       
       for (var element in tags) {labels.add(element);}
       for (var element in igs) {imgs.add(element);}
+
+      canChat=T;
     });
   }
 
@@ -79,10 +83,9 @@ class TaskInfoPageController extends GetxController {
     });
     
   }
-  void onTapChat(int tid){
-    UserInfoUtils.getUserInfoByTaskId(tid: tid, onSuccess: (u){
-      Get.toNamed(RouteConfig.chatDetailPage,arguments:{'name':u.username,'avatar':u.avatar,'email':u.mailAddress});
-    });
+  void onTapChat(){
+    if (!canChat) snackbar.error("对象错误", "对象信息未初始化完毕", 0);
+    else Get.toNamed(RouteConfig.chatDetailPage,arguments:{'name':username.value,'avatar':avatar.value,'email':account.value});
   }
 
   void access(){

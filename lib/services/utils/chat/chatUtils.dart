@@ -15,7 +15,7 @@ class ChatUtils extends GetConnect{
   }){
     ChatNetService().save(sender,receiver,msg,time,Status.notRead).then((value){
       if(value.isError()){
-        snackbar.error("保存失败", value.message!, value.statusCode);
+        snackbar.error("状态错误", value.message!, value.statusCode);
       }else{
         onSuccess(value.data);
       }
@@ -29,7 +29,7 @@ class ChatUtils extends GetConnect{
   }) {
     ChatNetService().read(him:him,me:me).then((value){
       if(value.isError()){
-        snackbar.error("变更失败", value.message!, value.statusCode);
+        snackbar.error("状态错误", value.message!, value.statusCode);
       }else{
         onSuccess();
       }
@@ -41,13 +41,18 @@ class ChatUtils extends GetConnect{
     required String him,
     required int page,
     int size=10,
-    required Function(dynamic) onSuccess
+    required Function(dynamic) onSuccess,
+    required Function() onSuccessBut
   }) {
     ChatNetService().history(him:him,me:me,page:page,size: size).then((value){
       if(value.isError()){
         snackbar.error("获取失败", value.message!, value.statusCode);
       }else{
-        onSuccess(value.data);
+        if(value.statusCode==Status.success){
+          onSuccess(value.data);
+        }else if(value.statusCode==Status.successButNoChat){
+          onSuccessBut();
+        }
       }
     });
   }

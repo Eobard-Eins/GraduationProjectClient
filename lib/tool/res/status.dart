@@ -5,7 +5,8 @@
 class Status{
   //正常
   static const int success=1000;//成功
-  static const int successButUserNotExist=1001;//成功登录但是用户不存在
+  static const int successButUserNotExist=1001;//成功登录但是用户不存在.
+  static const int successButNoChat=1002;//错误
   
   //邮箱、验证码、密码
   static const int mailFormatError=1100;//格式错误

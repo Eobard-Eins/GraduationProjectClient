@@ -22,7 +22,7 @@ class TaskInfoPage extends StatelessWidget{
             _tipc.needHead.value?Padding(
               padding: const EdgeInsets.only(right: 0),
               child: InkWell(
-                onTap: ()=>_tipc.onTapChat(_tipc.id),
+                onTap: _tipc.onTapChat,
                 highlightColor: Colors.transparent, // 透明色
                 splashColor: Colors.transparent,
                 child: Container(

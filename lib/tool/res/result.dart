@@ -13,7 +13,7 @@ class Result<T> {
   Result.success({required int this.statusCode, required T this.data});
 
   bool isSuccess(){
-    return this.statusCode==Status.success||this.statusCode==Status.successButUserNotExist;
+    return this.statusCode==Status.success||this.statusCode==Status.successButUserNotExist||this.statusCode==Status.successButNoChat;
   }
   bool isError(){
     return this.statusCode==Status.error;
