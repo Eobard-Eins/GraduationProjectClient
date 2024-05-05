@@ -158,6 +158,24 @@ class MyPublishPage extends StatelessWidget{
                       const Spacer(),
                       Padding(padding: const EdgeInsets.only(left: 5,right: 10),
                         child: InkWell(
+                          onTap: ()async{await _mppc.tapChatByEmail(mail,username,avatar);},
+                          highlightColor: Colors.transparent, // 透明色
+                          splashColor: Colors.transparent,
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              border: Border.fromBorderSide(
+                                BorderSide(width: 1.0, color: Coloors.main), // 描边颜色和宽度
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                              // color: Colors.transparent,
+                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 4),
+                            child: const Text("接受申请", style: TextStyle(fontSize: 12,color: Coloors.main)),
+                          ),
+                        ),
+                      ),
+                      Padding(padding: const EdgeInsets.only(left: 5,right: 10),
+                        child: InkWell(
                           onTap: ()async{await _mppc.accessTaskRequest(mail,id,username);},
                           highlightColor: Colors.transparent, // 透明色
                           splashColor: Colors.transparent,

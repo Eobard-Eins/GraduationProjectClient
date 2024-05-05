@@ -126,4 +126,7 @@ class MyPublishPageController extends GetxController{
       Get.toNamed(RouteConfig.chatDetailPage,arguments:{'name':u.username,'avatar':u.avatar,'email':u.mailAddress});
     });
   }
+  tapChatByEmail(String uid, String username, String avatar) {
+    Get.toNamed(RouteConfig.chatDetailPage,arguments:{'name':username,'avatar':avatar,'email':uid});
+  }
 }
