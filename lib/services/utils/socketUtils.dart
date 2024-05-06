@@ -105,12 +105,12 @@ class SocketUtils extends GetConnect{
     if(inRoom){//在房间中时
       String u=_ctrl!.email.value;
       if(sender==me && receiver==u){//由我发送，对方接收
-        _ctrl!.messages.add(ChatMessage(messageContent: msg, messageType: Status.sender));
-        _ctrl!.scrollController.animateTo(_ctrl!.scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 800), curve: Curves.easeInOut);
+        _ctrl!.messages.insert(0,ChatMessage(messageContent: msg, messageType: Status.sender));
+        _ctrl!.scrollController.animateTo(0, duration: const Duration(milliseconds: 800), curve: Curves.easeInOut);
         _ctrl!.controller.clear();//若在此处存数据库，可能双方都收到消息但数据库中没有
       }else if(sender==u && receiver==me){//由对方发送，我接收
-        _ctrl!.messages.add(ChatMessage(messageContent: msg, messageType: Status.receiver));
-        _ctrl!.scrollController.animateTo(_ctrl!.scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 800), curve: Curves.easeInOut);
+        _ctrl!.messages.insert(0,ChatMessage(messageContent: msg, messageType: Status.receiver));
+        _ctrl!.scrollController.animateTo(0, duration: const Duration(milliseconds: 800), curve: Curves.easeInOut);
         // 标为已读
         ChatUtils.read(me:me,him:u,onSuccess: ()=>isread=true);
       }else{//其余情况
