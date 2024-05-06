@@ -55,7 +55,6 @@ class ChatDetailPageController extends GetxController{
     SocketUtils().sendMessage(
       me,
       email.value,
-      Status.newMessage,
       controller.value.text
     );
     //controller.clear();

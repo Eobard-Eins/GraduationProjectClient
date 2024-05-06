@@ -26,17 +26,18 @@ class ChatNetService extends GetConnect{
     return await network(() => get("$_baseUrl/chat/getHistory",query: {"u1":him,"u2":me,"page":page.toString(),"size":size.toString()}));
   }
   Future<Result> getConvs({required String u,required int page,required int size}) async{
-    return await network(() => get("$_baseUrl/chat/getChatUser",query: {"u":u,"page":page.toString(),"size":size.toString()}));
+    return await network(() => get(
+      "$_baseUrl/chat/getChatUser",
+      query: {"u":u,"page":page.toString(),"size":size.toString()}
+    ));
   }
 
   Future<Result> network(Future<Response> Function() func)async{
-
     final Result res=await func().then((value){
       if(!value.isOk){
         printInfo(info:"网络异常，不能连接服务器");
         return Result.error(message: "网络出现错误，请检查网络设置:Net error");
       }else{
-        //printInfo(info:"网络正常 ${value.body.toString()}");
         bool isSuccess=value.body['isSuccess'];
         if(!isSuccess){
           printInfo(info:"网络正常，服务器返回错误：${value.body['message']}");

@@ -57,7 +57,7 @@ class SocketUtils extends GetConnect{
   }
 
   // 向服务器发送消息
-  void sendMessage(String sender, String receiver, int status, String msg) {
+  void sendMessage(String sender, String receiver, String msg) {
     ChatUtils.save(//现存入数据库，避免数据丢失，再发送
       sender: sender,
       receiver: receiver,
@@ -106,11 +106,11 @@ class SocketUtils extends GetConnect{
       String u=_ctrl!.email.value;
       if(sender==me && receiver==u){//由我发送，对方接收
         _ctrl!.messages.add(ChatMessage(messageContent: msg, messageType: Status.sender));
-        _ctrl!.scrollController.animateTo(_ctrl!.scrollController.position.maxScrollExtent+80, duration: const Duration(milliseconds: 800), curve: Curves.easeInOut);
+        _ctrl!.scrollController.animateTo(_ctrl!.scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 800), curve: Curves.easeInOut);
         _ctrl!.controller.clear();//若在此处存数据库，可能双方都收到消息但数据库中没有
       }else if(sender==u && receiver==me){//由对方发送，我接收
         _ctrl!.messages.add(ChatMessage(messageContent: msg, messageType: Status.receiver));
-        _ctrl!.scrollController.animateTo(_ctrl!.scrollController.position.maxScrollExtent+80, duration: const Duration(milliseconds: 800), curve: Curves.easeInOut);
+        _ctrl!.scrollController.animateTo(_ctrl!.scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 800), curve: Curves.easeInOut);
         // 标为已读
         ChatUtils.read(me:me,him:u,onSuccess: ()=>isread=true);
       }else{//其余情况

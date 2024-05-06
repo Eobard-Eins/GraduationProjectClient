@@ -71,7 +71,9 @@ class UserInfoUtils extends GetConnect{
         onError();
         snackbar.error("头像设置失败", value.message!, value.statusCode);
       }else{
-        value.data?onSuccess():snackbar.error("设置失败", "请稍后重试", value.statusCode);
+        value.data?
+          onSuccess():
+          snackbar.error("设置失败", "请稍后重试", value.statusCode);
       }
     });
   }
